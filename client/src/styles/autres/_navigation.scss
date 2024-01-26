@@ -9,11 +9,12 @@
   padding-right: 20px;
 
   div {
+    width: 120px;
     text-align: center;
     vertical-align: middle;
-    a {
       font-family: $font-2;
       font-size: 15px;
+    a {
       color: $black;
     }
   }
