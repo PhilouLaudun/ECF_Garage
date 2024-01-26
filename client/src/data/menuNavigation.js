@@ -4,7 +4,7 @@
       id: 1,
       designation: "Accueil",
       style: "menu-item",
-      adresse_page: "/accueil",
+      adresse_page: "/",
     },
     {
       id: 2,
@@ -22,13 +22,13 @@
       id: 4,
       designation: "Véhicules d'Occasion",
       style: "menu-item",
-      adresse_page: "/services",
+      adresse_page: "/occasion",
     },
     {
       id: 5,
       designation: "Autres Services",
       style: "menu-item",
-      adresse_page: "/services",
+      adresse_page: "/autres",
     },
     {
       id: 6,

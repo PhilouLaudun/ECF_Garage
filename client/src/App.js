@@ -1,18 +1,25 @@
 import { Routes, Route } from "react-router-dom"; // import de la balise route pour naviguer dans les pages
 import Home from "./componants/pages/Home";
+import Entretien from "./componants/pages/Entretien";
+import Carrosserie from "./componants/pages/Carrosserie";
+import Occasion from "./componants/pages/Occasion";
+import Autres from "./componants/pages/Autres";
+import Contact from "./componants/pages/Contact";
 function App() {
-  console.log("app");
-  /*<Route path="/partenaire" exact element={<Partenaire />} />
-    <Route path="/structures" exact element={<Structurespage />} />
-    <Route path="/gestionpresta" exact element={<Gestionpresta />} />*/
+
   return (
     <div>
       <Routes>
-    {/* Définition des routes des pages */}
-    <Route path="/" exact element={<Home />} />
-
-  </Routes></div>
-);
+        {/* Définition des routes des pages */}
+        <Route path="/" exact element={<Home />} />
+        <Route path="/entretien" exact element={<Entretien />} />
+        <Route path="/carrosserie" exact element={<Carrosserie />} />
+        <Route path="/occasion" exact element={<Occasion />} />
+        <Route path="/autres" exact element={<Autres />} />
+        <Route path="/contact" exact element={<Contact />} />
+      </Routes>
+    </div>
+  );
   
 }
 
