@@ -1,25 +1,19 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { Routes, Route } from "react-router-dom"; // import de la balise route pour naviguer dans les pages
+import Home from "./componants/pages/Home";
 function App() {
+  console.log("app");
+  /*<Route path="/partenaire" exact element={<Partenaire />} />
+    <Route path="/structures" exact element={<Structurespage />} />
+    <Route path="/gestionpresta" exact element={<Gestionpresta />} />*/
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div>
+      <Routes>
+    {/* Définition des routes des pages */}
+    <Route path="/" exact element={<Home />} />
+
+  </Routes></div>
+);
+  
 }
 
 export default App;

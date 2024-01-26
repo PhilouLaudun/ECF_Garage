@@ -1,0 +1,11 @@
+# Ignorer les dossiers build dans le dossier client
+client/build/
+
+# Ignorer les dossiers build dans le dossier server
+serveur/build/
+
+# Ignorer le répertoire node_modules dans le dossier client
+client/node_modules/
+
+# Ignorer le répertoire node_modules dans le dossier server
+serveur/node_modules/

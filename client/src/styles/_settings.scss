@@ -1,0 +1,61 @@
+// fichier des styles par défaut
+//initialisation des polices
+@font-face {
+  font-family: "font-1";
+  src: url(../assets/fonts/AveriaSerifLibre-Regular.ttf);
+}
+@font-face {
+  font-family: "font-2";
+  src: url(../assets/fonts/KronaOne-Regular.ttf);
+}
+$font-1: "font-1",arial,sans-serif;
+$font-2: "font-2",arial, serif;
+//initialisation des variables des couleurs
+$icone: #6C5DBB;
+$titreheader: #1687a7;
+$fond-11:  Rgba(246, 245, 245,0.5);
+$fond-12:  Rgba(138, 172, 194,0.5);
+$fond-13:  Rgba(106, 112, 117,0.5);
+$fond-21 : #FFFFFF ;
+$fond-22 : #D1D1D1;
+$black: #282828;
+$white: #FFFFFF;
+$green : #BAEE0C;
+
+:export { 
+  iconescss: $icone;
+}
+
+// initialisation de l'ensemble des balises du site
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style-type: none;
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+  // defilement fluide lors de l'utilisation des ascenseurs
+html { 
+  scroll-behavior: smooth;
+}
+// paramètres par défaut du corps de la page HTML
+body {
+  font-family: "font-1",arial,sans-serif;;
+  height: 100vh;
+  width: 100vw;
+  color: $black;
+}
+// polices par défaut des éléments des pages
+h1, h4 {
+  font-family: "font-2",arial, serif;
+}
+h2, h3, p, ul, li, input, textarea {
+  font-family: "font-1",arial,sans-serif;
+}
+// definit la position normale de la section main des pages
+main {
+ color: $black;
+  position: relative;
+}
