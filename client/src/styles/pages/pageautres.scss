@@ -1,0 +1,54 @@
+.containerbodyservice {
+  display: flex;
+  flex-direction: column; /* Définit la direction en colonne */
+  justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+  .imagepage {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    img {
+      //max-width: 1000px;
+    height: 100%;
+    width : 100%;
+    }
+  }
+  .presentPage {
+    display: flex;
+    justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    margin-bottom: 2%;
+  }
+  .servicepage {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    img{
+        margin: 20px;
+        max-width:50%;
+        height: auto;
+    }
+    .infoservice {
+      height: 400px;
+      margin: 20px;
+      display: flex;
+      flex-direction: column; /* Définit la direction en colonne */
+      justify-content: flex-start;
+      align-items: center; /* Centre verticalement */
+    }
+    .titreservice {
+      margin: 40px;
+      font-size: 25px;
+      font-weight: bold;
+    }
+    .texteservice {
+      margin: 40px;
+      font-size: 18px;
+    }
+    .service1 {
+      width: 100%;
+      display: flex;
+      align-items: center; /* Centre verticalement */
+    }
+  }
+}

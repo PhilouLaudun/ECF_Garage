@@ -1,0 +1,21 @@
+.mainPresentation {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centre horizontalement */
+  align-items: center; /* Centre verticalement */
+background: linear-gradient(
+    to bottom,
+    $fond-21,
+    $fond-22
+  );
+  border-radius: 20px;
+  .titrepresentation {
+    font-size: 25px;
+    margin-bottom: 10px;
+  }
+  .messagepresentation {
+    font-size: 18px;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+}

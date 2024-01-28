@@ -1,0 +1,25 @@
+.mainCarte {
+    width: 80%;
+    margin: 10%;
+    display : grid;
+          justify-content: center; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
+    grid-template-columns: 150px 1fr;
+      grid-template-rows: 25% 75%;
+      grid-template-areas:
+      " icone titre"
+      " icone message";
+
+      .iconecarte {
+        grid-area: icone;
+      }
+      .titrecarte {
+        grid-area: titre;
+        
+      }
+      .messagecarte {
+        grid-area: message;
+        font-size: 13px;
+       
+      }
+}

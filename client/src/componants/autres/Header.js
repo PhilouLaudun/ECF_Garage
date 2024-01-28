@@ -14,6 +14,7 @@ const Header = () => {
           <div>
             <img src="./assets/img/LogoGarageParrot.jpg" alt="Logo" />
           </div>
+          
         </div>
         <div className="navheader">
           <Navigation></Navigation>

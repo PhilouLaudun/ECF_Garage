@@ -1,0 +1,64 @@
+.mainHome {
+  display: flex;
+  flex-direction: column; /* Définit la direction en colonne */
+  .containerbodyhome {
+    width: 100%;
+    display: flex;
+    flex-direction: column; /* Définit la direction en colonne */
+
+    .imageHome {
+      display: flex;
+      img {
+        width: 100%;
+      }
+    }
+    .presentHome {
+      display: flex;
+      justify-content: center; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
+    }
+    .contactHome {
+      padding: 5%;
+      display: flex;
+      justify-content: center; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
+      justify-content: space-between;
+      .contactitem {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centre horizontalement */
+        align-items: center; /* Centre verticalement */
+        p {
+          padding-top: 10px;
+        }
+      }
+    }
+    .traithome {
+      align-self: center;
+      width: 80%;
+      border: 1px solid black;
+    }
+
+    .serviceHome {
+      display: flex;
+      justify-content: center; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
+      .containerServiceHome {
+        width: 80%;
+        display: grid;
+        grid-template-columns: 30% 30% 1fr;
+        grid-template-rows: 1fr;
+        grid-template-areas: " col1 col2 col3";
+        .col1 {
+          grid-area: col1;
+        }
+        .col2 {
+          grid-area: col2;
+        }
+        .col3 {
+          grid-area: col3;
+        }
+      }
+    }
+  }
+}
