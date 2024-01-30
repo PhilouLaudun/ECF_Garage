@@ -51,5 +51,25 @@ width: 100%;
       color: $black; /* Nouvelle couleur verte au survol */
     }
   }
-
+.messagecontact {
+    font-size: 12px;
+    background: $red;
+}
+ // style des champs obligatoires non remplies
+    .error::placeholder {
+      color: $white;
+      background: $red;
+    }
+    #not-mail {
+          display: none; //non affiché au départ
+          position: absolute;
+          top: 8px;
+          color: $white;
+          background: $titreheader;
+          right: 0;
+          transform-origin: 50% 50%;
+          border-radius: 10px;
+          width: 150px;
+          text-align: center;
+        }
 }

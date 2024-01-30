@@ -25,13 +25,100 @@ const CarteEmail = (props) => {
   const recipientEmail = "philippe.boudinaud@orange.fr"; // pour envoyer vers un autre destinataire il faut rajouter {{to_email}} dans le champ To EMail du template sinon cela laisse l'adresse par défaut. Cela implique que si on veut utiliser une adresse d'un partenaire, on charge recipientEmail avec cette adresse et on modifie le champ du template. Voir on crée un nouveau template
   const [sendStatus, setSendStatus] = useState(null); // variable définissant le status de l'envoi
   var messageavertissement = document.getElementById("messageavertissement"); // adresse de la div d'affichage du message
-  const sendMessage = () => {
-    if (message === "") {
-      messageavertissement.innerHTML = "le message doit être renseigné";
-      setTimeout(function () {
-        messageavertissement.innerHTML = "";
-      }, 3000);
+  const sendMessage = (e) => {
+    e.preventDefault();
+    let nameS = document.getElementById("name"); // récupére la localisation du champ obligatoire name
+    let emailS = document.getElementById("email"); // récupére la localisation du champ obligatoire  email
+    let messageS = document.getElementById("message"); // récupére la localisation du champ obligatoire message
+    let formMess = document.querySelector(".messagecontact"); // récupére la localisation de l'élément servant à afficher les messages d'erreur
+     const isEmail = () => {
+       let isMail = document.getElementById("not-mail"); // récupére la localisation indiquant un email non valide
+       let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // régle concernant la validation d'un email
+console.log("test email");
+       if (email.match(regex)) {
+         // si email conforme
+         isMail.style.display = "none"; // cache le message
+         return true; // renvoi true pour email valide
+       } else {
+         console.log("email invalide");
+         isMail.style.display = "block"; // affiche le message d'email non valide
+
+         // attend une minute avant d'effacer le messager
+         setTimeout(() => {
+           isMail.style.display = "none"
+           isMail.style.animation = "none";
+         }, 2000);
+         return false; //renvoi faux pour email valide
+       }
+     };
+    
+    //name && isEmail() && message;
+
+
+    if (name && isEmail() && message) {
+      emailjs
+        .send(
+          serviceId,
+          templateId,
+          {
+            name: name, // Example data, replace with your dynamic data
+            email: email,
+            message: message,
+          },
+          publicKey
+        )
+        .then((res) => {
+          // si envoi OK
+          formMess.innerHTML =
+            "Message envoyé ! Nous vous contacterons dès que possible."; // charge le message
+          formMess.style.background = "#BAEE0C"; // met le fond du message en vert
+          formMess.style.opacity = "1"; // affiche le message
+
+          nameS.classList.remove("error"); // enleve le syle error au message affiché par défaut pour le nom
+          emailS.classList.remove("error"); // enleve le syle error au message affiché par défaut pour l'email
+          messageS.classList.remove("error"); // enleve le syle error au message affiché par défaut pour le message
+          setName(""); // efface le champ
+          setEmail(""); // efface le champ
+          setMessage(""); // efface le champ
+          // attend 5s avant d'effacer le messsage
+          setTimeout(() => {
+            formMess.style.opacity = "0";
+          }, 5000);
+        })
+        .catch((err) => {
+          // si erreur d'envoi
+          formMess.innerHTML = "Une erreur s'est produite, veuillez réessayer."; // charge le message
+          formMess.style.background = "$red"; // met le fond du message en rouge
+          formMess.style.opacity = "1"; // affiche le message
+          // attend 2s avant d'effacer le messsage
+          setTimeout(() => {
+            formMess.style.opacity = "0";
+          }, 2000);
+        });
     } else {
+      formMess.innerHTML = "Merci de remplir correctement les champs requis *"; // charge le message d'erreur
+      formMess.style.background = "{$red}"; // met le fond du message en rouge
+      formMess.style.opacity = "1"; // affiche le message
+      //attend 2s avant d'effacer les messages
+      setTimeout(() => {
+        formMess.style.opacity = "0";
+        nameS.classList.remove("error");
+        emailS.classList.remove("error");
+        messageS.classList.remove("error");
+      }, 2000);
+      if (!name) {
+        // si nom non rempli
+        nameS.classList.add("error"); // ajoute le syle error au message affiché par défaut pour le nom
+      }
+      if (!email) {
+        emailS.classList.add("error"); // ajoute le syle error au message affiché par défaut pour l'email
+      }
+      if (!message) {
+        messageS.classList.add("error"); // ajoute le syle error au message affiché par défaut pour le message
+      }
+    }
+
+    /*else {
       // envoi du mail
       emailjs
         .send(
@@ -55,7 +142,7 @@ const CarteEmail = (props) => {
             setSendStatus("error");
           }
         );
-    }
+    }*/
   };
 
   return (
@@ -71,6 +158,7 @@ const CarteEmail = (props) => {
         value={name}
       />
       <div className="email-content">
+        <label id="not-mail">Email non valide</label>
         <input
           type="mail"
           id="email"
@@ -90,11 +178,12 @@ const CarteEmail = (props) => {
         required
       />
       <div className="zonebouton">
-        <button className="boutonoccase">Envoyer</button>
+        <button className="boutonoccase" onDoubleClick={sendMessage}>
+          Envoyer
+        </button>
       </div>
-
       {/* zone du message si celui est vide  */}
-      <div id="messageavertissement" className="messageparten"></div>
+      <div id="messageavertissement" className="messagecontact"></div>
     </main>
   );
 };
