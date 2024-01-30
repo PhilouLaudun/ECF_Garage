@@ -12,7 +12,7 @@ const Entretien = () => {
         <Header />
         <div className="containerbodyservice">
           <div className="imagepage">
-            <img src="./assets/img/Accueil1.jpg" alt="Logo" />
+            <img src="./assets/img/reparation tete modif.jpg" alt="Logo" />
           </div>
           <div className="presentPage">
             <Presentation className="" page={2} largeur={45} />

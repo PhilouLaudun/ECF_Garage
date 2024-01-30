@@ -9,6 +9,7 @@ const dataCarteService = [
     message:
       "Une équipe professionnelle, formée aux dernières technologies ( Expert ZE, Hybride...) vous accueille pour assurer la maintenance de votre voiture: vidange, filtres, freinage, batterie, pneus, kit de distribution.",
     icone: ConstructionIcon,
+    navigation: "/entretien",
   },
   {
     id: 2,
@@ -16,6 +17,7 @@ const dataCarteService = [
     message:
       "Un parc de plus de 100 véhicules d'occasion pour trouver votre future voiture. ",
     icone: NoCrashIcon,
+    navigation: "/occasion",
   },
   {
     id: 3,
@@ -23,6 +25,7 @@ const dataCarteService = [
     message:
       "Agréé par les principales assurances, nous réalisons toutes les opérations de réparation, peinture et vitrage.",
     icone: CarRepairIcon,
+    navigation: "/carrosserie",
   },
   {
     id: 4,
@@ -30,6 +33,7 @@ const dataCarteService = [
     message:
       "Pré-contrôle et contrôle technique, service de carte grise, lavage professionnel.",
     icone: LocalCarWashIcon,
+    navigation: "/autres",
   },
 ];
 

@@ -1,0 +1,33 @@
+.occasepresentation {
+  width: 90%;
+  display: flex;
+
+  .containerbouton {
+    margin-left: 20%;
+    margin-right: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .boutonoccase {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 30px;
+      width: 250px;
+      background-color: $green; /* Couleur verte */
+      color: $white; /* Texte blanc */
+      border: none;
+      padding: 15px 20px; /* Espacement interne */
+      border-radius: 20px; /* Coins arrondis */
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transition de couleur au survol */
+    }
+
+    .boutonoccase:hover {
+      color: $black; /* Nouvelle couleur verte au survol */
+    }
+  }
+}

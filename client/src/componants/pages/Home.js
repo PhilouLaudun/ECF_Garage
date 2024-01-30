@@ -1,15 +1,16 @@
 import React from "react";
+import { useNavigate } from "react-router-dom"; // fonction pour naviguer entre les pages
 import Header from "../autres/Header";
 import Footer from "../autres/Footer";
 import Presentation from "../autres/Presentation";
 import PetiteIcone from "../autres/PetiteIcone";
-import GrandeIcone from "../autres/GrandeIcone";
 import CarteService from "../autres/CarteService";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
 
 const Home = () => {
+  const navigate= useNavigate()
   return (
     <>
       <main className="mainHome">
@@ -27,11 +28,11 @@ const Home = () => {
               <PetiteIcone materialIcon={PhoneEnabledIcon} />
               <p>01 01 01 01 01</p>
             </div>
-            <div className="contactitem">
+            <div className="contactitem" onClick={() => navigate("/contact")}>
               <PetiteIcone materialIcon={CalendarMonthIcon} />
-              <p>Prendre rendez-vous</p>
+              <p>Prendre rendez-vous</p> 
             </div>
-            <div className="contactitem">
+            <div className="contactitem"onClick={() => navigate("/contact")}>
               <PetiteIcone materialIcon={EmailIcon} />
               <p>Contactez nous</p>
             </div>
@@ -47,9 +48,7 @@ const Home = () => {
                 <CarteService service={3} />
                 <CarteService service={4} />
               </div>
-              <div className="col3">
-           avis client à construire
-              </div>
+              <div className="col3">avis client à construire</div>
             </div>
           </div>
         </div>
