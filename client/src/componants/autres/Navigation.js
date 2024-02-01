@@ -4,7 +4,6 @@ import menuNav from '../../data/menuNavigation';
 
 const Navigation = () => {
   const [menus, setMenus] = useState(menuNav);
-  console.log("menus",menus)
   return (
     <main className="containerNavigation">
       {menus.map((menu) => (

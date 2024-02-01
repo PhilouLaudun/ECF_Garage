@@ -5,6 +5,7 @@ import Carrosserie from "./componants/pages/Carrosserie";
 import Occasion from "./componants/pages/Occasion";
 import Autres from "./componants/pages/Autres";
 import Contact from "./componants/pages/Contact";
+import Vehicules from "./componants/pages/Vehicules";
 function App() {
 
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/occasion" exact element={<Occasion />} />
         <Route path="/autres" exact element={<Autres />} />
         <Route path="/contact" exact element={<Contact />} />
+        <Route path="/vehicule" exact element={<Vehicules />} />
       </Routes>
     </div>
   );

@@ -32,7 +32,7 @@ const Home = () => {
               <PetiteIcone materialIcon={CalendarMonthIcon} />
               <p>Prendre rendez-vous</p> 
             </div>
-            <div className="contactitem"onClick={() => navigate("/contact")}>
+            <div className="contactitem" onClick={() => navigate("/contact")}>
               <PetiteIcone materialIcon={EmailIcon} />
               <p>Contactez nous</p>
             </div>

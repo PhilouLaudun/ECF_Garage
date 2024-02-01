@@ -1,0 +1,24 @@
+.zonevehicule {
+    width : 100%;
+    display : grid;
+    grid-template-columns: 20% 80%;
+    grid-template-rows: 1fr;
+    grid-template-areas: 
+    "filtre carte";
+
+    .filtreoccase {
+        grid-area: filtre;
+        display : flex;
+        flex-direction: column;
+align-items: center ; /* Centre verticalement */
+
+    }
+    .carteoccase {
+ grid-area: carte;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(calc(33% - 20px), 1fr)); /* Trois cartes par ligne */
+    gap: 20px; /* Ajoute un espacement entre les cartes */
+    }
+
+}

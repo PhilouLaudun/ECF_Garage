@@ -48,6 +48,14 @@ const dataPresentation = [
     message2: "",
     message3: "",
   },
+  {
+    id: 7,
+    titre: "ANNONCES VEHICULE D'OCCASION",
+    message1:
+      "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd…",
+    message2: "",
+    message3: "",
+  },
 ];
 
 export default dataPresentation;

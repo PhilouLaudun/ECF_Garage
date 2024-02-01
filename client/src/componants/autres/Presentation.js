@@ -11,8 +11,6 @@ const Presentation = ({ page ,largeur }) => {
   const largeurPresentation = {
     width: `${largeur}%`,
   };
-  console.log("page", page, typeof page);
-  console.log("largeur", largeur, typeof largeur);
   return (
     <main className="mainPresentation" style={largeurPresentation}>
       <div className="titrepresentation">{titre}</div>
