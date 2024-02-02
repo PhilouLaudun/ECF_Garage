@@ -12,13 +12,11 @@ const FiltreVoiture = ({ filtres, onTriChange, minMaxValues }) => {
     minAnnee,
     maxAnnee,
   } = minMaxValues;
-  console.log("filtres", filtres)
-  console.log("minMaxValues", minMaxValues);
+  
   const [kilometrage, setKilometrage] = useState(filtres.kilometrage);
   const [prix, setPrix] = useState(filtres.prix);
   const [annee, setAnnee] = useState(filtres.annee);
 
-  console.log(kilometrage,prix,annee)
   const styleslider = {
     marginBottom: "20px",
   };
@@ -57,16 +55,18 @@ const FiltreVoiture = ({ filtres, onTriChange, minMaxValues }) => {
       annee: [minMaxValues.minAnnee, minMaxValues.maxAnnee],
     });
   };
-  const kilometrageMarks = [{ value: minKilometrage, label: minKilometrage },
-  { value: maxKilometrage, label: maxKilometrage }];
- const prixMarks = [
-   { value: minPrix, label: minPrix },
-   { value: maxPrix, label: maxPrix },
- ];
- const anneeMarks = [
-   { value: minAnnee, label: minAnnee },
-   { value: maxAnnee, label: maxAnnee },
- ];
+  const kilometrageMarks = [
+    { value: minKilometrage, label: minKilometrage },
+    { value: maxKilometrage, label: maxKilometrage },
+  ];
+  const prixMarks = [
+    { value: minPrix, label: minPrix },
+    { value: maxPrix, label: maxPrix },
+  ];
+  const anneeMarks = [
+    { value: minAnnee, label: minAnnee },
+    { value: maxAnnee, label: maxAnnee },
+  ];
   return (
     <main className="mainfiltre">
       <Typography id="kilometrage-slider" gutterBottom>

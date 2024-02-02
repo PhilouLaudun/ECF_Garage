@@ -6,6 +6,38 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 
 const CarteVehicule = ({ vehicule }) => {
+  const cardstyle = {
+    borderRadius: 4,
+    boxShadow: 8,
+    minWidth: 200,
+    maxWidth: 260,
+  };
+  const cardmediastyle = {
+    height: "150px",
+  };
+  const cardheaderstyle = {
+    paddingBottom: "0",
+    textAlign: "center",
+  };
+  const cardcontentstyle = {
+    marginTop: "0",
+    padding: "0",
+  };
+  const cardtyposub1style = {
+    fontWeight: "2000",
+    marginTop: "0",
+    paddingLeft: "10px",
+    paddingRight: "10px",
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  };
+  const cardtypobody2style = {
+    paddingTop: "20px",
+    borderBottom: "1px solid #ccc",
+    textAlign: "center",
+    fontSize: "12px",
+  };
   const {
     marque,
     modéle,
@@ -15,37 +47,26 @@ const CarteVehicule = ({ vehicule }) => {
     energie,
     transmission,
     photo,
+    prix,
   } = vehicule;
 
   return (
-    <Card
-      sx={{
-        borderRadius: 4,
-        boxShadow: 8,
-        minWidth: 200,
-        maxWidth: 250,
-      }}
-    >
+    <Card sx={cardstyle}>
       <CardMedia
         component="img"
-        style={{
-          height: "150px",
-        }}
+        sx={cardmediastyle}
         image={photo}
         alt="Vehicle"
       />
-      <CardHeader title={`${marque} ${modéle}`} sx={{ paddingBottom: "0", textAlign: "center" }} />
-      <CardContent sx={{ marginTop: "0", padding: "0" }}>
-        <Typography
-          variant="subtitle1"
-          sx={{ fontWeight: "2000", marginTop: "0", paddingLeft:"10px" }}
-        >
-          {modeleprecis}
+      <CardHeader title={`${marque} ${modéle}`} sx={cardheaderstyle} />
+      <CardContent sx={cardcontentstyle}>
+        <Typography variant="subtitle1" sx={cardtyposub1style}>
+          <span style={{ fontSize: "12px", fontStyle: "italic" }}>
+            {modeleprecis}
+          </span>
+          <span style={{ fontSize: "15px", fontWeight: "bold" }}>{prix}€</span>
         </Typography>
-        <Typography
-          variant="body2"
-          sx={{ paddingTop: "20px", borderBottom: "1px solid #ccc", textAlign: "center" }}
-        >
+        <Typography variant="body2" sx={cardtypobody2style}>
           {`${année} | ${kilometrage} Km | ${transmission} | ${energie}`}
         </Typography>
       </CardContent>

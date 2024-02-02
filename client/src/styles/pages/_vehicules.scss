@@ -1,24 +1,42 @@
 .zonevehicule {
-    width : 100%;
-    display : grid;
-    grid-template-columns: 20% 80%;
-    grid-template-rows: 1fr;
-    grid-template-areas: 
-    "filtre carte";
+  width: 100%;
+  height: auto;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  grid-template-rows: 1fr;
+  grid-template-areas: "filtre carte";
 
-    .filtreoccase {
-        grid-area: filtre;
-        display : flex;
-        flex-direction: column;
-align-items: center ; /* Centre verticalement */
+  .filtreoccase {
+    grid-area: filtre;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centre verticalement */
+  }
+
+  .carteoccase-container {
+    grid-area: carte;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 10% 90%;
+    grid-template-areas:
+      "pagination"
+      "affichagecarte";
+    .pagination-carteoccase {
+      grid-area: pagination;display: flex;
+    align-items: center;
+    justify-content: center;
+            justify-content: center;
 
     }
     .carteoccase {
- grid-area: carte;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(33% - 20px), 1fr)); /* Trois cartes par ligne */
-    gap: 20px; /* Ajoute un espacement entre les cartes */
+      grid-area: affichagecarte;
+      padding: 10px;
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fill,
+        minmax(calc(33% - 20px), 1fr)
+      ); /* Trois cartes par ligne */
+      gap: 20px; /* Ajoute un espacement entre les cartes */
     }
-
+  }
 }

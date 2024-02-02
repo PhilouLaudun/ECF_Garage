@@ -6,6 +6,9 @@ import Presentation from "../autres/Presentation";
 import dataCarteVehicule from "../../data/dataCarteVehicule";
 import CarteVehicule from "../autres/CarteVehicule";
 import FiltreVoiture from "../autres/FiltreVoiture";
+import { Pagination } from "@mui/material";
+
+const CardsPerPage = 6; // nombre de cartes par page
 const Vehicules = () => {
   const [vehicules, setVehicules] = useState(dataCarteVehicule);
   const [filtres, setFiltres] = useState({
@@ -44,7 +47,6 @@ const Vehicules = () => {
     maxAnnee,
   };
 
-
   // Initialiser l'état filtres avec les valeurs minimales et maximales du fichier
   useEffect(() => {
     setFiltres({
@@ -75,9 +77,16 @@ const Vehicules = () => {
     setVehicules(vehiculesTri);
   }, [filtres]);
 
-  /*            <div className="filtreoccase">
-              <FiltreVoiture filtres={filtres} onTriChange={trierVehicules} />
-            </div>   */
+  // Pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const indexOfLastCard = currentPage * CardsPerPage;
+  const indexOfFirstCard = indexOfLastCard - CardsPerPage;
+  const currentVehicules = vehicules.slice(indexOfFirstCard, indexOfLastCard);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
   return (
     <>
       <main>
@@ -97,10 +106,19 @@ const Vehicules = () => {
                 minMaxValues={minMaxValues}
               />
             </div>
-            <div className="carteoccase">
-              {vehicules.map((vehicule) => (
-                <CarteVehicule key={vehicule.id} vehicule={vehicule} />
-              ))}
+            <div className="carteoccase-container">
+                  <div className="pagination-carteoccase">
+                  <Pagination
+                    count={Math.ceil(vehicules.length / CardsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                  />
+                </div>
+              <div className="carteoccase">
+                {currentVehicules.map((vehicule) => (
+                  <CarteVehicule key={vehicule.id} vehicule={vehicule} />
+                ))}
+              </div>
             </div>
           </div>
         </div>
