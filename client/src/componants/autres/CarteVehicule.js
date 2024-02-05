@@ -4,8 +4,10 @@ import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { useNavigate } from "react-router-dom";
 
 const CarteVehicule = ({ vehicule }) => {
+  const navigate = useNavigate();
   const cardstyle = {
     borderRadius: 4,
     boxShadow: 8,
@@ -49,9 +51,14 @@ const CarteVehicule = ({ vehicule }) => {
     photo,
     prix,
   } = vehicule;
-
+  const onClickCarte = (e) => { 
+    console.log("onClickCarte")
+    console.log("id", vehicule.id);
+    navigate(`/fichevehicule/${vehicule.id}`);
+  }
   return (
-    <Card sx={cardstyle}>
+    <main className="maincartevehicule" onClick={onClickCarte}>
+      <Card sx={cardstyle}>
       <CardMedia
         component="img"
         sx={cardmediastyle}
@@ -70,7 +77,8 @@ const CarteVehicule = ({ vehicule }) => {
           {`${année} | ${kilometrage} Km | ${transmission} | ${energie}`}
         </Typography>
       </CardContent>
-    </Card>
+    </Card> </main>
+    
   );
 };
 

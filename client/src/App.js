@@ -6,6 +6,7 @@ import Occasion from "./componants/pages/Occasion";
 import Autres from "./componants/pages/Autres";
 import Contact from "./componants/pages/Contact";
 import Vehicules from "./componants/pages/Vehicules";
+import FicheVehicule from "./componants/pages/FicheVehicule";
 function App() {
 
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/autres" exact element={<Autres />} />
         <Route path="/contact" exact element={<Contact />} />
         <Route path="/vehicule" exact element={<Vehicules />} />
+        <Route path="/fichevehicule/:id" exact element={<FicheVehicule />} />
       </Routes>
     </div>
   );

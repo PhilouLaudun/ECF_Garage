@@ -12,7 +12,7 @@ const Header = () => {
       <div className="containeurheader">
         <div className="logoheader">
           <div>
-            <img src="./assets/img/LogoGarageParrot.jpg" alt="Logo" />
+            <img src="/assets/img/LogoGarageParrot.jpg" alt="Logo" />
           </div>
           
         </div>
