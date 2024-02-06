@@ -1,0 +1,38 @@
+const dbConfig = require("../config/db.config.js");
+const Sequelize = require("sequelize");
+const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+  host: dbConfig.HOST,
+  dialect: dbConfig.Dialect,
+  port: 3306, //mysql sur xampp
+  operatorsAliases: 0,
+  pool: {
+    max: dbConfig.pool.max,
+    min: dbConfig.pool.min,
+    acquire: dbConfig.pool.acquire,
+    idle: dbConfig.pool.idle,
+  },
+});
+
+const db = {};
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.utilisateurs = require("./utilisateurs.model.js")(sequelize, Sequelize);
+/*db.partenaires = require("./partenaire.model.js")(sequelize, Sequelize);
+db.structures = require("./structure.model.js")(sequelize, Sequelize);
+db.prestation = require("./prestation.model.js")(sequelize, Sequelize);
+db.relstructprestas = require("./relstructpresta.model.js")(sequelize, Sequelize);*/
+
+/*
+// Déclarer les associations "belongsToMany" ici
+db.structures.belongsToMany(db.prestation, {
+  through: db.relstructprestas,
+  foreignKey: "fk_structure",
+});
+
+db.prestation.belongsToMany(db.structures, {
+  through: db.relstructprestas,
+  foreignKey: "fk_prestation",
+});
+*/
+
+module.exports = db;
