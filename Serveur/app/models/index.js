@@ -17,9 +17,10 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.utilisateurs = require("./utilisateurs.model.js")(sequelize, Sequelize);
-/*db.partenaires = require("./partenaire.model.js")(sequelize, Sequelize);
-db.structures = require("./structure.model.js")(sequelize, Sequelize);
-db.prestation = require("./prestation.model.js")(sequelize, Sequelize);
+db.vehicules = require("./vehicules.model.js")(sequelize, Sequelize);
+db.images = require("./images.model.js")(sequelize, Sequelize);
+db.caracteristiques = require("./caracteristiques.model.js")(sequelize, Sequelize);
+/*db.prestation = require("./prestation.model.js")(sequelize, Sequelize);
 db.relstructprestas = require("./relstructpresta.model.js")(sequelize, Sequelize);*/
 
 /*

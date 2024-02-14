@@ -5,9 +5,11 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+const backendUrl = process.env.REACT_APP_BACKEND_URL; // charge l'url du serveur pour charger directement les photos à partir du serveur, fichier .env à la racine de /client
 
 const CarteVehicule = ({ vehicule }) => {
   const navigate = useNavigate();
+  console.log("CarteVehicule : vehicule", vehicule);
   const cardstyle = {
     borderRadius: 4,
     boxShadow: 8,
@@ -41,44 +43,51 @@ const CarteVehicule = ({ vehicule }) => {
     fontSize: "12px",
   };
   const {
-    marque,
-    modéle,
-    modeleprecis,
-    année,
-    kilometrage,
-    energie,
-    transmission,
-    photo,
-    prix,
+    id_vehicule,
+    Marque,
+    Modele,
+    Modeleprecis,
+    Annee,
+    Kilometrage,
+    Energie,
+    Transmission,
+    Prix,
+    UrlPhoto,
   } = vehicule;
-  const onClickCarte = (e) => { 
-    console.log("onClickCarte")
-    console.log("id", vehicule.id);
-    navigate(`/fichevehicule/${vehicule.id}`);
-  }
+  // modifie l'url du champs pour pouvoir l'utilisé pour afficher l'image
+  let imageUrlaffichage = ""; // Variable pour stocker l'URL de l'image formatée
+  const formattedImageUrl = UrlPhoto.replace(/\\/g, "/"); // Remplace tous les antislashes par des slashes
+  imageUrlaffichage = `${backendUrl}/${formattedImageUrl}`; // crée l'url à partir  de l'url stoké dans la BD et de l'adresse du serveur
+  console.log("CarteVehicule : backendUrl", backendUrl);
+  console.log("CarteVehicule : imageUrlaffichage", imageUrlaffichage);
+  const onClickCarte = (e) => {
+    navigate(`/fichevehicule/${id_vehicule}`);
+  };
   return (
     <main className="maincartevehicule" onClick={onClickCarte}>
       <Card sx={cardstyle}>
-      <CardMedia
-        component="img"
-        sx={cardmediastyle}
-        image={photo}
-        alt="Vehicle"
-      />
-      <CardHeader title={`${marque} ${modéle}`} sx={cardheaderstyle} />
-      <CardContent sx={cardcontentstyle}>
-        <Typography variant="subtitle1" sx={cardtyposub1style}>
-          <span style={{ fontSize: "12px", fontStyle: "italic" }}>
-            {modeleprecis}
-          </span>
-          <span style={{ fontSize: "15px", fontWeight: "bold" }}>{prix}€</span>
-        </Typography>
-        <Typography variant="body2" sx={cardtypobody2style}>
-          {`${année} | ${kilometrage} Km | ${transmission} | ${energie}`}
-        </Typography>
-      </CardContent>
-    </Card> </main>
-    
+        <CardMedia
+          component="img"
+          sx={cardmediastyle}
+          image={imageUrlaffichage}
+          alt="Vehicle"
+        />
+        <CardHeader title={`${Marque} ${Modele}`} sx={cardheaderstyle} />
+        <CardContent sx={cardcontentstyle}>
+          <Typography variant="subtitle1" sx={cardtyposub1style}>
+            <span style={{ fontSize: "12px", fontStyle: "italic" }}>
+              {Modeleprecis}
+            </span>
+            <span style={{ fontSize: "15px", fontWeight: "bold" }}>
+              {Prix}€
+            </span>
+          </Typography>
+          <Typography variant="body2" sx={cardtypobody2style}>
+            {`${Annee} | ${Kilometrage} Km | ${Transmission} | ${Energie}`}
+          </Typography>
+        </CardContent>
+      </Card>{" "}
+    </main>
   );
 };
 

@@ -9,9 +9,9 @@ const CarteService = ({ service }) => {
   var message = carte.message;
   var icone = carte.icone;
   var navigation = carte.navigation;
-  const navigate = useNavigate(); // définit une fonction de navigation pour aller sur la page concerné par l'icone sur la page acceui'
+  const navigate = useNavigate(); // définit une fonction de navigation pour aller sur la page concerné par l'icone sur la page acceuil
   const affichagePage = () => {
-    console.log("affcihagePage");
+    console.log("affichagePage");
     console.log("navigation", navigation);
     navigate(navigation);
     // Ajoutez la ligne suivante pour faire défiler vers le haut de la nouvelle page

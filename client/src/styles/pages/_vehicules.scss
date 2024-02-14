@@ -7,10 +7,10 @@
   grid-template-areas: "filtre carte";
 
   .filtreoccase {
+    width: 80%;
     grid-area: filtre;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centre verticalement */
+    margin: 0 auto;
+    padding-top: 50px;
   }
 
   .carteoccase-container {
@@ -22,11 +22,31 @@
       "pagination"
       "affichagecarte";
     .pagination-carteoccase {
-      grid-area: pagination;display: flex;
-    align-items: center;
-    justify-content: center;
-            justify-content: center;
-
+      width: 60%;
+      grid-area: pagination;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto;
+    .boutoncreation {
+      width: 200px;
+      background: yellowgreen;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      background-color: $green; /* Couleur verte */
+      color: $white; /* Texte blanc */
+      border: none;
+      padding: 15px 20px; /* Espacement interne */
+      border-radius: 20px; /* Coins arrondis */
+      font-size: 16px;
+      cursor: pointer;
+    }
+        .boutoncreation:hover {
+      color: $black;
+    }
+      
     }
     .carteoccase {
       grid-area: affichagecarte;

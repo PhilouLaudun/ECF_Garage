@@ -1,0 +1,84 @@
+.stylesaisie {
+  // sert aux 3 types de cartes de la page
+  width: 100%;
+  height: 25px;
+  padding: 10px;
+  background-color: $white;
+  border: 1px $fondfooter solid;
+  border-radius: 20px;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 0px;
+}
+.messagemodalevehicule {
+  display: inline-block !important;
+  font-size: 12px;
+  width: auto;
+  margin: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: bold;
+  background: rgba(255, 166, 0, 0.5);
+  border-radius: 20px;
+}
+
+// spécifique à ce composant :
+
+.mainmodalecartevehicule {
+  min-width: 390px;
+  max-width: 390px;
+  height: 900px;
+  padding: 20px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  font-family: $font-1;
+  place-items: left center;
+  z-index: 50;
+  .divdonnee {
+ 
+    .intitule {
+      font-size: 15px;
+      color: $titreheader;
+    }
+  }
+
+  .iconemodif {
+    display: flex;
+    justify-content: center;
+    border-top: 1px $black solid;
+  }
+
+  .file-input-container {
+    position: absolute;
+    top: 20px; /* Ajustez la position verticale selon vos besoins */
+    left: 20px; /* Ajustez la position horizontale selon vos besoins */
+    overflow: hidden;
+    display: inline-block;
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    color: #343a40;
+    z-index: 100; /* Assurez-vous que le bouton est au-dessus du slider */
+    font-size: 10px;
+  }
+
+  .file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+  }
+  .slider-container{
+    margin : 10px;
+  }
+  .slider {
+    margin-top: 50px; /* Ajustez la marge en fonction de la taille du bouton de fichier */
+  }
+}

@@ -1,0 +1,87 @@
+.carteconnexion {
+  z-index: 20;
+width: 500px;
+height: 300px ;
+  display: grid;
+  border: 1px blue solid;
+  background: rgba(211, 214, 234, 0.6);
+  box-shadow: 10px 10px 6px rgba(0, 0, 0, 0.45);
+  border-radius: 20px;
+  font-size: 20px;
+  .titreconnexion {
+    height: 50px;
+    width: 100%;
+    background: white;
+    font-size: 30px;
+    font-style: italic;
+    border-radius: 20px 20px 0 0;
+    display: grid;
+grid-template-columns: 1fr 50px;
+grid-template-rows: 100%;
+grid-template-areas: " titreg iconeg";
+    line-height: 50px;
+    .titre {
+      grid-area: titreg;
+      text-align: center;
+    }
+    .cancelconnexion {
+      grid-area: iconeg;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+    }
+  }
+  .ligneconnexion {
+    height : 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    input {
+      width: 300px;
+      padding: 15px;
+      background-color: $white;
+      font-size: 18px;
+    }
+  }
+  .messagelogin {
+    display: none;
+  font-size: 12px;
+  width: auto;
+  height: 30px;
+  margin: 0;
+  padding:10px;
+  font-weight: bold;
+  background: rgba(255, 166, 0, 0.5);
+  border-radius: 20px;
+  text-align: center; /* Centre le contenu horizontalement */
+
+
+  
+  }
+  .boutonenvoyer {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+    height: 45px;
+
+    .bouton {
+         display: flex;
+      align-items: center;
+      justify-content: center;
+
+      height: 30px;
+      width: 120px;
+      background-color: $green; /* Couleur verte */
+      color: $white; /* Texte blanc */
+      border: none;
+      padding: 15px 20px; /* Espacement interne */
+      border-radius: 20px; /* Coins arrondis */
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Transition de couleur au survol */
+    }
+  }
+}

@@ -1,3 +1,4 @@
+import React from "react"; // Importez React
 import { Routes, Route } from "react-router-dom"; // import de la balise route pour naviguer dans les pages
 import Home from "./componants/pages/Home";
 import Entretien from "./componants/pages/Entretien";
@@ -8,7 +9,6 @@ import Contact from "./componants/pages/Contact";
 import Vehicules from "./componants/pages/Vehicules";
 import FicheVehicule from "./componants/pages/FicheVehicule";
 function App() {
-
   return (
     <div>
       <Routes>
@@ -24,7 +24,6 @@ function App() {
       </Routes>
     </div>
   );
-  
 }
 
 export default App;

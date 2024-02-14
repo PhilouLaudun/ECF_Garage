@@ -1,36 +1,38 @@
 import React from "react";
-import dataCarteVehicule from "../../data/dataCarteVehicule";
 import EmailIcon from "@mui/icons-material/Email";
+import { useSelector } from "react-redux";
 
 // css dans fichier _fichevehicule.scss
 
 const SyntheseVehicule = ({ id }) => {
-  const vehicule = dataCarteVehicule[id - 1];
-  console.log("voiture", vehicule);
+  const vehicules = useSelector((state) => state.vehicule.vehicule);
+  const vehicule = vehicules.find((v) => v.id_vehicule === id);
   const {
-    marque,
-    modéle,
-    modeleprecis,
-    année,
-    kilometrage,
-    energie,
-    transmission,
-    photo,
-    prix,
+    Marque,
+    Modele,
+    Modeleprecis,
+    Annee,
+    Kilometrage,
+    Energie,
+    Transmission,
+    UrlPhoto,
+    Prix,
   } = vehicule;
   return (
-    <div>
+    <div className="cartesynthese">
       <div className="titresynthese">
-        {marque} {modéle}
+        {Marque} {Modele}
       </div>
-      <div className="precisionmodele">{modeleprecis} </div>
+      <div className="precisionmodele">{Modeleprecis} </div>
       <div className="infosynthese">
-        {année} | {kilometrage} Km | {transmission} | {energie}
+        {Annee} | {Kilometrage} Km | {Transmission} | {Energie}
       </div>
-      <div className="prixsynthese">{prix}€</div>
+      <div className="prixsynthese">{Prix}€</div>
       <div className="containerboutonmail">
         {" "}
-        <button className="boutonsynthese"><EmailIcon/></button>
+        <button className="boutonsynthese">
+          <EmailIcon />
+        </button>
       </div>
     </div>
   );
