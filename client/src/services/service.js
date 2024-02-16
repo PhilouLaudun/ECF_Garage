@@ -27,7 +27,6 @@ const updateAgent = (id, data) => {
 // *********************** table vehicule *********************************
 // charge la liste de tous les vehicules
 const getAllVehicule = () => {
-  console.log("service:getAllVehicule")
   return http.get("/vehicules");
 };
 // crée un vehicule  
@@ -69,18 +68,25 @@ const fetchImageById = (data) => {
 // *********************** table caracteristiques *********************************
 // charge la liste des caracteristiques associées à un vehicule
 const fetchCaractById = (data) => {
-  console.log("data service",data)
   const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
   const url = `/caracteristiques/byId?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
 };
-// charge la liste de toutes les images associées à un vehicule
+// crée une nouvelle caractéristique 
 const createCaract = (data) => {
   for (const entry of data.entries()) {
     console.log(entry[0] + ":", entry[1]);
   }
   console.log("data service", data);
   return http.post("/caracteristiques/create", data);
+};
+// met à jour une nouvelle caractéristique 
+const upadteCaract = (id,data) => {
+  for (const entry of data.entries()) {
+    console.log(entry[0] + ":", entry[1]);
+  }
+  console.log("data service", data);
+  return http.put(`/caracteristiques/update/${id}`, data);
 };
 
 // crée une structure sans image pour le logo 
@@ -100,37 +106,38 @@ const createCaract = (data) => {
   console.log("ImageLogo", data.get('ImageLogo'));
   return http.post("/Structures/NoImg", data);
 };*/
-// *********************** table prestation *********************************
-// charge la liste de toutes les structures associées au partenaires
-const getAllPrestation = () => { 
-  return http.get("/prestations")
-}
-// crée une nouvelle prestation
-const createPrestation = (data) => { 
-  console.log("service : createPrestation", data);
-  return http.post("/prestations", data);
-}
-// *********************** table relStructPresta *********************************
+// *********************** table equipement *********************************
+// charge la liste de toutes les equipements
+const fetchEquip = () => {
+  return http.get("/equipements");
+};
+// crée un nouvel equipement
+const createEquip = (data) => {
+  return http.post("/equipements/create", data);
+};
+// *********************** table relvehiculeequipements *********************************
 // charge la liste de toutes les structures associées à un partenaire
-const getAllStructPresta = (data) => {
+const listRelVehEquip = (data) => {
+  console.log("service relation");
   const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
-  const url = `/RelStructPresta/presta?${queryParams}`; // les données contrairement à POST sont passées par l'url
+  const url = `/relVehiculeEquipement/list?${queryParams}`; // les données contrairement à POST sont passées par l'url
+  console.log("url",url);
   return http.get(url);
 };
 
 // crée une nouvelle relation
-const createRelStructPresta = (data) => {
-  console.log("service : data ",data)
-  return http.post("/RelStructPresta", data);
+const createRelVehEquip = (data) => {
+  console.log("service : data ", data);
+  return http.post("/relVehiculeEquipement/create", data);
 };
 // supprime une relation
-const delRelStructPresta = (id_relStructPresta) => {
+const delRelVehEquip = (id_relVehEquip) => {
   console.log(
     "service : id_relStructPresta ",
-    id_relStructPresta,
-    typeof id_relStructPresta
+    id_relVehEquip,
+    typeof id_relVehEquip
   );
-  return http.delete(`/RelStructPresta/${id_relStructPresta}`);
+  return http.delete(`/relVehiculeEquipement/${id_relVehEquip}`);
 };
 
 // *********************** récupération données binaire image sur serveur répertoire upload *********************************
@@ -159,17 +166,18 @@ const Service = {
   fetchImageById,
   fetchCaractById,
   createCaract,
+  upadteCaract,
+  createEquip,
+  fetchEquip,
+  createRelVehEquip,
+  listRelVehEquip,
+  delRelVehEquip,
   saveNewAgent,
   updateAgent,
   updatePartenaireWithImg,
   updatePartenaireNoImg,
 
   getImageDataFromURL,
-  getAllPrestation,
-  createPrestation,
-  getAllStructPresta,
-  createRelStructPresta,
-  delRelStructPresta,
 };
 
 export default Service;

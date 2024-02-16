@@ -1,13 +1,19 @@
 .corpFiche {
   height: 100%;
   display: grid;
-  grid-template-columns: 33% 33% 33%;
-  grid-template-rows: 300px 1fr;
-  grid-template-areas:
-    "slide slide synthese "
-    " general  equipe option";
+grid-template-columns: 100%;
+grid-template-rows: 50% 50%;
+grid-template-areas:
+    "hautcorps" "bascorps";
 
-  .slider {
+.hautc {
+  grid-area:hautcorps ;
+  display:grid;
+grid-template-columns: 66% 33%;
+ grid-template-rows: 100%; 
+ grid-template-areas:
+    "slide synthese";
+    .slider {
     grid-area: slide;
     display: flex;
     justify-content: center; /* Centre horizontalement */
@@ -76,6 +82,7 @@
           align-items: center;
           justify-content: center;
           .boutonsynthese {
+            margin : 10px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -98,6 +105,15 @@
       }
     }
   }
+}
+.basc {
+  grid-area:bascorps ;
+  display:grid;
+grid-template-columns: 33% 33% 33%;
+ grid-template-rows: 100%; 
+ grid-template-areas:
+    "general equipe option";
+  
   .caracteristique {
     grid-area: general;
     margin: 30px;
@@ -129,7 +145,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
     border-radius: 10px; /* Coins arrondis pour un effet plus doux */
     .titreequipement {
+            display : flex;
       text-align: center;
+      align-items: center; /* aligne les éléments sur l'axe vertical */
+      justify-content: space-around;
       font-size: 22px;
       margin-bottom: 15px;
       font-weight: bold;
@@ -147,7 +166,10 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
     border-radius: 10px; /* Coins arrondis pour un effet plus doux */
     .titreoption {
+          display : flex;
       text-align: center;
+      align-items: center; /* aligne les éléments sur l'axe vertical */
+        justify-content: space-around;
       font-size: 22px;
       margin-bottom: 15px;
       font-weight: bold;
@@ -156,5 +178,6 @@
       display: flex;
       flex-direction: column;
     }
-  }
+  }}
+
 }

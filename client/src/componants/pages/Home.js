@@ -10,7 +10,8 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
 
 const Home = () => {
-  const navigate= useNavigate()
+  const navigate = useNavigate()
+  
   return (
     <>
       <main className="mainHome">

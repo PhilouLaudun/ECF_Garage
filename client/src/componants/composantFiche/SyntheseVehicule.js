@@ -4,7 +4,8 @@ import { useSelector } from "react-redux";
 
 // css dans fichier _fichevehicule.scss
 
-const SyntheseVehicule = ({ id }) => {
+const SyntheseVehicule = () => {
+  let id = useSelector((state) => state.vehicule.vehiculeEnCours);
   const vehicules = useSelector((state) => state.vehicule.vehicule);
   const vehicule = vehicules.find((v) => v.id_vehicule === id);
   const {

@@ -26,4 +26,7 @@ const store = configureStore({
   },
 });
 const persistor = persistStore(store); // store utilisé
+
+// Purge the store before exporting it
+persistor.purge();
 export { store, persistor };

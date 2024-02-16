@@ -14,7 +14,6 @@ const CardsPerPage = 6; // nombre de cartes par page
 const Vehicules = () => {
   // charge les données depuis le store à propos des vehicules et le tableau sera mis à jour à chaque changement du store.
   const vehiculetest = useSelector((state) => state.vehicule.vehicule); // variable contenant les cartes des vehicules
-  console.log("vehiculetest", vehiculetest);
   const dispatch = useDispatch();
   //const vehiculetest = "";
   const [vehicules, setVehicules] = useState(vehiculetest);
@@ -50,7 +49,7 @@ const Vehicules = () => {
   };
   useEffect(() => {
     async function fetchData() {
-      console.log("useeefect");
+console.log("Fetching data vehicule..");
       // fonction de chargement des vehicules au départ
       if (!hasLoadedData) {
         //  si le tableau partenaire est vide et si les données n'ont pas été chargé
@@ -58,7 +57,6 @@ const Vehicules = () => {
         try {
           //alors on charge les données
           const response = await dispatch(listVehicule()); // appel du slice de chargement des données auprés de la BD;
-          console.log("response", response);
           if (response) {
             // si on obtient une réponse
             if (response.payload.okay === "false") {
@@ -177,42 +175,46 @@ const Vehicules = () => {
           <div className="presentPage">
             <Presentation className="" page={7} largeur={45} />
           </div>
-          {hasLoadedData &&  vehicules &&(
+          {hasLoadedData && vehicules && (
             <div className="zonevehicule">
-            <div className="filtreoccase">
-              <FiltreVoiture
-                filtres={filtres}
-                onTriChange={trierVehicules}
-                minMaxValues={minMaxValues}
-              />
-            </div>
-            <div className="carteoccase-container">
-              <div className="pagination-carteoccase">
-                <Pagination
-                  count={Math.ceil(vehicules.length / CardsPerPage)}
-                  page={currentPage}
-                  onChange={handlePageChange}
+              <div className="filtreoccase">
+                <FiltreVoiture
+                  filtres={filtres}
+                  onTriChange={trierVehicules}
+                  minMaxValues={minMaxValues}
                 />
-                <button className="boutoncreation" onClick={creationVehicule}>
-                  Créer un véhicule
-                </button>
               </div>
-              <div className="carteoccase">
-                {currentVehicules.map((vehicule) => (
-                  <CarteVehicule key={vehicule.id} vehicule={vehicule} />
-                ))}
-                {flagCreation && (
-                  <Dialog open={true} sx={modalStyleParten}>
-                    <ModaleCarteVehicule
-                      vehicule={currentVehicules[0]}
-                      onClose={abordCreationVehicule}
-                    />
-                  </Dialog>
-                )}
+              <div className="carteoccase-container">
+                <div className="pagination-carteoccase">
+                  <Pagination
+                    count={Math.ceil(vehicules.length / CardsPerPage)}
+                    page={currentPage}
+                    onChange={handlePageChange}
+                  />
+                  <button
+                    key="unique_key"
+                    className="boutoncreation"
+                    onClick={creationVehicule}
+                  >
+                    Créer un véhicule
+                  </button>
+                </div>
+                <div className="carteoccase">
+                  {currentVehicules.map((vehicule) => (
+                    <CarteVehicule key={vehicule.id_vehicule} vehicule={vehicule} />
+                  ))}
+                  {flagCreation && (
+                    <Dialog open={true} sx={modalStyleParten}>
+                      <ModaleCarteVehicule
+                        vehicule={currentVehicules[0]}
+                        onClose={abordCreationVehicule}
+                      />
+                    </Dialog>
+                  )}
+                </div>
               </div>
             </div>
-          </div>)}
-
+          )}
         </div>
 
         <Footer />

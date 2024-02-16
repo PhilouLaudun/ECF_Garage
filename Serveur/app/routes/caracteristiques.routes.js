@@ -6,7 +6,8 @@ module.exports = app => {
 
   // charge les images pour un vehicules
   router.get("/byId", caracteristique.fetchCaractById);
-  router.post("/create", caracteristique.createCaract); // sans image
+  router.post("/create", caracteristique.createCaract);
+  router.put("/update/:id", caracteristique.updateCaract);
 
   app.use("/api/caracteristiques", router);
 };

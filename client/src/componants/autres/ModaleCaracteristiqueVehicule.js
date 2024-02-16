@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import {
@@ -9,7 +9,10 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { createCaract } from "../../features/slice/caracteristiqueSlice";
+import {
+  createCaract,
+  updateCaract,
+} from "../../features/slice/caracteristiqueSlice";
 
 const ModaleCaracteristiqueVehicule = ({
   caracteristique,
@@ -20,16 +23,24 @@ const ModaleCaracteristiqueVehicule = ({
   console.log("caracteristique", caracteristique);
   console.log("flagCreation", flagCreation, typeof flagCreation);
   console.log("idvehicule", idvehicule, typeof idvehicule);
-  const [provenance, setProvenance] = useState("");
-  const [miseencirculation, setMiseencirculation] = useState("");
-  const [couleur, setCouleur] = useState("");
-  const [nombreporte, setNombreporte] = useState("");
-  const [nombreplace, setNombreplace] = useState("");
-  const [longueur, setLongueur] = useState("");
-  const [largeur, setLargeur] = useState("");
-  const [volumecoffre, setVolumecoffre] = useState("");
-  const [puissancefiscal, setPuissancefiscal] = useState("");
-  const [puissancemoteur, setPuissancemoteur] = useState("");
+  const [provenance, setProvenance] = useState(caracteristique.Provenance);
+  const [miseencirculation, setMiseencirculation] = useState(
+    caracteristique.Miseencirculation
+  );
+  const [couleur, setCouleur] = useState(caracteristique.Couleur);
+  const [nombreporte, setNombreporte] = useState(caracteristique.Nombreporte);
+  const [nombreplace, setNombreplace] = useState(caracteristique.Nombreplace);
+  const [longueur, setLongueur] = useState(caracteristique.Longueur);
+  const [largeur, setLargeur] = useState(caracteristique.Largeur);
+  const [volumecoffre, setVolumecoffre] = useState(
+    caracteristique.Volumecoffre
+  );
+  const [puissancefiscal, setPuissancefiscal] = useState(
+    caracteristique.Puissancefiscale
+  );
+  const [puissancemoteur, setPuissancemoteur] = useState(
+    caracteristique.Puissancemoteur
+  );
 
   const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
   // definition du style des composants icones de sauvegarde et d'annulation
@@ -44,7 +55,6 @@ const ModaleCaracteristiqueVehicule = ({
   const dispatch = useDispatch();
 
   const saveCaracteristiqueVehicule = () => {
-    console.log("Saving info vehicle");
     // verif effectuées: champs vides pour tous
     // on mets le flag de vérification à true dés le départ et on le passe à false si il y a une anomalie, on récupére ensuite les id des div pour afficher les divers messages liés aux saisies obligatoires (non nulles)
     var flagOk = true;
@@ -116,15 +126,33 @@ const ModaleCaracteristiqueVehicule = ({
     /*for (const entry of formData.entries()) {
       console.log(entry[0] + ":", entry[1]);
     }*/
-    dispatch(createCaract({ data: formData }));
+    if (flagCreation) {
+      dispatch(createCaract({ data: formData }));
+    } else {
+      const id = caracteristique.id_caracteristique;
+      console.log("id:", id, typeof id);
+      dispatch(updateCaract({ id: id, data: formData }))
+        .then((response) => {
+          // Traitez la réponse ici si nécessaire
+          //const { data } = response.payload;
+          console.log("response modale", response.payload.flagmodifdonnee);
+        })
+        .catch((error) => {
+          // Gérez les erreurs ici si nécessaire
+        });
+    }
+    onClose()
   };
+
   // fonction de test des champs vides
   const verifChampVide = (champ, message) => {
     // récupére le champ à tester et si il est nul, affiche le message pendant 3s et renvoi false (pour les tests suivants) sinon renvoi true (champ non vide)
     // Si le champ est un tableau et a une longueur supérieure à zéro, ou si le champ est une chaîne non vide, retourne true
+    console.log("champ", champ, typeof champ);
     if (
-      (Array.isArray(champ) && champ.length > 0) ||
-      (typeof champ === "string" && champ.trim() !== "")
+      champ !== undefined &&
+      champ !== null &&
+      champ.toString().trim() !== ""
     ) {
       return true;
     } else {

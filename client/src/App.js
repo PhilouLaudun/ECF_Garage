@@ -1,4 +1,4 @@
-import React from "react"; // Importez React
+import React, { useEffect } from "react"; // Importez React
 import { Routes, Route } from "react-router-dom"; // import de la balise route pour naviguer dans les pages
 import Home from "./componants/pages/Home";
 import Entretien from "./componants/pages/Entretien";
@@ -8,7 +8,9 @@ import Autres from "./componants/pages/Autres";
 import Contact from "./componants/pages/Contact";
 import Vehicules from "./componants/pages/Vehicules";
 import FicheVehicule from "./componants/pages/FicheVehicule";
+
 function App() {
+
   return (
     <div>
       <Routes>
@@ -20,7 +22,7 @@ function App() {
         <Route path="/autres" exact element={<Autres />} />
         <Route path="/contact" exact element={<Contact />} />
         <Route path="/vehicule" exact element={<Vehicules />} />
-        <Route path="/fichevehicule/:id" exact element={<FicheVehicule />} />
+        <Route path="/fichevehicule" exact element={<FicheVehicule />} />
       </Routes>
     </div>
   );

@@ -19,21 +19,33 @@ db.sequelize = sequelize;
 db.utilisateurs = require("./utilisateurs.model.js")(sequelize, Sequelize);
 db.vehicules = require("./vehicules.model.js")(sequelize, Sequelize);
 db.images = require("./images.model.js")(sequelize, Sequelize);
-db.caracteristiques = require("./caracteristiques.model.js")(sequelize, Sequelize);
+db.caracteristiques = require("./caracteristiques.model.js")(
+  sequelize,
+  Sequelize
+);
+db.caracteristiques = require("./caracteristiques.model.js")(
+  sequelize,
+  Sequelize
+);
+db.equipements = require("./equipements.model.js")(
+  sequelize,
+  Sequelize
+);
+db.relvehiculeequipements = require("./relvehiculeequipements.model.js")(sequelize, Sequelize);
 /*db.prestation = require("./prestation.model.js")(sequelize, Sequelize);
 db.relstructprestas = require("./relstructpresta.model.js")(sequelize, Sequelize);*/
 
-/*
+
 // Déclarer les associations "belongsToMany" ici
-db.structures.belongsToMany(db.prestation, {
-  through: db.relstructprestas,
-  foreignKey: "fk_structure",
+db.vehicules.belongsToMany(db.equipements, {
+  through: db.relvehiculeequipements,
+  foreignKey: "fk_vehicule",
 });
 
-db.prestation.belongsToMany(db.structures, {
-  through: db.relstructprestas,
-  foreignKey: "fk_prestation",
+db.equipements.belongsToMany(db.vehicules, {
+  through: db.relvehiculeequipements,
+  foreignKey: "fk_equipement",
 });
-*/
+
 
 module.exports = db;

@@ -5,11 +5,13 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
+import { setVehiculeEnCours } from "../../features/slice/vehiculeSlice";
+import { useDispatch } from "react-redux";
 const backendUrl = process.env.REACT_APP_BACKEND_URL; // charge l'url du serveur pour charger directement les photos à partir du serveur, fichier .env à la racine de /client
 
 const CarteVehicule = ({ vehicule }) => {
   const navigate = useNavigate();
-  console.log("CarteVehicule : vehicule", vehicule);
+  const dispatch=useDispatch()
   const cardstyle = {
     borderRadius: 4,
     boxShadow: 8,
@@ -58,10 +60,10 @@ const CarteVehicule = ({ vehicule }) => {
   let imageUrlaffichage = ""; // Variable pour stocker l'URL de l'image formatée
   const formattedImageUrl = UrlPhoto.replace(/\\/g, "/"); // Remplace tous les antislashes par des slashes
   imageUrlaffichage = `${backendUrl}/${formattedImageUrl}`; // crée l'url à partir  de l'url stoké dans la BD et de l'adresse du serveur
-  console.log("CarteVehicule : backendUrl", backendUrl);
-  console.log("CarteVehicule : imageUrlaffichage", imageUrlaffichage);
+
   const onClickCarte = (e) => {
-    navigate(`/fichevehicule/${id_vehicule}`);
+    dispatch(setVehiculeEnCours(id_vehicule));
+    navigate(`/fichevehicule`);
   };
   return (
     <main className="maincartevehicule" onClick={onClickCarte}>

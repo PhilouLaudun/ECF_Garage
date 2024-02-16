@@ -17,6 +17,7 @@ import AuthorizedActionsComponent from "../autres/AuthorizedActionsComponent";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchImageById } from "../../features/slice/imageSlice";
 import { useEffect } from "react";
+import { fetchEquip } from "../../features/slice/equipementSlice";
 const backendUrl = process.env.REACT_APP_BACKEND_URL; // charge l'url du serveur pour charger directement les photos à partir du serveur, fichier .env à la racine de /client
 
 const settings = {
@@ -30,8 +31,8 @@ const settings = {
 };
 
 const FicheVehicule = () => {
-  let { id } = useParams();
-  console.log("FicheVehicule id",id)
+  //let { id } = useParams();
+  let id = useSelector(state => state.vehicule.vehiculeEnCours)
   id = parseInt(id); // tranforme l'id en nombre, car l'id envoyé par Navigate est modifié en string
   const dispatch = useDispatch();
   const images = useSelector((state) => state.image.images);
@@ -46,39 +47,48 @@ const FicheVehicule = () => {
   };
   //
 
+  dispatch(fetchEquip()); //recupére la liste des équipement, cela permet de charger le store pour les cartes
   //sauvegarde DOM
 
   /*  
-        <div className="equipement">
-          <EquipementVehicule id={id} />
-        </div>
-        <div className="option">
-          <OptionVehicule id={id} />
-        </div>*/
+        
+       */
   return (
     <main>
       <Header />
       <div className="corpFiche">
-        <div className="slider">
-          <Slider {...settings} infinite={false}>
-            {images.map((item) => (
-              <img
-                key={item.id_photo}
-                src={formatImageUrl(item.UrlPhoto)}
-                alt={`slide-${item.id_photo}`}
-                className="slick-image"
-              />
-            ))}
-          </Slider>
-        </div>
-        <div className="synthesevehicule"> 
-          <div className="container-synthese">
-            <SyntheseVehicule id={id} />
-            <div className="gestion-synthese">gestion</div>
+        <div className="hautc">
+          {" "}
+          <div className="slider">
+            <Slider {...settings} infinite={false}>
+              {images.map((item) => (
+                <img
+                  key={item.id_photo}
+                  src={formatImageUrl(item.UrlPhoto)}
+                  alt={`slide-${item.id_photo}`}
+                  className="slick-image"
+                />
+              ))}
+            </Slider>
+          </div>
+          <div className="synthesevehicule">
+            <div className="container-synthese">
+              <SyntheseVehicule id={id} />
+              <div className="gestion-synthese">gestion</div>
+            </div>
           </div>
         </div>
-        <div className="caracteristique">
-          <CaracteristiqueVehicule id={id} />
+        <div className="basc">
+          {" "}
+          <div className="caracteristique">
+            <CaracteristiqueVehicule id={id} />
+          </div>
+          <div className="equipement">
+            <EquipementVehicule id={id} />
+          </div>
+          <div className="option">
+            <OptionVehicule id={id} />
+          </div>
         </div>
       </div>
 
