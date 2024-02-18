@@ -6,32 +6,29 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 import { FormGroup, Checkbox, FormControlLabel, Dialog } from "@mui/material";
-import NewEquipement from "../composantFiche/NewEquipement";
-import { createRelVehEquip, deleteRelVelVehEquip, listRelVehEquip } from "../../features/slice/relVehiculeEquipementSlice";
-import { fetchEquip } from "../../features/slice/equipementSlice";
-/*import {
-  createRelStructPresta,
-  deleteRelStructPresta,
-  listStructPresta,
-} from "../../features/slice/relStructPrestaSlice";*/
+import NewOption from "./NewOption";
+import { createRelVehOpt, listRelVehOpt } from "../../features/slice/relVehiculeOptionSlice";
+import { fetchOpt } from "../../features/slice/optionSlice";
 
-export const EquipementModale = (props) => {
+
+export const OptionModale = (props) => {
   const dispatch = useDispatch(); // définit une fonction dispatch pour  envoyer les données dans le store
   const IdVehicule = props.idVehicule; //  récupére l'id du vehicule
   var onCancel = props.onCancel; //  props contenant la fonction d'effacement de la modale
   const [checkboxState, setCheckboxState] = useState({}); // État pour les cases à cocher
-  const [ajoutEquip, setAjoutEquip] = useState(false); //
-  const listeEquipement = useSelector((state) => state.equipement.equipement); // ensemble des prestations disponibles
-  const [equipementsLiees, setEquipementsLiees] = useState([]); // Remplacez par les prestations déjà liées
+  const [ajoutOption, setAjoutOption] = useState(false); //
+  const listeOption = useSelector((state) => state.option.option); // ensemble des prestations disponibles
+  const [optionsLiees, setOptionsLiees] = useState([]); // Remplacez par les prestations déjà liées
   const [relations, setRelations] = useState([]); // Ajoutez cet état pour stocker les relations
   const [showSaveButton, setShowSaveButton] = useState(false);
   const [showAddButton, setShowAddButton] = useState(true);
-  const [nouveauxEquipementsLiees, setNouveauxEquipementsLiees] = useState([]);
+  const [nouvellesOptionsLiees, setNouvellesOptionsLiees] = useState([]);
   const [nouveauxEquipements, setNouveauxEquipements] = useState([]); // Nouvelle variable d'état pour les nouvelles prestations liées
   const [equipementsDisponibles, setEquipementsDisponibles] =
-    useState(listeEquipement); // Remplacez par l'ensemble des prestations disponibles
+    useState(listeOption); // Remplacez par l'ensemble des prestations disponibles
 
-  const [hasLoadedDataRelStructPresta, setHasLoadedDataRelStructPresta] =useState(false); // n'est pas gérer de la même manière que dans le composant partenaire
+  const [hasLoadedDataRelStructPresta, setHasLoadedDataRelStructPresta] =
+    useState(false); // n'est pas gérer de la même manière que dans le composant partenaire
   //const [message, setMessage] = useState(""); //  message de retour de  la base de données en cas d'erreur ou si elle est vides
   // definition du style des composants icones de sauvegarde, annulation et fermeture
 
@@ -54,15 +51,17 @@ export const EquipementModale = (props) => {
     "& .MuiSvgIcon-root": { fontSize: 13 },
     "& .MuiTypography-body1": { fontSize: 13 },
   };
- 
+
   useEffect(() => {
     if (IdVehicule) {
-      dispatch(listRelVehEquip({ data: IdVehicule }))
-        .then((response) => {
+      dispatch(listRelVehOpt({ data: IdVehicule }))
+        
+          .then((response) => {
+       
           const res = response.payload.data;
           if (res && res.length > 0) {
-            const nouveauxEquipementLiees = res.map((item) => item.fk_equipement);
-            setEquipementsLiees(nouveauxEquipementLiees);
+            const nouveauxOptionLiees = res.map((item) => item.fk_option);
+            setOptionsLiees(nouveauxOptionLiees);
           }
         })
         .catch((error) => {
@@ -78,7 +77,7 @@ export const EquipementModale = (props) => {
         try {
           //alors on charge les données
           const response = await dispatch(
-            listRelVehEquip({ data: IdVehicule })
+            listRelVehOpt({ data: IdVehicule })
           ); // appel du slice de chargement des données auprés de la BD pour un vehicule donné
           if (response) {
             //si on obtient une réponse
@@ -89,14 +88,14 @@ export const EquipementModale = (props) => {
               setHasLoadedDataRelStructPresta(true); // Marquer que les données ont été chargées
             } else {
               const relations = response.payload.data.map((item) => ({
-                id_relVehiculeEquipement: item.id_relVehiculeEquipement,
+                id_relvehiculeoption: item.id_relvehiculeoption,
                 fk_vehicule: item.fk_vehicule,
-                fk_equipement: item.fk_equipement, // Ajout de l'identifiant de relation
+                fk_option: item.fk_option, // Ajout de l'identifiant de relation
               }));
               setRelations(relations); // Mettez à jour les relations
               setHasLoadedDataRelStructPresta(true); // Marquer que les données ont été chargées
               //setMessage(""); // effacer le message sinon réapparait
-              dispatch(fetchEquip()); // charge la liste des prestations pour  l'utiliser dans les cartes
+              dispatch(fetchOpt()); // charge la liste des prestations pour  l'utiliser dans les cartes
             }
           }
         } catch (error) {
@@ -112,12 +111,13 @@ export const EquipementModale = (props) => {
   }, [dispatch, hasLoadedDataRelStructPresta, IdVehicule]);
   //
   // filtre les prestations pour n'afficher que celles qui manquent
-  const equipementsDisponiblesFiltrees = listeEquipement.filter(
-    (equipement) => !equipementsLiees.includes(equipement.id_equipement)
-  );
+
+    const optionsDisponiblesFiltrees = listeOption
+      ? listeOption.filter((option) => !optionsLiees.includes(option.id_option))
+      : [];
   // fonction d'affichage de la partie de saisie des nouvelles prestations à reliée
   const ajoutRelVE = () => {
-    setAjoutEquip(true); // affiche la zone des prestations pouvant etre reliées
+    setAjoutOption(true); // affiche la zone des prestations pouvant etre reliées
     setShowSaveButton(true); // affiche l'icone de sauvegarde
     setShowAddButton(false); // desaffiche l'icone d'ajout
   };
@@ -126,34 +126,34 @@ export const EquipementModale = (props) => {
     console.log(
       "IdStructure, nouvellesPrestationsLiees",
       IdVehicule,
-      nouveauxEquipementsLiees
+      nouvellesOptionsLiees
     );
-    setAjoutEquip(false);
+    setAjoutOption(false);
     setShowSaveButton(false);
     setShowAddButton(true);
     try {
       await dispatch(
-        createRelVehEquip({
+        createRelVehOpt({
           vehiculeId: IdVehicule,
-          equipementsIds: nouveauxEquipementsLiees,
+          optionsIds: nouvellesOptionsLiees,
         })
       );
 
       // Après la sauvegarde, mettez à jour les états nécessaires
-      const response = await dispatch(listRelVehEquip({ data: IdVehicule }));
+      const response = await dispatch(listRelVehOpt({ data: IdVehicule }));
       console.log("response .payload.data", response.payload.data);
       const updatedRelations = response.payload.data.map((item) => ({
-        id_relVehiculeEquipement: item.id_relVehiculeEquipement,
+        id_relvehiculeoption: item.id_relvehiculeoption,
         fk_vehicule: item.fk_vehicule,
-        fk_equipement: item.fk_equipement,
+        fk_option: item.fk_option,
       }));
       setRelations(updatedRelations);
 
       // Mettez à jour le tableau prestationsLiees après la sauvegarde
       const updatedPrestationsLiees = response.payload.data.map(
-        (item) => item.fk_equipement
+        (item) => item.fk_option
       );
-      setEquipementsLiees(updatedPrestationsLiees);
+      setOptionsLiees(updatedPrestationsLiees);
     } catch (error) {
       console.error("Erreur lors de la sauvegarde :", error);
     }
@@ -167,67 +167,65 @@ export const EquipementModale = (props) => {
       [selectedId]: !isChecked,
     }));
     // Vérifiez si la prestation est déjà liée
-    const estDejaLiee = equipementsLiees.includes(selectedId);
+    const estDejaLiee = optionsLiees.includes(selectedId);
 
     if (!estDejaLiee) {
       // Mettez à jour les nouvelles prestations à lier
-      setNouveauxEquipementsLiees((prevEquipements) => {
+      setNouvellesOptionsLiees((prevOptions) => {
         setShowSaveButton(true); // Affiche le bouton après l'ajout d'une prestation
 
         if (isChecked) {
           // Retirer la prestation si elle était cochée
-          return prevEquipements.filter(
-            (equipement) => equipement !== selectedId
+          return prevOptions.filter(
+            (option) => option !== selectedId
           );
         } else {
           // Ajouter la prestation si elle était décochée
-          return [...prevEquipements, selectedId];
+          return [...prevOptions, selectedId];
         }
       });
     }
 
-    if (!equipementsLiees.includes(selectedId)) {
+    if (!optionsLiees.includes(selectedId)) {
       if (isChecked) {
         // Retirer la prestation si elle était cochée
-        setEquipementsLiees((prevEquipementsLiees) =>
-          prevEquipementsLiees.filter(
-            (equipement) =>
-              prevEquipementsLiees.filter(
-                (equipement) => equipement !== selectedId
+        setOptionsLiees((prevOptionsLiees) =>
+          prevOptionsLiees.filter(
+            (option) =>
+              prevOptionsLiees.filter(
+                (option) => option !== selectedId
               ) !== selectedId
           )
         );
       } else {
         // Ajouter la prestation si elle était décochée
-        setEquipementsLiees((prevEquipementsLiees) => [
-          ...prevEquipementsLiees,
+        setOptionsLiees((prevOptionsLiees) => [
+          ...prevOptionsLiees,
           selectedId,
         ]);
       }
     }
   };
-  const deleteRelation = (id_relVehiculeEquipement) => {
-    dispatch(deleteRelVelVehEquip(id_relVehiculeEquipement))
+  const deleteRelation = (id_relvehiculeoption) => {
+    dispatch(deleteRelation(id_relvehiculeoption))
       .then(async (response) => {
         // Mettez à jour le tableau prestationsLiees et relations après la suppression
-        const updatedData = await dispatch(
-          listRelVehEquip({ data: IdVehicule })
-        );
+        const updatedData = await dispatch(listRelVehOpt({ data: IdVehicule }));
 
         if (updatedData.payload.okay !== "false") {
           const updatedRelations = updatedData.payload.data.map((item) => ({
-            id_relVehiculeEquipement: item.id_relVehiculeEquipement,
+            id_relvehiculeoption: item.id_relvehiculeoption,
             fk_vehicule: item.fk_vehicule,
-            fk_equipement: item.fk_equipement,
+            fk_option: item.fk_option,
           }));
 
           setRelations(updatedRelations);
 
           // Mettez à jour le tableau prestationsLiees après la suppression
           const updatedPrestationsLiees = updatedData.payload.data.map(
-            (item) => item.fk_equipement
+            (item) => item.fk_option
           );
-          setEquipementsLiees(updatedPrestationsLiees);
+          setOptionsLiees(updatedPrestationsLiees);
         }
       })
 
@@ -248,7 +246,11 @@ export const EquipementModale = (props) => {
           onClick={onCancel}
         />
         {showAddButton && (
-          <AddCircleTwoToneIcon className="ajout" sx={iconeStyle} onClick={ajoutRelVE} />
+          <AddCircleTwoToneIcon
+            className="ajout"
+            sx={iconeStyle}
+            onClick={ajoutRelVE}
+          />
         )}
 
         {showSaveButton && (
@@ -262,21 +264,16 @@ export const EquipementModale = (props) => {
       <div className="corpsmodale">
         <div className="liste">
           <div className="titreliste">Equipement choisies</div>
-          {equipementsLiees.map((equipementId) => {
-            const equipement = listeEquipement.find(
-              (p) => p.id_equipement === equipementId
-            );
+          {optionsLiees.map((optiontId) => {
+            const option = listeOption.find((p) => p.id_option === optiontId);
             // Obtenir la relation correspondant à la prestation
-            const relation = relations.find(
-              (r) => r.fk_equipement === equipementId
-            );
+            const relation = relations.find((r) => r.fk_option === optiontId);
             return (
-              <div key={equipementId} className="itemlistepresta">
+              <div key={optiontId} className="itemlistepresta">
                 <div>
-                  {equipement && (
+                  {option && (
                     <div className="ajustitemliste">
-                      
-                      <span>{equipement.Equipement}</span>
+                      <span>{option.Optionvehicule}</span>
                       <DeleteTwoToneIcon
                         sx={iconeStyleDelete}
                         onDoubleClick={() =>
@@ -291,34 +288,34 @@ export const EquipementModale = (props) => {
           })}
         </div>
         <div className="listeAjout">
-          {ajoutEquip && (
-            <> <FormGroup>
-              {equipementsDisponiblesFiltrees.map((equipement) => (
-                <FormControlLabel
-                  key={equipement.id_equipement}
-                  sx={prestaStyle}
-                  control={
-                    <Checkbox
-                      checked={checkboxState[equipement.id_equipement] || false}
-                      value={equipement.id_equipement}
-                      onChange={handleCheckboxChange}
-                    />
-                  }
-                  label={equipement.Equipement}
-                />
-              ))}
-            </FormGroup>
-                      <div className="AjoutNouvelEquipement">
-            <NewEquipement />
-          </div>
+          {ajoutOption && (
+            <>
+              {" "}
+              <FormGroup>
+                {optionsDisponiblesFiltrees.map((option) => (
+                  <FormControlLabel
+                    key={option.id_option}
+                    sx={prestaStyle}
+                    control={
+                      <Checkbox
+                        checked={checkboxState[option.id_option] || false}
+                        value={option.id_option}
+                        onChange={handleCheckboxChange}
+                      />
+                    }
+                    label={option.Optionvehicule}
+                  />
+                ))}
+              </FormGroup>
+              <div className="AjoutNouvelEquipement">
+                <NewOption />
+              </div>
             </>
-             
           )}
-
         </div>
       </div>
     </main>
   );
 };
 
-export default EquipementModale;
+export default OptionModale;

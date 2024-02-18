@@ -7,6 +7,13 @@ export const fetchImageById = createAsyncThunk("image/byId", async (data) => {
   return res.data;
 });
 
+//fonction permettant d'ajouter un partenaire à la base de données
+export const ajoutImage = createAsyncThunk("image/ajout", async ({ data }) => {
+  console.log("ajoutImage Slice", data);
+  const res = await service.ajoutImage(data);
+  return res.data;
+});
+
 // variable définissant l'état initial du slice image
 const initialState = {
   images: [],

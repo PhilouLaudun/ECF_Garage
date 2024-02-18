@@ -14,7 +14,15 @@ export const createVehicule = createAsyncThunk(
       const res = await service.createVehicule(data);
       return res.data;
   });
-    
+ export const updateVehicule = createAsyncThunk(
+   "vehicule/update",
+   async ({ id, data }) => {
+     console.log(id, data);
+     const res = await service.upadteVehicule(id, data);
+     return res.data;
+   }
+ );
+   
 
 // variable définissant l'état initial du slice partenaire
 const initialState = {
@@ -44,7 +52,20 @@ const vehiculeSlice = createSlice({
         } else {
           state.vehicule = []; // ne charge rien dans le store
         }
-      });
+      })
+      .addCase(updateVehicule.fulfilled, (state, { payload }) => {
+        const { flagmodifdonnee, ...data } = payload; // on supprime le flag flagmodifdonnee du payload avant de stocker les données dans le store
+        // Stocker les données dans le store
+         var index = state.vehicule.findIndex(
+           (vehicule) => vehicule.id_vehicule === parseInt(payload.id_vehicule)
+        ); //  recherche de l'index de la carte modifiée
+        console.log("index slice vehicule",index)
+         state.vehicule[index] = {
+           ...state.vehicule[index],
+           ...payload,
+        };
+            //  console.log("store slice vehicule",JSON.stringify(state.vehicule)); à conserver pour exemple
+      });;
   },
 });
 export const { setVehiculeEnCours } = vehiculeSlice.actions;

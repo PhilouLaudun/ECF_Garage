@@ -1,7 +1,7 @@
 //const { logReceivedData } = require("../controllers/uploadImage.js");
 
 module.exports = app => {
-  const relVehiculeEquipement = require("../controllers/relvehiculeequipements.controller.js");
+  const relVehiculeEquipement = require("../controllers/relvehiculeequipements.controller");
   var router = require("express").Router();
 
   // charge les images pour un vehicule

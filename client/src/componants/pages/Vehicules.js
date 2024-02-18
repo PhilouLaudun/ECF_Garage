@@ -49,7 +49,6 @@ const Vehicules = () => {
   };
   useEffect(() => {
     async function fetchData() {
-console.log("Fetching data vehicule..");
       // fonction de chargement des vehicules au départ
       if (!hasLoadedData) {
         //  si le tableau partenaire est vide et si les données n'ont pas été chargé
@@ -208,6 +207,7 @@ console.log("Fetching data vehicule..");
                       <ModaleCarteVehicule
                         vehicule={currentVehicules[0]}
                         onClose={abordCreationVehicule}
+                        newvehicule={true}
                       />
                     </Dialog>
                   )}

@@ -31,9 +31,16 @@ db.equipements = require("./equipements.model.js")(
   sequelize,
   Sequelize
 );
+db.options = require("./options.model.js")(
+  sequelize,
+  Sequelize
+);
 db.relvehiculeequipements = require("./relvehiculeequipements.model.js")(sequelize, Sequelize);
-/*db.prestation = require("./prestation.model.js")(sequelize, Sequelize);
-db.relstructprestas = require("./relstructpresta.model.js")(sequelize, Sequelize);*/
+db.relvehiculeoptions = require("./relvehiculeoptions.model.js")(
+  sequelize,
+  Sequelize
+);
+
 
 
 // Déclarer les associations "belongsToMany" ici
@@ -46,6 +53,13 @@ db.equipements.belongsToMany(db.vehicules, {
   through: db.relvehiculeequipements,
   foreignKey: "fk_equipement",
 });
-
+db.vehicules.belongsToMany(db.options, {
+  through: db.relvehiculeoptions,
+  foreignKey: "fk_vehicule",
+});
+db.options.belongsToMany(db.vehicules, {
+  through: db.relvehiculeoptions,
+  foreignKey: "fk_option",
+});
 
 module.exports = db;

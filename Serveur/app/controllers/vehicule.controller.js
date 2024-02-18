@@ -93,3 +93,45 @@ exports.create = (req, res) => {
     });
 };
 
+exports.updateVehicule = (req, res) => {
+  const id = req.params.id;
+    console.log("controller vehicule:");
+  console.log("id :", id);
+  console.log("req.body :", req.body.id_vehicule, typeof req.body.id_vehicule);
+  // transforme les valeurs numeriques en nombre avant enregistrement dans la BD, sinon en retour l'index est un string au lieu d'un nombre
+const id_vehicule = parseInt( req.body.id_vehicule,10);// trnaformer l'id en nombre car si on renvoi rq.body, l'i reste en string
+  const annee = parseInt(req.body.Annee, 10);
+  const kilometrage = parseInt(req.body.Kilometrage, 10); // Utilisez parseInt pour convertir en nombre base 10 pour que le retour id_structure soit un nombre pour modifier le state, par contre directement avec append formData ca ne fonctionne pas, c'est a faire juste avant la mise à jour de la base
+  const prix = parseInt(req.body.Prix, 10);
+  req.body.id_vehicule = id_vehicule;
+  req.body.Annee = annee;
+  req.body.Kilometrage = kilometrage;
+  req.body.Prix = prix;
+  
+  var flagmodifdonnee = false;
+  // met à jour l'enregistrement concerné, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
+  Vehicule.update(req.body, {
+    where: {
+      id_vehicule: id,
+    },
+  })
+    .then((num) => {
+      if (num == 1) {
+        var flagmodifdonnee = true;
+        req.body.flagmodifdonnee = flagmodifdonnee;
+        res.send(req.body); // on utilise req.body en retour pour pouvoir modifié le store sinon cela ne fonctionne pas
+      } else {
+        res.send({
+          message: `Impossible de mettre à jour le vehicule avec l'id=${id}. Peut-etre  que le vehicule n'a pas été trouvé ou alors req.body est vide!`,
+        });
+      }
+    })
+
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          "Une erreur est intervenue lors de la mise à jour de la cracteristique avec l'id=" +
+          id,
+      });
+    });
+};

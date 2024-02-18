@@ -7,7 +7,7 @@ import "slick-carousel/slick/slick-theme.css";
 import {
   CustomPrevArrow,
   CustomNextArrow,
-} from "../composantFiche/CustomArrow";
+} from "./CustomArrow";
 import {
   Button,
   Dialog,
@@ -16,32 +16,22 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { createVehicule } from "../../features/slice/vehiculeSlice";
+import { updateVehicule } from "../../features/slice/vehiculeSlice";
 
-const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
+const SyntheseModale = ({ vehicule, onClose }) => {
+console.log("vehicule", vehicule)
 
-  console.log("ModaleCarteVehicule newvehicule", newvehicule, typeof newvehicule);
-  
-  const [images, setImages] = useState([]);
-  const [marque, setMarque] = useState("");
-  const [modele, setModele] = useState("");
-  const [modelePrecis, setModelePrecis] = useState("");
-  const [annee, setAnnee] = useState("");
-  const [kilometrage, setKilometrage] = useState("");
-  const [transmission, setTransmission] = useState("");
-  const [energie, setEnergie] = useState("");
-  const [prix, setPrix] = useState("");
+  const [marque, setMarque] = useState(vehicule.Marque);
+  const [modele, setModele] = useState(vehicule.Modele);
+  const [modelePrecis, setModelePrecis] = useState(vehicule.Modeleprecis);
+  const [annee, setAnnee] = useState(vehicule.Annee);
+  const [kilometrage, setKilometrage] = useState(vehicule.Kilometrage);
+  const [transmission, setTransmission] = useState(vehicule.Transmission);
+  const [energie, setEnergie] = useState(vehicule.Energie);
+  const [prix, setPrix] = useState(vehicule.Prix);
   const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
   // definition du style des composants icones de sauvegarde et d'annulation
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />,
-  };
+
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
@@ -51,49 +41,13 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     },
   };
   const dispatch = useDispatch();
-  const handleFileChange = async (event) => {
-    const selectedFiles = event.target.files;
-    const newImages = [];
 
-    for (let i = 0; i < selectedFiles.length; i++) {
-      const file = selectedFiles[i];
-      try {
-        const { dataURL, name } = await readFileAsBase64(file);
-        const fileExtension = name.split(".").pop().toLowerCase();
-        const acceptedExtensions = ["jpeg", "jpg", "png", "tiff"];
-
-        if (acceptedExtensions.includes(fileExtension)) {
-          newImages.push({ id: Date.now() + i, url: dataURL });
-        } else {
-          console.log("Ce fichier n'est pas une image valide:", name);
-        }
-      } catch (error) {
-        console.error("Erreur lors de la lecture du fichier:", error);
-      }
-    }
-    setImages((prevImages) => [...prevImages, ...newImages]);
-  };
-  const readFileAsBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        resolve({
-          dataURL: reader.result,
-          name: file.name,
-        });
-      };
-      reader.onerror = (error) => {
-        reject(error);
-      };
-      reader.readAsDataURL(file);
-    });
-  };
   const saveInfoVehicule = () => {
+    console.log("Saving info vehicule");
     // verif effectuées: champs vides pour tous
     // on mets le flag de vérification à true dés le départ et on le passe à false si il y a une anomalie, on récupére ensuite les id des div pour afficher les divers messages liés aux saisies obligatoires (non nulles)
     var flagOk = true;
     // adresse des div pour les messages concernant les champs non vide et url et email valide
-    var messagephoto = document.getElementById("messagephoto");
     var messagemarque = document.getElementById("messagemarque");
     var messagemodele = document.getElementById("messagemodele");
     var messagemodeleprecis = document.getElementById("messagemodeleprecis");
@@ -119,8 +73,7 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     flagOk = flagOk && res; // AND entre le flgOk et le résultat du test, si faux, passe à faux
     res = verifChampVide(prix, messageprix); // champ nom non vide
     flagOk = flagOk && res; // AND entre le flgOk et le résultat du test, si faux, passe à faux
-    res = verifChampVide(images, messagephoto); // champ nom non vide
-    flagOk = flagOk && res; // AND entre le flgOk et le résultat du test, si faux, passe à faux
+
 
     if (flagOk) {
       setOpen(true); // léve le drapeau d'affichage de la boite de dialogue pour valider les données
@@ -133,7 +86,8 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     setOpen(false);
     // sauve les données modifiées ou pas dans un formData (sinon multer ne fonctionne pas)
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
-    //formData.append("id_vehicule", carte.id_partenaire); // a rajouter pour update par la suite
+    formData.append("id_vehicule", vehicule.id_vehicule);
+    formData.append("UrlPhoto", vehicule.UrlPhoto);// a rajouter pour update par la suite
     formData.append("Marque", marque);
     formData.append("Modele", modele);
     formData.append("Modeleprecis", modelePrecis);
@@ -142,43 +96,27 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     formData.append("Energie", energie);
     formData.append("Transmission", transmission);
     formData.append("Prix", prix);
-    for (let i = 0; i < images.length; i++) {
-      const image = images[i];
-      const imageBlob = dataURItoBlob(image.url);
-      const fileExtension = "jpeg"; // Vous pouvez remplacer cela par une logique pour extraire l'extension de l'image si nécessaire
-      const imageFile = new File([imageBlob], `image${i}.${fileExtension}`, {
-        type: `image/${fileExtension}`,
-      });
-      formData.append("images", imageFile);
-    }
+
     // Parcours des entrées de FormData et affichage dans la console
     for (const entry of formData.entries()) {
       console.log(entry[0] + ":", entry[1]);
     }
-    dispatch(createVehicule({ data: formData }));
+        const id = vehicule.id_vehicule;
+        console.log("id:", id, typeof id);
+    dispatch(updateVehicule({ id: id, data: formData }));
+    onClose()
   };
-  //fonction permattant de transformer les donnees du fichier en fichier blob pour multer
-  function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(",")[1]);
-    const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
 
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-    return new Blob([ab], {
-      type: mimeString,
-    });
-  }
+
   // fonction de test des champs vides
   const verifChampVide = (champ, message) => {
     console.log("champ", champ);
     // récupére le champ à tester et si il est nul, affiche le message pendant 3s et renvoi false (pour les tests suivants) sinon renvoi true (champ non vide)
     // Si le champ est un tableau et a une longueur supérieure à zéro, ou si le champ est une chaîne non vide, retourne true
     if (
-      (Array.isArray(champ) && champ.length > 0) ||
-      (typeof champ === "string" && champ.trim() !== "")
+      champ !== undefined &&
+      champ !== null &&
+      champ.toString().trim() !== ""
     ) {
       return true;
     } else {
@@ -192,37 +130,7 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
   //
   return (
     <main className="mainmodalecartevehicule">
-      {/* zone du carroussel */}
-      <div>
-        <label className="file-input-container">
-          Choississez un fichier
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            className="file-input"
-          />
-          <div id="messagephoto" className="messagemodalevehicule"></div>
-        </label>
-        {images.length > 0 && (
-          <div className="slider-container">
-            {" "}
-            <div className="slider">
-              <Slider {...settings} infinite={false}>
-                {images.map((item) => (
-                  <img
-                    key={item.id}
-                    src={item.url}
-                    alt={`slide-${item.id}`}
-                    className="slick-image"
-                  />
-                ))}
-              </Slider>
-            </div>
-          </div>
-        )}
-        <div id="messagephoto" className="messagemodalevehicule"></div>
-      </div>
+
       {/* zone de la Marque du véhicule */}
       <div className="divdonnee">
         <div className="intitule">Marque</div>
@@ -356,4 +264,4 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
   );
 };
 
-export default ModaleCarteVehicule;
+export default SyntheseModale;

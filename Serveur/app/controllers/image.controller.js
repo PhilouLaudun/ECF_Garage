@@ -69,5 +69,21 @@ exports.findImageById = (req, res) => {
     });
   */
 };
+exports.ajout = (req, res) => {
+  console.log("Données du formulaire :", req.body);
+  id_vehicule = parseInt(req.body.id_vehicule, 10);
+  console.log("controller id_vehicule :", id_vehicule);
 
+    // Affichage des fichiers téléversés avec Multer
+  console.log("Fichiers téléversés :", req.files);
+       const images = req.files.map((file) => {
+        return {
+          fk_vehicule: id_vehicule,
+          UrlPhoto: `uploads/${file.filename}`,
+        };
+      });
 
+      // Enregistrez les images dans la base de données
+      return Image.bulkCreate(images);
+ }
+ 

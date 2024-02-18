@@ -11,7 +11,7 @@ module.exports = app => {
   router.post("/create", uploadImage, vehicule.create);
   // charge tous les vehicules
   router.get("/", vehicule.findAll);
-
+ router.put("/update/:id", vehicule.updateVehicule);
   
   app.use("/api/vehicules", router);
 };

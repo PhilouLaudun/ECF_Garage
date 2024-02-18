@@ -20,9 +20,7 @@ const ModaleCaracteristiqueVehicule = ({
   onClose,
   idvehicule,
 }) => {
-  console.log("caracteristique", caracteristique);
-  console.log("flagCreation", flagCreation, typeof flagCreation);
-  console.log("idvehicule", idvehicule, typeof idvehicule);
+
   const [provenance, setProvenance] = useState(caracteristique.Provenance);
   const [miseencirculation, setMiseencirculation] = useState(
     caracteristique.Miseencirculation

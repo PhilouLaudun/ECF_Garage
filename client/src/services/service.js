@@ -44,26 +44,33 @@ const createVehicule = (data) => {
   };
   return http.post("/vehicules/create", data, config);
 };
-// met a jour un partenaire avec image pour le logo 
-const updatePartenaireWithImg = (id, data) => {
-  const config = {
-    // en-tête remplacant l'en-tête par défaut quand un formData contient un champ avec un fichier binaire : IMPORTANT
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  };
-  return http.put(`/partenaires/uWithImg/${id}`,data,config);
+const upadteVehicule = (id, data) => {
+  for (const entry of data.entries()) {
+    console.log(entry[0] + ":", entry[1]);
+  }
+  console.log("data service", data);
+  return http.put(`/vehicules/update/${id}`, data);
 };
-// met a jour un partenaire sans image pour le logo 
-const updatePartenaireNoImg = (id, data) => {
-  return http.put(`/partenaires/uNoImg/${id}`, data);
-};
+
 // *********************** table images *********************************
 // charge la liste de toutes les images associées à un vehicule
 const fetchImageById = (data) => {
   const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
   const url = `/images/byId?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
+};
+const ajoutImage = (data) => {
+  // Parcours des entrées de FormData et affichage dans la console
+  /*for (const entry of data.entries()) {
+    console.log(entry[0] + ":", entry[1]);
+  }*/
+  const config = {
+    // en-tête remplacant l'en-tête par défaut quand un formData contient un champ avec un fichier binaire : IMPORTANT
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };
+  return http.post("/images/ajout", data, config);
 };
 // *********************** table caracteristiques *********************************
 // charge la liste des caracteristiques associées à un vehicule
@@ -74,18 +81,16 @@ const fetchCaractById = (data) => {
 };
 // crée une nouvelle caractéristique 
 const createCaract = (data) => {
-  for (const entry of data.entries()) {
+  /*for (const entry of data.entries()) {
     console.log(entry[0] + ":", entry[1]);
-  }
-  console.log("data service", data);
+  }*/
   return http.post("/caracteristiques/create", data);
 };
 // met à jour une nouvelle caractéristique 
 const upadteCaract = (id,data) => {
-  for (const entry of data.entries()) {
+  /*for (const entry of data.entries()) {
     console.log(entry[0] + ":", entry[1]);
-  }
-  console.log("data service", data);
+  }*/
   return http.put(`/caracteristiques/update/${id}`, data);
 };
 
@@ -115,31 +120,47 @@ const fetchEquip = () => {
 const createEquip = (data) => {
   return http.post("/equipements/create", data);
 };
+// *********************** table option *********************************
+// charge la liste de toutes les equipements
+const fetchOpt = () => {
+  return http.get("/options");
+};
+// crée une nouvelle option
+const createOpt = (data) => {
+  return http.post("/options/create", data);
+};
 // *********************** table relvehiculeequipements *********************************
 // charge la liste de toutes les structures associées à un partenaire
 const listRelVehEquip = (data) => {
-  console.log("service relation");
   const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
   const url = `/relVehiculeEquipement/list?${queryParams}`; // les données contrairement à POST sont passées par l'url
-  console.log("url",url);
   return http.get(url);
 };
 
-// crée une nouvelle relation
+// crée un nouvel equipement
 const createRelVehEquip = (data) => {
-  console.log("service : data ", data);
   return http.post("/relVehiculeEquipement/create", data);
 };
 // supprime une relation
 const delRelVehEquip = (id_relVehEquip) => {
-  console.log(
-    "service : id_relStructPresta ",
-    id_relVehEquip,
-    typeof id_relVehEquip
-  );
   return http.delete(`/relVehiculeEquipement/${id_relVehEquip}`);
 };
+// *********************** table relvehiculeoptions *********************************
+// charge la liste de toutes les options associées à un vehicule
+const listRelVehOpt = (data) => {
+  const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
+  const url = `/relVehiculeOption/list?${queryParams}`; // les données contrairement à POST sont passées par l'url
+  return http.get(url);
+};
 
+// crée une nouvelle option
+const createRelVehOpt = (data) => {
+  return http.post("/relVehiculeOption/create", data);
+};
+// supprime une relation
+const delRelVehOpt = (id_relVehOpt) => {
+  return http.delete(`/relVehiculeOption/${id_relVehOpt}`);
+};
 // *********************** récupération données binaire image sur serveur répertoire upload *********************************
 // fonction utilisée pour récuperer l'image du logo d'un prestataire dans le répertoire upload
 const getImageDataFromURL = (imageUrl) => {
@@ -162,6 +183,7 @@ const Service = {
   validLogin,
   getAllVehicule,
   createVehicule,
+  upadteVehicule,
   listUtilisateur,
   fetchImageById,
   fetchCaractById,
@@ -172,10 +194,14 @@ const Service = {
   createRelVehEquip,
   listRelVehEquip,
   delRelVehEquip,
+listRelVehOpt,
+createRelVehOpt,
+  delRelVehOpt,
+  fetchOpt,
+  createOpt,
+ajoutImage,
   saveNewAgent,
   updateAgent,
-  updatePartenaireWithImg,
-  updatePartenaireNoImg,
 
   getImageDataFromURL,
 };

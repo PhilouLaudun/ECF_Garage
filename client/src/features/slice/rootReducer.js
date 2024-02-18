@@ -5,6 +5,7 @@ import vehiculeRecucer from "./vehiculeSlice"
 import imageReducer from "./imageSlice"
 import caracteristiqueReducer from "./caracteristiqueSlice"
 import equipementReducer from "./equipementSlice"
+import optionReducer from "./optionSlice";
 
 // création de la fonction de combinaison des slices
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   image: imageReducer,
   caracteristique: caracteristiqueReducer,
   equipement: equipementReducer,
+  option: optionReducer,
 });
 
 export default rootReducer;

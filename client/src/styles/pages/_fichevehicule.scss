@@ -1,183 +1,214 @@
 .corpFiche {
-  height: 100%;
+  height: 800px;
   display: grid;
-grid-template-columns: 100%;
-grid-template-rows: 50% 50%;
-grid-template-areas:
-    "hautcorps" "bascorps";
+  grid-template-columns: 100%;
+  grid-template-rows: 50% 50%;
+  grid-template-areas: "hautcorps" "bascorps";
 
-.hautc {
-  grid-area:hautcorps ;
-  display:grid;
-grid-template-columns: 66% 33%;
- grid-template-rows: 100%; 
- grid-template-areas:
-    "slide synthese";
-    .slider {
-    grid-area: slide;
-    display: flex;
-    justify-content: center; /* Centre horizontalement */
-    align-items: center; /* Centre verticalement */
-
-    .slick-slider {
-      width: 400px; /* Taille fixe en pixels */
-      margin: 10px;
-    }
-
-    .slick-image {
-      width: 100%; /* Utilise 100% de la largeur de l'élément parent */
-      height: auto; /* Maintient le rapport hauteur-largeur de l'image */
-      border-radius: 10px; /* Ajustez la valeur du rayon selon vos besoins */
-    }
-  }
-
-  .synthesevehicule {
-    grid-area: synthese;
-    width: 80%;
-    margin: 20px;
-
-   
-    .container-synthese {
-      display: grid;
-      width: 100%;
-       grid-template-columns: 90% 10%;
+  .hautc {
+    grid-area: hautcorps;
+    display: grid;
+    grid-template-columns: 60% 40%;
     grid-template-rows: 100%;
-    grid-template-areas: " carte gestion";
+    grid-template-areas: "slide synthese";
+    .slider {
+      grid-area: slide;
+      display: flex;
+      //justify-content: space-around; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
 
-      .cartesynthese {
-        grid-area: carte;
+      .slick-slider {
+        width: 400px; /* Taille fixe en pixels */
+        margin: 10px;
+      }
+
+      .slick-image {
+        width: 100%; /* Utilise 100% de la largeur de l'élément parent */
+        height: auto; /* Maintient le rapport hauteur-largeur de l'image */
+        border-radius: 10px; /* Ajustez la valeur du rayon selon vos besoins */
+      }
+      .zonemodif {
+        width: 20%;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
-        border-radius: 10px; /* Coins arrondis pour un effet plus doux */
-        position: relative;
-        .titresynthese {
-          text-align: center;
-          font-size: 25px;
-          margin: 20px;
+        align-items: center; /* Centre verticalement */
+        .file-input-container {
+          position: relative;
+          overflow: hidden;
+          display: inline-block;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+          padding: 6px 12px;
+          cursor: pointer;
+          margin-right: 5%;
+          margin-left: 30px;
         }
-        .precisionmodele {
-          text-align: center;
-          font-size: 20px;
-          font-style: italic;
-          margin-bottom: 10px;
-        }
-        .infosynthese {
-          text-align: center;
-          font-size: 18px;
-          margin-bottom: 10px;
-        }
-        .prixsynthese {
-          text-align: center;
-          font-size: 20px;
-          margin-bottom: 10px;
-          font-weight: bold;
-        }
-        .containerboutonmail {
-          margin-top: 10%;
-          margin-left: 20%;
-          margin-right: 20%;
+      }
+
+      .file-input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+      }
+
+      .file-input-container span {
+        font-size: 12px;
+      }
+
+      /* Pour masquer le texte "Aucun fichier choisi" */
+      .file-input::-webkit-file-upload-button {
+        visibility: hidden;
+      }
+    }
+
+    .synthesevehicule {
+   grid-area: synthese;
+  display: flex;
+  align-items: center; /* Centrer verticalement */
+  justify-content: center; /* Centrer horizontalement */
+  width: 100%;
+  height: 100%; 
+  
+        .cartesynthese {
           display: flex;
+          flex-direction: column;
           align-items: center;
-          justify-content: center;
-          .boutonsynthese {
-            margin : 10px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
+          border-radius: 10px; /* Coins arrondis pour un effet plus doux */
+          position: relative;
+          .titresynthese {
+            display: flex;
+            text-align: center;
+            align-items: center; /* aligne les éléments sur l'axe vertical */
+            justify-content: space-around;
+            text-align: center;
+            font-size: 25px;
+            margin: 10px;
+          }
+          .precisionmodele {
+            text-align: center;
+            font-size: 20px;
+            font-style: italic;
+            margin-bottom: 10px;
+          }
+          .infosynthese {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 10px;
+          }
+          .prixsynthese {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+          }
+          .containerboutonmail {
+            margin-top: 10%;
+            margin-left: 20%;
+            margin-right: 20%;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 30px;
-            width: 100px;
-            background-color: $green; /* Couleur verte */
-            color: $white; /* Texte blanc */
-            border: none;
-            padding: 15px 20px; /* Espacement interne */
-            border-radius: 20px; /* Coins arrondis */
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease; /* Transition de couleur au survol */
-          }
+            .boutonsynthese {
+              margin: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 30px;
+              width: 100px;
+              background-color: $green; /* Couleur verte */
+              color: $white; /* Texte blanc */
+              border: none;
+              padding: 15px 20px; /* Espacement interne */
+              border-radius: 20px; /* Coins arrondis */
+              font-size: 16px;
+              cursor: pointer;
+              transition: background-color 0.3s ease; /* Transition de couleur au survol */
+            }
 
-          .boutonsynthese:hover {
-            color: $black; /* Nouvelle couleur verte au survol */
+            .boutonsynthese:hover {
+              color: $black; /* Nouvelle couleur verte au survol */
+            }
           }
+        }
+      
+    }
+  }
+  .basc {
+    grid-area: bascorps;
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 100%;
+    grid-template-areas: "general equipe option";
+    margin-bottom: 10px;
+    .caracteristique {
+      grid-area: general;
+      margin: 30px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
+      border-radius: 10px; /* Coins arrondis pour un effet plus doux */
+      .titrecaracter {
+        display: flex;
+        align-items: center; /* aligne les éléments sur l'axe vertical */
+        justify-content: space-around;
+        font-size: 22px;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .donnéecaracter {
+        display: flex;
+        flex-direction: column;
+        .separationcaract {
+          border-bottom: 1px solid $black;
+          margin-bottom: 10px;
         }
       }
     }
-  }
-}
-.basc {
-  grid-area:bascorps ;
-  display:grid;
-grid-template-columns: 33% 33% 33%;
- grid-template-rows: 100%; 
- grid-template-areas:
-    "general equipe option";
-  
-  .caracteristique {
-    grid-area: general;
-    margin: 30px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
-    border-radius: 10px; /* Coins arrondis pour un effet plus doux */
-    .titrecaracter {
-      display : flex;
-      align-items: center; /* aligne les éléments sur l'axe vertical */
-      justify-content: space-around;
-      font-size: 22px;
-      margin-bottom: 15px;
-      font-weight: bold;
+    .equipement {
+      grid-area: equipe;
+      margin: 30px;
+      margin: 30px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
+      border-radius: 10px; /* Coins arrondis pour un effet plus doux */
+      .titreequipement {
+        display: flex;
+        text-align: center;
+        align-items: center; /* aligne les éléments sur l'axe vertical */
+        justify-content: space-around;
+        font-size: 22px;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .donnéeequipement {
+        display: flex;
+        flex-direction: column;
+      }
     }
-    .donnéecaracter {
-      display: flex;
-      flex-direction: column;
-      .separationcaract {
-        border-bottom: 1px solid $black;
-        margin-bottom: 10px;
+    .option {
+      grid-area: option;
+      margin: 30px;
+      margin: 30px;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
+      border-radius: 10px; /* Coins arrondis pour un effet plus doux */
+      .titreoption {
+        display: flex;
+        text-align: center;
+        align-items: center; /* aligne les éléments sur l'axe vertical */
+        justify-content: space-around;
+        font-size: 22px;
+        margin-bottom: 15px;
+        font-weight: bold;
+      }
+      .donnéeoption {
+        display: flex;
+        flex-direction: column;
       }
     }
   }
-  .equipement {
-    grid-area: equipe;
-    margin: 30px;
-    margin: 30px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
-    border-radius: 10px; /* Coins arrondis pour un effet plus doux */
-    .titreequipement {
-            display : flex;
-      text-align: center;
-      align-items: center; /* aligne les éléments sur l'axe vertical */
-      justify-content: space-around;
-      font-size: 22px;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-    .donnéeequipement {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-  .option {
-    grid-area: option;
-    margin: 30px;
-    margin: 30px;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Ombre autour de la div */
-    border-radius: 10px; /* Coins arrondis pour un effet plus doux */
-    .titreoption {
-          display : flex;
-      text-align: center;
-      align-items: center; /* aligne les éléments sur l'axe vertical */
-        justify-content: space-around;
-      font-size: 22px;
-      margin-bottom: 15px;
-      font-weight: bold;
-    }
-    .donnéeoption {
-      display: flex;
-      flex-direction: column;
-    }
-  }}
-
 }

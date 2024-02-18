@@ -21,6 +21,8 @@ require("./app/routes/images.routes")(app);
 require("./app/routes/caracteristiques.routes")(app);
 require("./app/routes/equipements.routes")(app);
 require("./app/routes/relVehiculeEquipement.routes")(app);
+require("./app/routes/relVehiculeOption.routes")(app);
+require("./app/routes/options.routes")(app);
 // Démarrage du serveur
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

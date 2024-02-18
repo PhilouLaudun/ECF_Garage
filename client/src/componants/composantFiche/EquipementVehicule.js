@@ -14,7 +14,7 @@ const EquipementVehicule = () => {
   const [equipementsLiees, setEquipementsLiees] = useState([]);
   const dispatch = useDispatch();
   // charge les données depuis le store à propos des vehicules et le tableau sera mis à jour à chaque changement du store.
-  const listeEquipements = useSelector((state) => state.equipement.equipement); // variable contenant les cartes des vehicules
+  //const listeEquipements = useSelector((state) => state.equipement.equipement); // variable contenant les cartes des vehicules
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
@@ -23,7 +23,7 @@ const EquipementVehicule = () => {
       borderRadius: "50%",
     },
   };
-  const modalStyleParten = {
+  const modalStyle = {
     zIndex: 20,
     position: "absolute",
     margin: "auto",
@@ -119,9 +119,6 @@ const EquipementVehicule = () => {
         <div>Feux automatiques</div>
         <div>accoudoir central</div>
       </div>*/
-  console.log("hasloaddata", hasLoadedData);
-  console.log("equipementsLiees", equipementsLiees);
-  console.log("listeEquipement",listeEquipement)
   return (
     <div>
       <div className="titreequipement">
@@ -154,10 +151,10 @@ const EquipementVehicule = () => {
         )}
       </div>
       {flagEdit && (
-        <Dialog open={true} sx={modalStyleParten}>
+        <Dialog open={true} sx={modalStyle}>
           <EquipementModale
             onCancel={closeEquipVehicule}
-            equipements={listeEquipements}
+            equipements={listeEquipement}
             idVehicule={id_vehicule}
           />
         </Dialog>
