@@ -10,6 +10,7 @@ import ModaleCaracteristiqueVehicule from '../autres/ModaleCaracteristiqueVehicu
 // css dans fichier _fichevehicule.scss
 
 const CaracteristiqueVehicule = () => {
+    const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   let id = useSelector((state) => state.vehicule.vehiculeEnCours);
   const dispatch = useDispatch();
   const [hasLoadedData, setHasLoadedData] = useState(false);
@@ -96,7 +97,8 @@ const CaracteristiqueVehicule = () => {
     <div>
       <div className="titrecaracter">
         Caractéristiques
-        <EditTwoToneIcon sx={iconeStyle} onClick={editCaractVehicule} />
+        {authorized && ( <EditTwoToneIcon sx={iconeStyle} onClick={editCaractVehicule} />)}
+       
       </div>
       <div className="donnéecaracter">
         <div>Provenance : {Provenance}</div>

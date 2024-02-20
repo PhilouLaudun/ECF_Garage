@@ -1,8 +1,8 @@
 module.exports = (sequelize, Sequelize) => {
-  const Utilisateur = sequelize.define(
-    "utilisateurs",
+  const Blog = sequelize.define(
+    "blogs",
     {
-      id_utilisateur: {
+      id_message: {
         type: Sequelize.INTEGER(11),
         autoIncrement: true,
         allowNull: false,
@@ -16,16 +16,20 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(50),
         allowNull: false,
       },
-      Qualite: {
-        type: Sequelize.STRING(50),
+      Message: {
+        type: Sequelize.STRING(500),
         allowNull: false,
       },
-      Mdp: {
-        type: Sequelize.STRING(50),
+      DateM: {
+        type: Sequelize.DATE(),
         allowNull: false,
       },
-      Login: {
-        type: Sequelize.STRING(60),
+      Heure: {
+        type: Sequelize.TIME(),
+        allowNull: false,
+      },
+      Approuve: {
+        type: Sequelize.BOOLEAN(),
         allowNull: false,
       },
     },
@@ -33,5 +37,5 @@ module.exports = (sequelize, Sequelize) => {
       timestamps: false,
     }
   );
-  return Utilisateur;
+  return Blog;
 };

@@ -40,7 +40,9 @@ db.relvehiculeoptions = require("./relvehiculeoptions.model.js")(
   sequelize,
   Sequelize
 );
+db.blogs = require("./blogs.model.js")(sequelize, Sequelize);
 
+db.horaires = require("./horaires.model.js")(sequelize, Sequelize);
 
 
 // Déclarer les associations "belongsToMany" ici

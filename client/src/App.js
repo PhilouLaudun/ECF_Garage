@@ -10,7 +10,6 @@ import Vehicules from "./componants/pages/Vehicules";
 import FicheVehicule from "./componants/pages/FicheVehicule";
 
 function App() {
-
   return (
     <div>
       <Routes>

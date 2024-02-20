@@ -8,6 +8,7 @@ import CarteService from "../autres/CarteService";
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
+import BlogCard from "../blog/BlogCard";
 
 const Home = () => {
   const navigate = useNavigate()
@@ -49,7 +50,9 @@ const Home = () => {
                 <CarteService service={3} />
                 <CarteService service={4} />
               </div>
-              <div className="col3">avis client à construire</div>
+              <div className="col3">
+              <BlogCard/>
+              </div>
             </div>
           </div>
         </div>

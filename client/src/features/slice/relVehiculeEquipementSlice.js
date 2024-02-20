@@ -21,7 +21,7 @@ export const listRelVehEquip = createAsyncThunk(
 );
 //fonction permettant de supprimer une relation 
 export const deleteRelVelVehEquip = createAsyncThunk(
-  "relVehiculeEquipement/liste",
+  "relVehiculeEquipement/delete",
   async (id_relVehEquip) => {
     console.log("Slice: id_relVehEquip", id_relVehEquip);
     const res = await service.delRelVehEquip(id_relVehEquip);

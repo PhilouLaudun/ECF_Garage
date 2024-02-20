@@ -7,6 +7,7 @@ import { fetchEquip } from "../../features/slice/equipementSlice";
 import { listRelVehEquip } from "../../features/slice/relVehiculeEquipementSlice";
 
 const EquipementVehicule = () => {
+  const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   let id_vehicule = useSelector((state) => state.vehicule.vehiculeEnCours);
   const [flagEdit, setFlagEdit] = useState(false);
   const [hasLoadedData, setHasLoadedData] = useState(false);
@@ -74,16 +75,15 @@ const EquipementVehicule = () => {
     fetchData();
   }, [dispatch, hasLoadedData]);
 
-
   const editEquipVehicule = () => {
     setFlagEdit(true);
   };
   const closeEquipVehicule = () => {
-  dispatch(fetchEquip());
-  setFlagEdit(false);
+    dispatch(fetchEquip());
+    setFlagEdit(false);
 
-  // Déclencher le rechargement des données après la fermeture de la modale
-  updateEquipementsLiees();
+    // Déclencher le rechargement des données après la fermeture de la modale
+    updateEquipementsLiees();
   };
   const updateEquipementsLiees = async () => {
     try {
@@ -102,28 +102,14 @@ const EquipementVehicule = () => {
       // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur
     }
   };
-  /*<div>Bluetooth</div>
-        <div>Régulateur de vitesse</div>
-        <div>Direction assistée</div>
-        <div>Fermeture électrique automatique</div>
-        <div>Vitres électriques</div>
-        <div>Volant multifonctions</div>
-        <div>Régulateur limiteur de vitesse</div>
-        <div>GPS</div>
-        <div>Écran tactile</div>
-        <div>ABSESP</div>
-        <div>Aide au démarrage en côte</div>
-        <div>AFU</div>
-        <div>Projecteurs antibrouillard</div>
-        <div>Détecteur de pluie</div>
-        <div>Feux automatiques</div>
-        <div>accoudoir central</div>
-      </div>*/
+
   return (
     <div>
       <div className="titreequipement">
         Equipements
-        <EditTwoToneIcon sx={iconeStyle} onClick={editEquipVehicule} />
+        {authorized && (
+          <EditTwoToneIcon sx={iconeStyle} onClick={editEquipVehicule} />
+        )}
       </div>
       <div className="donnéeequipement">
         {hasLoadedData && (

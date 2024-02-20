@@ -15,7 +15,7 @@
       width: 20%;
       min-height: 80px;
       display: flex;
-           flex-direction: column; /* Définit la direction en colonne */
+      flex-direction: column; /* Définit la direction en colonne */
       justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
       justify-content: space-between;
@@ -23,23 +23,20 @@
         max-width: 120px;
       }
       .containericonefooter {
-
         display: flex;
-            justify-content: center; /* Centre horizontalement */
-      align-items: center; /* Centre verticalement */
-      justify-content: space-between;
+        justify-content: center; /* Centre horizontalement */
+        align-items: center; /* Centre verticalement */
+        justify-content: space-between;
 
-      .iconefooter{
-        margin: 10px;
-  color : $white;  
+        .iconefooter {
+          margin: 10px;
+          color: $white;
+        }
       }
-
-} 
-.createurfooter{
-  font-size: 10px;
-  margin-top: 20px;
-}
-
+      .createurfooter {
+        font-size: 10px;
+        margin-top: 20px;
+      }
     }
     .adressefooter {
       width: 60%;
@@ -57,16 +54,14 @@
       }
     }
     .horairefooter {
-         width: 20%;
+      width: 30%;
       height: 100%;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       justify-content: center; /* Centre verticalement */
       text-align: center;
-      h2 {
-        margin-bottom: 15px;
-      }
+
     }
   }
 }

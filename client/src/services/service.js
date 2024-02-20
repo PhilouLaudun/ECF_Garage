@@ -23,6 +23,41 @@ const saveNewAgent = (data) => {
 const updateAgent = (id, data) => {
   return http.put(`/login/update/${id}`, data);
 };
+// *********************** table blog *********************************
+// envoi les infos sur l'utilisateur pour validation du login
+const listeAvis = () => { 
+return http.get("/blog");
+}
+const saveAvis = (message) => {
+  // je laisse les parties config et affichage des clés et valeur du formdata pour mémoire. Pour formdata, cela permet d'afficher les données du formdata. Pour config, ici comme il n'y a pas de fichier transmis, on à pas besoin de modifier le Content-Type en ultipart/form-data
+  /*const config = {
+    // en-tête remplacant l'en-tête par défaut quand un formData contient un champ avec un fichier binaire : IMPORTANT
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  };*/
+  return http.post("/blog/create", message);
+};
+// met a jour d'un avis
+const updateAvis = (id, messageaenvoyer) => {
+  return http.put(`/blog/update/${id}`, messageaenvoyer);
+};
+
+const deleteAvis = (id_message) => {
+  return http.delete(`/blog/delete/${id_message}`);
+};
+// *********************** table horaires *********************************
+// envoi les infos sur l'utilisateur pour validation du login
+const listeHoraires = () => {
+  console.log("listeHoraires Service");
+  return http.get("/horaire");
+};
+
+// met a jour d'un avis
+const updateHoraires = (horairesModif) => {
+  console.log("updateHoraires servcice", horairesModif);
+  return http.put(`/horaire/update`, horairesModif);
+};
 
 // *********************** table vehicule *********************************
 // charge la liste de tous les vehicules
@@ -202,7 +237,12 @@ createRelVehOpt,
 ajoutImage,
   saveNewAgent,
   updateAgent,
-
+  listeAvis,
+  saveAvis,
+  updateAvis,
+  deleteAvis,
+  listeHoraires,
+  updateHoraires,
   getImageDataFromURL,
 };
 

@@ -8,6 +8,7 @@ import { fetchOpt } from "../../features/slice/optionSlice";
 import OptionModale from "./OptionModale";
 
 const OptionVehicule = () => {
+    const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   let id_vehicule = useSelector((state) => state.vehicule.vehiculeEnCours);
   const [flagEdit, setFlagEdit] = useState(false);
   const [hasLoadedDataOpt, setHasLoadedDataOpt] = useState(false);
@@ -104,7 +105,8 @@ const OptionVehicule = () => {
     <div>
       <div className="titreoption">
         Options
-        <EditTwoToneIcon sx={iconeStyle} onClick={editOptionVehicule} />
+        { authorized && (<EditTwoToneIcon sx={iconeStyle} onClick={editOptionVehicule} />)}
+        
       </div>
       <div className="donnéeoption">
         {" "}

@@ -10,6 +10,7 @@ import { listVehicule } from "../../features/slice/vehiculeSlice";
 // css dans fichier _fichevehicule.scss
 
 const SyntheseVehicule = () => {
+  const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   const dispatch = useDispatch();
   let id = useSelector((state) => state.vehicule.vehiculeEnCours);
   const vehicules = useSelector((state) => state.vehicule.vehicule);
@@ -69,7 +70,8 @@ const SyntheseVehicule = () => {
         <div>
           {Marque} {Modele}
         </div>
-        <EditTwoToneIcon sx={iconeStyle} onClick={editSyntheseVehicule} />
+        { authorized && (<EditTwoToneIcon sx={iconeStyle} onClick={editSyntheseVehicule} />)}
+        
       </div>
       <div className="precisionmodele">{Modeleprecis} </div>
       <div className="infosynthese">

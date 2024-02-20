@@ -34,6 +34,7 @@ const settings = {
 };
 
 const FicheVehicule = () => {
+    const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   let id = useSelector((state) => state.vehicule.vehiculeEnCours);
   id = parseInt(id); // tranforme l'id en nombre, car l'id envoyé par Navigate est modifié en string
   const dispatch = useDispatch();
@@ -164,8 +165,7 @@ const FicheVehicule = () => {
         <div className="hautc">
           <div className="slider">
             <div className="zonemodif">
-              {" "}
-              <label className="file-input-container">
+              { authorized && (             <label className="file-input-container">
                 <span>Ajouter une image</span>
                 <input
                   type="file"
@@ -173,7 +173,8 @@ const FicheVehicule = () => {
                   className="file-input"
                   onChange={handleFileChangeCarroussel}
                 />
-              </label>
+              </label>)
+              }
               {flagNewImages && (
                 <SaveTwoToneIcon
                   sx={iconeStyle}

@@ -2,8 +2,16 @@ import React from "react";
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from "@mui/icons-material/Twitter";
 import InstagramIcon from "@mui/icons-material/Instagram";
+import Horaires from "./Horaires";
 
 const Footer = () => {
+  /*   <h2>HORAIRES D'OUVERTURE</h2>
+          <p>Lundi : 8h-12h 14h-19h</p>
+          <p>Mardi : 8h-12h 14h-19h</p>
+          <p>Mercredi : 8h-12h 14h-19h</p>
+          <p>Jeudi : 8h-12h 14h-19h</p>
+          <p>Vendredi : 8h-12h 14h-19h</p>
+          <p>Samedi : 8h-12h (occasion)</p>  */
   return (
     <main className="mainfooter">
       <div className="containerfooter">
@@ -27,13 +35,7 @@ const Footer = () => {
           <p>04 67 01 01 01</p>
         </div>
         <div className="horairefooter">
-          <h2>HORAIRES D'OUVERTURE</h2>
-          <p>Lundi : 8h-12h 14h-19h</p>
-          <p>Mardi : 8h-12h 14h-19h</p>
-          <p>Mercredi : 8h-12h 14h-19h</p>
-          <p>Jeudi : 8h-12h 14h-19h</p>
-          <p>Vendredi : 8h-12h 14h-19h</p>
-          <p>Samedi : 8h-12h (occasion)</p>
+          <Horaires/>
         </div>
       </div>
     </main>

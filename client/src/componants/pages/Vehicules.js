@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 const CardsPerPage = 6; // nombre de cartes par page
 const Vehicules = () => {
   // charge les données depuis le store à propos des vehicules et le tableau sera mis à jour à chaque changement du store.
+  const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   const vehiculetest = useSelector((state) => state.vehicule.vehicule); // variable contenant les cartes des vehicules
   const dispatch = useDispatch();
   //const vehiculetest = "";
@@ -26,7 +27,7 @@ const Vehicules = () => {
   /*const [hasLoadedData, setHasLoadedData] = useState(
     localStorage.getItem("hasLoadedData") === "true" ? true : false
   ); // Charger l'état depuis le localStorage*/
-  const [hasLoadedData, setHasLoadedData] = useState(false)
+  const [hasLoadedData, setHasLoadedData] = useState(false);
   const [message, setMessage] = useState(""); //  message de retour de  la base de données en cas d'erreur ou si elle est vide
   const [currentVehicules, setCurrentVehicules] = useState([]);
   const [minMaxValues, setMinMaxValues] = useState({
@@ -52,7 +53,7 @@ const Vehicules = () => {
       // fonction de chargement des vehicules au départ
       if (!hasLoadedData) {
         //  si le tableau partenaire est vide et si les données n'ont pas été chargé
-        
+
         try {
           //alors on charge les données
           const response = await dispatch(listVehicule()); // appel du slice de chargement des données auprés de la BD;
@@ -102,20 +103,20 @@ const Vehicules = () => {
       const maxAnnee = Math.max(
         ...vehiculetest.map((vehicule) => vehicule.Annee)
       );
-    // Initialiser l'état filtres avec les valeurs minimales et maximales du fichier
-    setMinMaxValues({
-      minKilometrage,
-      maxKilometrage,
-      minPrix,
-      maxPrix,
-      minAnnee,
-      maxAnnee,
-    });
+      // Initialiser l'état filtres avec les valeurs minimales et maximales du fichier
+      setMinMaxValues({
+        minKilometrage,
+        maxKilometrage,
+        minPrix,
+        maxPrix,
+        minAnnee,
+        maxAnnee,
+      });
 
       setVehicules(vehiculetest);
     }
   }, [vehiculetest, hasLoadedData]);
-  
+
   // Fonction de tri des véhicules
   const trierVehicules = (nouveauxFiltres) => {
     setFiltres((prevState) => ({ ...prevState, ...nouveauxFiltres }));
@@ -139,17 +140,19 @@ const Vehicules = () => {
     }
   }, [filtres, hasLoadedData]);
 
- const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     // Pagination
     if (hasLoadedData) {
       const indexOfLastCard = currentPage * CardsPerPage;
       const indexOfFirstCard = indexOfLastCard - CardsPerPage;
-      const currentVehicules = vehicules.slice(indexOfFirstCard, indexOfLastCard);
+      const currentVehicules = vehicules.slice(
+        indexOfFirstCard,
+        indexOfLastCard
+      );
       setCurrentVehicules(currentVehicules);
     }
   }, [currentPage, vehicules]);
-
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
@@ -160,8 +163,6 @@ const Vehicules = () => {
   const abordCreationVehicule = () => {
     setFlagCreation(false);
   };
-
-
 
   return (
     <>
@@ -190,17 +191,22 @@ const Vehicules = () => {
                     page={currentPage}
                     onChange={handlePageChange}
                   />
-                  <button
-                    key="unique_key"
-                    className="boutoncreation"
-                    onClick={creationVehicule}
-                  >
-                    Créer un véhicule
-                  </button>
+                  {authorized && (
+                    <button
+                      key="unique_key"
+                      className="boutoncreation"
+                      onClick={creationVehicule}
+                    >
+                      Créer un véhicule
+                    </button>
+                  )}
                 </div>
                 <div className="carteoccase">
                   {currentVehicules.map((vehicule) => (
-                    <CarteVehicule key={vehicule.id_vehicule} vehicule={vehicule} />
+                    <CarteVehicule
+                      key={vehicule.id_vehicule}
+                      vehicule={vehicule}
+                    />
                   ))}
                   {flagCreation && (
                     <Dialog open={true} sx={modalStyleParten}>
