@@ -16,76 +16,90 @@
     border-bottom: 2px solid black;
     border-radius: 20px;
   }
-      .name {
+  .lignenom {
+    display: flex;
+    //justify-content: center; /* Centre horizontalement */
+    align-items: center; /* Centre verticalement */
+    .name {
+      display: flex;
+      align-items: center; /* Centre verticalement */
       font-size: 14px;
       margin-left: 10px;
+      margin-right: 10px;
     }
     .date {
-      margin-left: 100px;
+      margin-left: 20px;
       font-size: 12px;
     }
-    .texte {
-      font-size: 12px;
-      padding: 5px;
-      border-bottom: 1px solid $black;
-    }
+  }
+  .texte {
+    font-size: 12px;
+    padding: 5px;
+    border-bottom: 1px solid $black;
+  }
   .avisvalide {
     margin-top: 10px;
     height: 200px;
     overflow-y: auto;
-
   }
   .newavis {
-    margin: 0;
-    padding:0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgb(0, 0, 255, 0.1);
+    border-radius: 20px;
     input {
-       font-size: 14px;
-       margin: 5px;
-       border: 1px solid $black;
-       width: 80%;
-       padding: 5px;
-       border-radius: 5px;
+      font-size: 14px;
+      margin: 5px;
+      border: 1px solid $black;
+      width: 80%;
+      padding: 5px;
+      border-radius: 5px;
     }
     textarea {
-          font-size: 14px;
-       margin: 5px;
-       border: 1px solid $black;
-       width: 95%;
-       padding: 5px;
-       border-radius: 5px;
+      font-size: 14px;
+      margin: 5px;
+      border: 1px solid $black;
+      width: 95%;
+      padding: 5px;
+      border-radius: 5px;
     }
-        .soumettre {
-      width: 150px;
-      background: yellowgreen;
+
+    .rating-container {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 20px;
-      background-color: $green; /* Couleur verte */
-      color: $white; /* Texte blanc */
-      border: none;
-      padding: 15px 20px; /* Espacement interne */
-      border-radius: 20px; /* Coins arrondis */
-      font-size: 16px;
-      cursor: pointer;
-    }
-        .soumettre:hover {
-      color: $black;
+      .soumettre {
+        width: 150px;
+        background: yellowgreen;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20px;
+        background-color: $green; /* Couleur verte */
+        color: $white; /* Texte blanc */
+        border: none;
+        padding: 15px 20px; /* Espacement interne */
+        border-radius: 20px; /* Coins arrondis */
+        font-size: 16px;
+        cursor: pointer;
+        margin-right: 10px;
+      }
+      .soumettre:hover {
+        color: $black;
+      }
     }
   }
   .avisavalider {
-
     margin-top: 10px;
     h3 {
-            margin-left: 10px;
-            margin-top: 5px;
-            margin-bottom: 10px;
-font-size: 14px;
-font-style: italic;
+      margin-left: 10px;
+      margin-top: 5px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-style: italic;
     }
     .messageavalider {
-       height: 200px;
-    overflow-y: auto;
+      height: 200px;
+      overflow-y: auto;
     }
-}
+  }
 }

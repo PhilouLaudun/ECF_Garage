@@ -11,7 +11,6 @@ import BlogCard from "../blog/BlogCard";// composant pour afficher le blog
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
-import BlogCard from "../blog/BlogCard";
 
 // page principale de l'application
 const Home = () => {

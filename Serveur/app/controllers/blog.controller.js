@@ -58,7 +58,7 @@ exports.create = (req, res) => {
   const [day, month, year] = req.body.DateM.split("/");
   const dateStr = `${year}-${month}-${day}`;
   const datem = new Date(dateStr);
-
+const satisfaction = parseInt(req.body.Satisfaction, 10);
   // Convertir l'heure de la chaîne en objet Date
   // Notez que nous devons utiliser la même date de référence pour l'heure
   // que celle utilisée par Sequelize pour les champs TIME, c'est-à-dire le 1er janvier 1970
@@ -71,6 +71,7 @@ exports.create = (req, res) => {
     DateM: datem,
     Heure: heure,
     Approuve: req.body.Approuve,
+    Satisfaction: satisfaction,
   };
   console.log("constante Date", message.DateM, typeof message.DateM);
   console.log("constante Heure", message.Heure, typeof message.Heure);

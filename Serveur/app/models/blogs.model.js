@@ -32,6 +32,10 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.BOOLEAN(),
         allowNull: false,
       },
+      Satisfaction: {
+        type: Sequelize.INTEGER(11),
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
