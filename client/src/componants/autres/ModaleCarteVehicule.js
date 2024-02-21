@@ -1,13 +1,6 @@
-import React, { useState } from "react";
-import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
-import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import {
-  CustomPrevArrow,
-  CustomNextArrow,
-} from "../composantFiche/CustomArrow";
+import React, { useState } from "react";// chargement des composants react
+import { useDispatch } from "react-redux";
+// import des composants mui material
 import {
   Button,
   Dialog,
@@ -15,12 +8,22 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+// import des composant du carroussel
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import {
+  CustomPrevArrow,
+  CustomNextArrow,
+} from "../composantFiche/CustomArrow"; // formatage des fléches de déroulement du carroussel
+// import des icones mui material
+import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+// gestion du store
 import { createVehicule } from "../../features/slice/vehiculeSlice";
-
+// composant modale de création d'un vehicule: props passées : onClose: callback de sortie de la modale/ newvehicule : flag pour signifier la création d'un véhicule (à virer car on utilise pas cette modale pour la modification, a voir)
 const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
 
-  console.log("ModaleCarteVehicule newvehicule", newvehicule, typeof newvehicule);
   
   const [images, setImages] = useState([]);
   const [marque, setMarque] = useState("");

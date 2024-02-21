@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";// chargement des composants react
+// import des composants mui material
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
+// composant d'affichage des tri par slider: props passées : filtres = contient les valeurs min et max des filtres 
 const FiltreVoiture = ({ filtres, onTriChange, minMaxValues }) => {
   const {
     minKilometrage,

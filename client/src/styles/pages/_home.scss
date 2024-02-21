@@ -44,9 +44,9 @@
       justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
       .containerServiceHome {
-        width: 80%;
+        width: 90%;
         display: grid;
-        grid-template-columns: 30% 30% 1fr;
+        grid-template-columns: 35% 35% 1fr;
         grid-template-rows: 1fr;
         grid-template-areas: " col1 col2 col3";
         .col1 {

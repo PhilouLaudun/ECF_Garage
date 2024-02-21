@@ -146,7 +146,7 @@ const Carteconnexion = ({ onCancel }) => {
           className="bouton"
           onClick={handleLogin}
         >
-          Envoyer
+          Connecter
         </button>
       </div>
     </main>

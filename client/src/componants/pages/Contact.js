@@ -1,9 +1,10 @@
-import React from "react";
+import React from "react";// chargement des composants react
+// import des composants de la page
 import Header from "../autres/Header";
 import Footer from "../autres/Footer";
-import dataPageService from "../../data/dataPageService";
 import Presentation from "../autres/Presentation";
 import CarteEmail from "../autres/CarteEmail";
+// page contact
 const Contact = () => {
   return (
     <>

@@ -1,13 +1,17 @@
-import React from "react";
+import React from "react";// chargement des composants react
 import { useNavigate } from "react-router-dom"; // fonction pour naviguer entre les pages
+// import des composants de la page
 import Header from "../autres/Header";
 import Footer from "../autres/Footer";
-import dataPageService from "../../data/dataPageService";
 import Presentation from "../autres/Presentation";
+//import du fichier des données du composant de présentation de la page
+import dataPageService from "../../data/dataPageService";
+// page occasion
 const Occasion = () => {
+  //chargement des données concernant la présentation des services liées à cette page
   var carte1 = dataPageService[4];
   var carte2 = dataPageService[5];
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   return (
     <>
       <main>

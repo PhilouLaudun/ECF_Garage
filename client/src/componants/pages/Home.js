@@ -1,22 +1,28 @@
-import React from "react";
+import React from "react"; // chargement des composants react
 import { useNavigate } from "react-router-dom"; // fonction pour naviguer entre les pages
-import Header from "../autres/Header";
-import Footer from "../autres/Footer";
-import Presentation from "../autres/Presentation";
-import PetiteIcone from "../autres/PetiteIcone";
-import CarteService from "../autres/CarteService";
+// import des composants de la page
+import Header from "../autres/Header";// header
+import Footer from "../autres/Footer";//footer
+import Presentation from "../autres/Presentation";// présentation de la page
+import PetiteIcone from "../autres/PetiteIcone";// composant des petites icones pour afficher les infos de contact
+import CarteService from "../autres/CarteService"; // composant d'affichage des cartes de service
+import BlogCard from "../blog/BlogCard";// composant pour afficher le blog
+// import des icones mui material
 import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
 import BlogCard from "../blog/BlogCard";
 
+// page principale de l'application
 const Home = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate() // fonction pour naviguer vers les autres pages 
   
   return (
     <>
       <main className="mainHome">
+        {/* En tete */}
         <Header />
+        {/* Corps de la page */}
         <div className="containerbodyhome">
           <div className="imageHome">
             <img src="./assets/img/Accueil2 et reparation.jpg" alt="Logo" />
@@ -56,6 +62,7 @@ const Home = () => {
             </div>
           </div>
         </div>
+        {/* Pied de page */}
         <Footer />
       </main>
     </>

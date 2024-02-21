@@ -1,6 +1,9 @@
 .mainCarte {
-    width: 80%;
-    margin: 10%;
+    width: 300px;
+    height: 200px;
+    margin: 30px;
+   background: rgb(128, 128, 128,0.1);
+   border-radius: 10px;
     display : grid;
           justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
@@ -14,12 +17,12 @@
         grid-area: icone;
       }
       .titrecarte {
+       
         grid-area: titre;
         
       }
       .messagecarte {
         grid-area: message;
         font-size: 13px;
-       
       }
 }

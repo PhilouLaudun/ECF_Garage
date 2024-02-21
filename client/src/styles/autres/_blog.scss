@@ -1,0 +1,91 @@
+.mainblog {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgb(0, 0, 0, 0.5);
+  border-radius: 20px;
+  padding: 10px;
+  box-shadow: 5px 5px 6px rgba(0, 0, 0, 0.5);
+  .titre {
+    background: rgb(128, 128, 128, 0.5);
+    font-size: 22px;
+    text-align: center;
+    height: 25px; // ajuste selon tes besoins
+    line-height: 25px; // ajuste selon tes besoins
+    font-style: italic;
+    border-bottom: 2px solid black;
+    border-radius: 20px;
+  }
+      .name {
+      font-size: 14px;
+      margin-left: 10px;
+    }
+    .date {
+      margin-left: 100px;
+      font-size: 12px;
+    }
+    .texte {
+      font-size: 12px;
+      padding: 5px;
+      border-bottom: 1px solid $black;
+    }
+  .avisvalide {
+    margin-top: 10px;
+    height: 200px;
+    overflow-y: auto;
+
+  }
+  .newavis {
+    margin: 0;
+    padding:0;
+    input {
+       font-size: 14px;
+       margin: 5px;
+       border: 1px solid $black;
+       width: 80%;
+       padding: 5px;
+       border-radius: 5px;
+    }
+    textarea {
+          font-size: 14px;
+       margin: 5px;
+       border: 1px solid $black;
+       width: 95%;
+       padding: 5px;
+       border-radius: 5px;
+    }
+        .soumettre {
+      width: 150px;
+      background: yellowgreen;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 20px;
+      background-color: $green; /* Couleur verte */
+      color: $white; /* Texte blanc */
+      border: none;
+      padding: 15px 20px; /* Espacement interne */
+      border-radius: 20px; /* Coins arrondis */
+      font-size: 16px;
+      cursor: pointer;
+    }
+        .soumettre:hover {
+      color: $black;
+    }
+  }
+  .avisavalider {
+
+    margin-top: 10px;
+    h3 {
+            margin-left: 10px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+font-size: 14px;
+font-style: italic;
+    }
+    .messageavalider {
+       height: 200px;
+    overflow-y: auto;
+    }
+}
+}

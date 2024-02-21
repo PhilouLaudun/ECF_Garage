@@ -1,5 +1,6 @@
-import React, { useEffect } from "react"; // Importez React
+import React from "react"; // Importez React
 import { Routes, Route } from "react-router-dom"; // import de la balise route pour naviguer dans les pages
+// import des composants pour la définitions des routes
 import Home from "./componants/pages/Home";
 import Entretien from "./componants/pages/Entretien";
 import Carrosserie from "./componants/pages/Carrosserie";
@@ -8,7 +9,7 @@ import Autres from "./componants/pages/Autres";
 import Contact from "./componants/pages/Contact";
 import Vehicules from "./componants/pages/Vehicules";
 import FicheVehicule from "./componants/pages/FicheVehicule";
-
+// gestion des routes
 function App() {
   return (
     <div>
