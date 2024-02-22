@@ -1,6 +1,7 @@
 import React from 'react'
 import textePresentation from "../../data/datapresentation"
-const Presentation = ({ page ,largeur }) => {
+const Presentation = ({ page, largeur }) => {
+  const largeurEcran = window.innerWidth;
   var presentation = textePresentation[page - 1];
   var titre = presentation.titre;
   var message1 = presentation.message1;
@@ -11,6 +12,12 @@ const Presentation = ({ page ,largeur }) => {
   const largeurPresentation = {
     width: `${largeur}%`,
   };
+
+  // Si la largeur de l'écran est inférieure à 420px, définir la largeur sur 100%
+  if (largeurEcran <= 420) {
+    largeurPresentation.width = "85%";
+  }
+
   return (
     <main className="mainPresentation" style={largeurPresentation}>
       <div className="titrepresentation">{titre}</div>

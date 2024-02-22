@@ -14,6 +14,11 @@ import { IconButton } from "@mui/material";
           color: "black !important", // Couleur de l'icône au survol
         },
       },
+      "@media (max-width: 420px)": {
+        width: "40px",
+        height: "40px",
+        // Ajoutez d'autres styles selon vos besoins
+      },
     });
 const PetiteIcone = ({ materialIcon: MaterialIcon }) => {
   return (

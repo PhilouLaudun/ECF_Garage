@@ -11,35 +11,57 @@
   display: flex;
   justify-content: center; /* Centre horizontalement */
   align-items: center; /* Centre verticalement */
-
+  @media (max-width: 420px) {
+    height: 300px;
+  }
   .containeurheader {
     height: 80%;
     width: 100%;
     display: flex;
     justify-content: space-between;
 
+    display: grid;
+    grid-template-columns: 20% 1fr 20%;
+    grid-template-rows: 50% 1fr;
+    grid-template-areas:
+      " logo nav titre"
+      "logo nav icone";
+
+    @media (max-width: 420px) {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 100px 20px 150px; /* Réinitialise les lignes de la grille */
+      grid-template-areas:
+        "logo icone"
+        "titre titre"
+        "nav nav";
+    }
+
     .logoheader {
-      width: 15%;
-      min-height: 80px;
+      grid-area: logo;
       display: flex;
       justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
 
       img {
-        max-height: 100%;
-        max-width: 100%;
+        max-width: 200px; /* L'image s'étend sur toute la largeur du conteneur parent */
+        min-width: 100px;
+        height: auto; /* La hauteur s'ajuste automatiquement pour conserver les proportions */
       }
     }
     .navheader {
-      width: 70%;
+      grid-area: nav;
+      width: 95%;
       height: 100%;
       display: flex;
+      justify-content: space-between;
+      align-items: center; /* Centre verticalement */
     }
     .titreheader {
-      width: 15%;
+      grid-area: titre;
+      width: 100%;
       height: 100%;
       display: flex;
-      flex-direction: column; /* Définit la direction en colonne */
       justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
       .titreh {
@@ -47,8 +69,21 @@
         font-family: $font-2;
         font-size: 12px;
         color: $titreheader;
+      @media (max-width: 420px) {
+         font-size: 14px;
       }
+      }
+    }
+    .iconeheader {
+      grid-area: icone;
+      display: flex;
+      justify-content: space-evenly; /* Centre horizontalement */
+      align-items: center; /* Centre verticalement */
       .nomutilisateur {
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* Centre horizontalement */
+        align-items: center; /* Centre verticalement */
         color: $titreheader;
         font-family: $font-2;
         font-size: 10px;

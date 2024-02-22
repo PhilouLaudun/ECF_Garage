@@ -30,6 +30,10 @@
         align-items: center; /* Centre verticalement */
         p {
           padding-top: 10px;
+            @media (max-width: 420px) {
+              font-size: 10px;
+              font-weight:bold ;
+            }
         }
       }
     }
@@ -43,12 +47,23 @@
       display: flex;
       justify-content: center; /* Centre horizontalement */
       align-items: center; /* Centre verticalement */
+      margin-top: 10px;
+      margin-bottom: 10px;;
       .containerServiceHome {
         width: 90%;
         display: grid;
         grid-template-columns: 35% 35% 1fr;
         grid-template-rows: 1fr;
         grid-template-areas: " col1 col2 col3";
+
+@media (max-width: 420px) {
+ width: 90%;
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 1fr 1fr 1f;
+        grid-template-areas: "col1" "col2" "col3";
+      }
+
         .col1 {
           grid-area: col1;
         }

@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { listHoraires, updateHoraires } from "../../features/slice/horaireSlice";
+import {
+  listHoraires,
+  updateHoraires,
+} from "../../features/slice/horaireSlice";
 
 const Horaires = () => {
   const role = useSelector((state) => state.utilisateur.role);
@@ -41,7 +44,9 @@ const Horaires = () => {
   }, [dispatch, setHasLoadedDataHoraire, horaires]);
   // Mettre à jour horairestest avec les horaires initiaux du store Redux
   useEffect(() => {
-    setHorairesModif(horaires);
+    if (hasLoadedDataHoraire) {
+      setHorairesModif(horaires);
+    }
   }, [horaires]);
   const handleChange = (idHoraire, newValue) => {
     if (role === 1) {
@@ -66,22 +71,25 @@ const Horaires = () => {
   return (
     <div className="horaire">
       <h2>HORAIRES D'OUVERTURE</h2>
-      <div className="horaires-list">
-        {horairesModif.map(({ id_horaire, Jour, Horaires }) => (
-          <div key={id_horaire} className="horaire-item">
-            <label>{`${
-              Jour.charAt(0).toUpperCase() + Jour.slice(1)
-            } : `}</label>
-            <input
-              type="text"
-              placeholder={Horaires}
-              value={Horaires}
-              onChange={(e) => handleChange(id_horaire, e.target.value)}
-              disabled={role !== 1}
-            />
-          </div>
-        ))}
-      </div>
+      {hasLoadedDataHoraire && (
+        <div className="horaires-list">
+          {horairesModif.map(({ id_horaire, Jour, Horaires }) => (
+            <div key={id_horaire} className="horaire-item">
+              <label>{`${
+                Jour.charAt(0).toUpperCase() + Jour.slice(1)
+              } : `}</label>
+              <input
+                type="text"
+                placeholder={Horaires}
+                value={Horaires}
+                onChange={(e) => handleChange(id_horaire, e.target.value)}
+                disabled={role !== 1}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
       {role === 1 && (
         <button className="boutonoccase" onClick={saveData}>
           Save

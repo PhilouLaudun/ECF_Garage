@@ -12,10 +12,16 @@ background: linear-gradient(
   .titrepresentation {
     font-size: 25px;
     margin-bottom: 10px;
+    @media (max-width: 420px) {
+      font-size: 18px;
+    }
   }
   .messagepresentation {
     font-size: 18px;
     margin-bottom: 10px;
     text-align: center;
+        @media (max-width: 420px) {
+      font-size: 14px;
+    }
   }
 }

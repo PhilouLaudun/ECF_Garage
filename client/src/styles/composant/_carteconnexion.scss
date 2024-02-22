@@ -8,6 +8,9 @@ height: 300px ;
   box-shadow: 10px 10px 6px #00000073;
   border-radius: 20px;
   font-size: 20px;
+  @media (max-width: 420px) {
+    width: 380px;
+  }
   .titreconnexion {
     height: 50px;
     width: 100%;
