@@ -1,16 +1,24 @@
 .zonevehicule {
   width: 100%;
-  height: auto;
   display: grid;
   grid-template-columns: 20% 80%;
   grid-template-rows: 1fr;
   grid-template-areas: "filtre carte";
-
+  @media (max-width: 420px) {
+    display: grid;
+    height: auto;
+    grid-template-columns: 100%;
+    grid-template-rows: 30% 1fr;
+    grid-template-areas: "filtre" "carte";
+  }
   .filtreoccase {
     width: 80%;
     grid-area: filtre;
     margin: 0 auto;
     padding-top: 50px;
+    display: flex; /* Utilisez flexbox pour centrer le contenu */
+    justify-content: center; /* Centrer horizontalement le contenu */
+    align-items: center; /* Centrer verticalement le contenu */
   }
 
   .carteoccase-container {
@@ -21,32 +29,32 @@
     grid-template-areas:
       "pagination"
       "affichagecarte";
+
     .pagination-carteoccase {
-      width: 60%;
+      width: 80%;
       grid-area: pagination;
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin: 0 auto;
-    .boutoncreation {
-      width: 200px;
-      background: yellowgreen;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 20px;
-      background-color: $green; /* Couleur verte */
-      color: $white; /* Texte blanc */
-      border: none;
-      padding: 15px 20px; /* Espacement interne */
-      border-radius: 20px; /* Coins arrondis */
-      font-size: 16px;
-      cursor: pointer;
-    }
-        .boutoncreation:hover {
-      color: $black;
-    }
-      
+      .boutoncreation {
+        width: 200px;
+        background: yellowgreen;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 20px;
+        background-color: $green; /* Couleur verte */
+        color: $white; /* Texte blanc */
+        border: none;
+        padding: 15px 20px; /* Espacement interne */
+        border-radius: 20px; /* Coins arrondis */
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .boutoncreation:hover {
+        color: $black;
+      }
     }
     .carteoccase {
       grid-area: affichagecarte;
@@ -58,6 +66,19 @@
         minmax(calc(33% - 20px), 1fr)
       ); /* Trois cartes par ligne */
       gap: 20px; /* Ajoute un espacement entre les cartes */
+      @media (max-width: 420px) {
+        width: 95%;
+        height: 600px;
+        overflow-y: auto !important;
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        display: flex; /* Utilisez flexbox pour centrer le contenu */
+        //justify-content: center; /* Centrer horizontalement le contenu */
+        align-items: center; /* Centrer verticalement le contenu */
+        //grid-template-columns: 1fr;
+        /* Une seule colonne pour les écrans de moins de 420px */
+      }
     }
   }
 }

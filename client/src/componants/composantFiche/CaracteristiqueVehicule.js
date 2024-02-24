@@ -68,7 +68,16 @@ const CaracteristiqueVehicule = () => {
     height: "auto",
     width: "400px",
     "& .MuiPaper-root": { borderRadius: "20px" },
-    "& .MuiDialog-paper": { borderRadius: "20px" },
+    "& .MuiDialog-paper": {
+      borderRadius: "20px",
+      background: "rgba(255, 255, 255, 0.8)",
+    },
+    "@media (max-width: 420px)": {
+      position: "absolute",
+      top: "10%",
+      left: "-13%",
+      // Ajoutez d'autres styles selon vos besoins
+    },
   };
   const {
     id_caracteristique = "",

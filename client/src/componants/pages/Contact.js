@@ -19,7 +19,7 @@ const Contact = () => {
           </div>
           <div className="contactcorps">
             <div className="itemcorps">
-              <CarteEmail></CarteEmail>
+              <CarteEmail objetDemandeprops=""></CarteEmail>
             </div>
             <div className="itemcorps">
               <div className="adressefooter">

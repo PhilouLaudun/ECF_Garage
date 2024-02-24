@@ -1,4 +1,4 @@
-import images from "../../data/dataCarrousel";
+
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -8,7 +8,6 @@ import {
 } from "../composantFiche/CustomArrow";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
-import { useParams } from "react-router-dom";
 import Header from "../autres/Header";
 import Footer from "../autres/Footer";
 import SyntheseVehicule from "../composantFiche/SyntheseVehicule";
@@ -34,7 +33,7 @@ const settings = {
 };
 
 const FicheVehicule = () => {
-    const authorized = useSelector((state) => state.utilisateur.isAuthentified);
+  const authorized = useSelector((state) => state.utilisateur.isAuthentified);
   let id = useSelector((state) => state.vehicule.vehiculeEnCours);
   id = parseInt(id); // tranforme l'id en nombre, car l'id envoyé par Navigate est modifié en string
   const dispatch = useDispatch();
@@ -110,7 +109,7 @@ const FicheVehicule = () => {
   const saveImagesToDatabase = () => {
     // Envoyer les nouvelles images au backend pour les sauvegarder dans la base de données
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
-    formData.append("id_vehicule",id)
+    formData.append("id_vehicule", id);
     for (let i = 0; i < newImages.length; i++) {
       const image = newImages[i];
       const imageBlob = dataURItoBlob(image.url);
@@ -124,11 +123,10 @@ const FicheVehicule = () => {
     /*for (const entry of formData.entries()) {
       console.log("visu formdata",entry[0] + ":", entry[1]);
     }*/
-    dispatch(ajoutImage({data: formData }));
+    dispatch(ajoutImage({ data: formData }));
     // Réinitialiser les nouvelles images dans le state local
     setNewImages([]);
     setFlagNewImages(false);
-    
   };
   //fonction permattant de transformer les donnees du fichier en fichier blob pour multer
   function dataURItoBlob(dataURI) {
@@ -165,16 +163,17 @@ const FicheVehicule = () => {
         <div className="hautc">
           <div className="slider">
             <div className="zonemodif">
-              { authorized && (             <label className="file-input-container">
-                <span>Ajouter une image</span>
-                <input
-                  type="file"
-                  multiple
-                  className="file-input"
-                  onChange={handleFileChangeCarroussel}
-                />
-              </label>)
-              }
+              {authorized && (
+                <label className="file-input-container">
+                  <span>Ajouter une image</span>
+                  <input
+                    type="file"
+                    multiple
+                    className="file-input"
+                    onChange={handleFileChangeCarroussel}
+                  />
+                </label>
+              )}
               {flagNewImages && (
                 <SaveTwoToneIcon
                   sx={iconeStyle}

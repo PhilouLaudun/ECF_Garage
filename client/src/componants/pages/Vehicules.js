@@ -40,6 +40,7 @@ const Vehicules = () => {
     maxAnnee: 0,
   }); // sert pour sauvegardé les limites hautes et basses du kilometrage, du prix et de l'année en fonction des vehicules présent dans la base (evite de gérer des limites fixes, c'est plus dynamique et cela evite de se retrouver avec des données hors limites)
   const modalStyle = {
+    
     zIndex: 20,
     position: "absolute",
     margin: "auto",
@@ -47,7 +48,7 @@ const Vehicules = () => {
     height: "auto",
     width: "400px",
     "& .MuiPaper-root": { borderRadius: "20px" },
-    "& .MuiDialog-paper": { borderRadius: "20px" },
+    "& .MuiDialog-paper": { borderRadius: "20px",background: "rgba(255, 255, 255, 0.8)", },
   }; // format d'affichage de la modale de création des véhicules
 
   // useEffect déclenché lors du lancement de la page pour récuperer les données de la BD
@@ -188,6 +189,7 @@ const Vehicules = () => {
                   filtres={filtres}
                   onTriChange={trierVehicules}
                   minMaxValues={minMaxValues}
+                  
                 />
               </div>
               {/* Zone d'affichage des cartes des vehicules*/}

@@ -23,18 +23,18 @@ const Entretien = () => {
           </div>
           <div className="servicepage">
             <div className="service1">
-              <img src={carte1.image} alt="Logo" />
-              <div className="infoservice">
+              <img className="imge1" src={carte1.image} alt="Logo" />
+              <div className="servi1">
                 <div className="titreservice">{carte1.titre}</div>
                 <div className="texteservice">{carte1.texte}</div>
               </div>
             </div>
-            <div className="service1">
-              <div className="infoservice">
+            <div className="service2">
+              <div className="servi2"> 
                 <div className="titreservice">{carte2.titre}</div>
                 <div className="texteservice">{carte2.texte}</div>
               </div>
-              <img src={carte2.image} alt="Logo" />
+              <img className="imge2" src={carte2.image} alt="Logo" />
             </div>
           </div>
         </div>

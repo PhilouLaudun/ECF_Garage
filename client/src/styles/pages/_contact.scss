@@ -26,9 +26,12 @@
   justify-content: space-between;
   align-items: center; /* Centre verticalement */
   margin : 20px;
+   @media (max-width: 420px) {
+flex-direction: column;
+      }
    .itemcorps {
     width: 80%;
-    height: 100%;
+    height: 600px;
     display: flex;
     align-items: center; /* Centre verticalement */
     justify-content: center; /* Centre horizontalement */
@@ -38,26 +41,45 @@
     to bottom,
     $fond-21,
     $fond-22
+
   );
+       @media (max-width: 420px) {
+width: 100%;
+height:auto;
+      }
+
       border-radius: 10px;
        .adressefooter {
-      width: 60%;
+      width: 80%;
       height: 100%;
       margin: 0 auto;
       display: flex;
       flex-direction: column;
       justify-content: center; /* Centre verticalement */
       text-align: center;
+       @media (max-width: 420px) {
+width: 100%;
+      }
       h2 {
         margin-bottom: 15px;
+         @media (max-width: 420px) {
+          font-size: 18px;
+         }
       }
       p {
         margin-bottom: 10px;
+                 @media (max-width: 420px) {
+          font-size: 15px;
+         }
       }
     }
     img {
         margin : 5px;
         border-radius: 10px;
+
+                         @media (max-width: 420px) {
+          width: 95%;
+         }
     }
 
 }
