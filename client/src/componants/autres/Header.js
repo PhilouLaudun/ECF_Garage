@@ -37,8 +37,7 @@ const Header = () => {
   };
   const autorised = useSelector((state) => state.utilisateur.isAuthentified);
   const utilisateur = useSelector((state) => state.utilisateur.nom);
-  const role = useSelector((state) => state.utilisateur.role);
-  console.log("role", role, typeof role);
+  const role = useSelector((state) => state.utilisateur.role);;
   const [flagModaleAgent, setFlagModaleAgent] = useState(false);
   const [loginApp, setLoginApp] = useState(false);
   const logApp = () => {
@@ -51,7 +50,6 @@ const Header = () => {
     dispatch(resetUtilisateur());
   };
   const gestionAgent = () => {
-    console.log("routine gestion agent");
     setFlagModaleAgent(true);
   };
   const closeGestionAgent = () => {

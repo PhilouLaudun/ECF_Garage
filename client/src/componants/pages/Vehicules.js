@@ -179,7 +179,7 @@ const Vehicules = () => {
             <img src="./assets/img/reparation tete modif.jpg" alt="Logo" />
           </div>
           <div className="presentPage">
-            <Presentation className="" page={7} largeur={45} />
+            <Presentation className="" page={7} largeur={67} />
           </div>
           {hasLoadedData && vehicules && (
             <div className="zonevehicule">

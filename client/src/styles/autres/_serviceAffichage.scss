@@ -1,15 +1,9 @@
-.mainPresentation {
-
+.mainService {
+width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center; /* Centre horizontalement */
   align-items: center; /* Centre verticalement */
-background: linear-gradient(
-    to bottom,
-    $fond-21,
-    $fond-22
-  );
-  border-radius: 20px;
   padding: 10px;
   .iconContainer {
         position: absolute; // Position absolue par rapport à main
@@ -18,15 +12,17 @@ background: linear-gradient(
         display: flex; // Permet d'aligner les icônes horizontalement
         gap: 2px; // Espacement entre les icônes
     }
-  .titrepresentation {
-    font-size: 25px;
+  .titreService {
+    font-size: 23px;
     margin-bottom: 10px;
+     align-self: flex-start; /* Cette ligne alignera le titre en haut */
     @media (max-width: 420px) {
       font-size: 18px;
     }
   }
-  .messagepresentation {
-
+  .messageservice {
+width: 100%;
+height: 200px;
     font-size: 18px;
     margin-bottom: 10px;
     text-align: center;
@@ -34,7 +30,7 @@ background: linear-gradient(
       font-size: 14px;
     }
     textarea {
-   font-size: 18px;
+   font-size: 17px;
    background: transparent; 
       width: 100%; /* Utilise la largeur du conteneur parent */
       height: 100%; /* Utilise la hauteur du conteneur parent */
@@ -46,9 +42,9 @@ background: linear-gradient(
       padding: 5px;
       
     }
-    &.editable {
+    &.editableservice {
         textarea {
-            background-color: rgba(173, 216, 230, 0.2);
+            background-color: rgba(173, 216, 230, 0.35);
         }
     }
   }

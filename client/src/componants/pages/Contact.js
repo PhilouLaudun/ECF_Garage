@@ -15,7 +15,7 @@ const Contact = () => {
             <img src="./assets/img/reparation tete modif.jpg" alt="Logo" />
           </div>
           <div className="presentPage">
-            <Presentation className="" page={6} largeur={45} />
+            <Presentation className="" page={6} largeur={60} />
           </div>
           <div className="contactcorps">
             <div className="itemcorps">

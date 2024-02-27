@@ -22,7 +22,7 @@
       id: 4,
       designation: "Véhicules d'Occasion",
       style: "menu-item",
-      adresse_page: "/occasion",
+      adresse_page: "vehicule",
     },
     {
       id: 5,

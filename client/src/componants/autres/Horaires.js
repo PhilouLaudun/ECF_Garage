@@ -11,7 +11,6 @@ const Horaires = () => {
   const [hasLoadedDataHoraire, setHasLoadedDataHoraire] = useState(false);
   const dispatch = useDispatch();
   const [horairesModif, setHorairesModif] = useState([]);
-  console.log("horaires", horaires);
   useEffect(() => {
     async function fetchData() {
       if (!hasLoadedDataHoraire) {
@@ -64,7 +63,6 @@ const Horaires = () => {
     // Code to save data to a file (data.js)
     // You may use a server-side logic or browser APIs like localStorage or IndexedDB for client-side storage
     // For simplicity, I'll just console log the data here
-    console.log("Data saved:", horairesModif);
     dispatch(updateHoraires({ horairesModif: horairesModif }));
   };
 

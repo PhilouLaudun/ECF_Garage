@@ -7,7 +7,9 @@ import caracteristiqueReducer from "./caracteristiqueSlice"
 import equipementReducer from "./equipementSlice"
 import optionReducer from "./optionSlice";
 import blogReducer from "./blogSlice";
-import horaireReducer from "./horaireSlice"
+import horaireReducer from "./horaireSlice";
+import presentationReducer from "./presentationSlice";
+import serviceReducer from "./serviceSlice"
 
 // création de la fonction de combinaison des slices
 const rootReducer = combineReducers({
@@ -18,7 +20,9 @@ const rootReducer = combineReducers({
   equipement: equipementReducer,
   option: optionReducer,
   blog: blogReducer,
-  horaire: horaireReducer
+  horaire: horaireReducer,
+  presentation: presentationReducer,
+  service: serviceReducer,
 });
 
 export default rootReducer;

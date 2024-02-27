@@ -183,7 +183,7 @@ export const CarteAgentModale = ({onCancel}) => {
     } else {
       dispatch(updateAgent({ id: idUtilisateur, data: formData })); // on utilise le slice et la route de la mise à jour
     }
-    refreshData(); // on lance le chargement des agents à partir de la base de données aprèdsles mise à jour
+    refreshData(); // on lance le chargement des agents à partir de la base de données après les mise à jour
     setOpen(false); // ferme la modale de confirmation des données
     setFlagNouvelAgent(false); // baisse le flag de la création d'un nouvel agent
     setShowmodalemodif(false); // efface la zone de saisie

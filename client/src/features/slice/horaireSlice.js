@@ -3,14 +3,12 @@ import Service from "../../services/service";
 
 
 export const listHoraires = createAsyncThunk("horaire", async () => {
-    console.log("slice horaires");
     const res = await Service.listeHoraires();
 return res.data
 })
 export const updateHoraires = createAsyncThunk(
   "horaire/update",
   async ({ horairesModif }) => {
-    console.log("slice horaires update", horairesModif);
     const res = await Service.updateHoraires(horairesModif);
     return res.data;
   }

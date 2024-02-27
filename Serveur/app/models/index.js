@@ -44,6 +44,8 @@ db.blogs = require("./blogs.model.js")(sequelize, Sequelize);
 
 db.horaires = require("./horaires.model.js")(sequelize, Sequelize);
 
+db.datapresentations = require("./datapresentations.model")(sequelize, Sequelize);
+db.dataservices = require("./dataservices.model.js")(sequelize, Sequelize)
 
 // Déclarer les associations "belongsToMany" ici
 db.vehicules.belongsToMany(db.equipements, {

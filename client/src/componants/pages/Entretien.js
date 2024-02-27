@@ -4,12 +4,10 @@ import Header from "../autres/Header";
 import Footer from "../autres/Footer";
 import Presentation from "../autres/Presentation";
 //import du fichier des données du composant de présentation de la page
-import dataPageService from "../../data/dataPageService";
+import ServiceAffichage from "../autres/ServiceAffichage";
 // page entretien
 const Entretien = () => {
-  //chargement des données concernant la présentation des services liées à cette page
-  var carte1 = dataPageService[0];
-  var carte2 = dataPageService[1];
+
   return (
     <>
       <main>
@@ -19,23 +17,11 @@ const Entretien = () => {
             <img src="./assets/img/reparation tete modif.jpg" alt="Logo" />
           </div>
           <div className="presentPage">
-            <Presentation className="" page={2} largeur={45} />
+            <Presentation className="" page={2} largeur={60} />
           </div>
           <div className="servicepage">
-            <div className="service1">
-              <img className="imge1" src={carte1.image} alt="Logo" />
-              <div className="servi1">
-                <div className="titreservice">{carte1.titre}</div>
-                <div className="texteservice">{carte1.texte}</div>
-              </div>
-            </div>
-            <div className="service2">
-              <div className="servi2"> 
-                <div className="titreservice">{carte2.titre}</div>
-                <div className="texteservice">{carte2.texte}</div>
-              </div>
-              <img className="imge2" src={carte2.image} alt="Logo" />
-            </div>
+            <ServiceAffichage id={1} service={1} />
+            <ServiceAffichage id={2} service={2} />
           </div>
         </div>
 

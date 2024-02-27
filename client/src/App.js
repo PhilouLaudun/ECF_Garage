@@ -18,7 +18,6 @@ function App() {
         <Route path="/" exact element={<Home />} />
         <Route path="/entretien" exact element={<Entretien />} />
         <Route path="/carrosserie" exact element={<Carrosserie />} />
-        <Route path="/occasion" exact element={<Occasion />} />
         <Route path="/autres" exact element={<Autres />} />
         <Route path="/contact" exact element={<Contact />} />
         <Route path="/vehicule" exact element={<Vehicules />} />

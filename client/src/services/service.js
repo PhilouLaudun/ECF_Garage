@@ -49,16 +49,34 @@ const deleteAvis = (id_message) => {
 // *********************** table horaires *********************************
 // envoi les infos sur l'utilisateur pour validation du login
 const listeHoraires = () => {
-  console.log("listeHoraires Service");
   return http.get("/horaire");
 };
 
 // met a jour d'un avis
 const updateHoraires = (horairesModif) => {
-  console.log("updateHoraires servcice", horairesModif);
   return http.put(`/horaire/update`, horairesModif);
 };
+// *********************** table presentations *********************************
+// envoi les infos sur l'utilisateur pour validation du login
+const listPresentations = () => {
+  return http.get("/presentation");
+};
 
+// met a jour d'un avis
+const updatePresentations = (id, message) => {
+  return http.put(`/presentation/update/${id}`, message);
+};
+// *********************** table services *********************************
+// envoi les infos sur l'utilisateur pour validation du login
+const listServices = () => {
+  return http.get("/service");
+};
+
+// met a jour d'un avis
+const updateServices = (id, message) => {
+  console.log("updateServices servcice", id, message);
+  return http.put(`/service/update/${id}`, message);
+};
 // *********************** table vehicule *********************************
 // charge la liste de tous les vehicules
 const getAllVehicule = () => {
@@ -243,6 +261,10 @@ ajoutImage,
   deleteAvis,
   listeHoraires,
   updateHoraires,
+  listPresentations,
+  updatePresentations,
+  listServices,
+  updateServices,
   getImageDataFromURL,
 };
 
