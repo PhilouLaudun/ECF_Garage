@@ -1,5 +1,5 @@
 import React, { useState } from "react";// chargement des composants react
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";// chargement des fonction de gestion du store
 // import des composants mui material
 import {
   Button,
@@ -23,19 +23,18 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import { createVehicule } from "../../features/slice/vehiculeSlice";
 // composant modale de création d'un vehicule: props passées : onClose: callback de sortie de la modale/ newvehicule : flag pour signifier la création d'un véhicule (à virer car on utilise pas cette modale pour la modification, a voir)
 const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
-
-  
-  const [images, setImages] = useState([]);
-  const [marque, setMarque] = useState("");
-  const [modele, setModele] = useState("");
-  const [modelePrecis, setModelePrecis] = useState("");
-  const [annee, setAnnee] = useState("");
-  const [kilometrage, setKilometrage] = useState("");
-  const [transmission, setTransmission] = useState("");
-  const [energie, setEnergie] = useState("");
-  const [prix, setPrix] = useState("");
-  const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
-  // definition du style des composants icones de sauvegarde et d'annulation
+  // initialisation des variables pour la saisie dans les champs des données du vehicule
+  const [images, setImages] = useState([]); // tableau des images
+  const [marque, setMarque] = useState(""); // marque du vehicule
+  const [modele, setModele] = useState(""); // modéle du vehicule
+  const [modelePrecis, setModelePrecis] = useState(""); // modéle précis du vehicule
+  const [annee, setAnnee] = useState(""); // année du vehicule
+  const [kilometrage, setKilometrage] = useState(""); // kilométrage du vehicule
+  const [transmission, setTransmission] = useState(""); // type boite du vehicule
+  const [energie, setEnergie] = useState(""); // type energie du vehicule
+  const [prix, setPrix] = useState(""); //prix du vehicule
+  const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue de validation des données,
+  // definition du style du composant carroussel
   const settings = {
     dots: true,
     infinite: true,
@@ -45,6 +44,7 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     prevArrow: <CustomPrevArrow />,
     nextArrow: <CustomNextArrow />,
   };
+  // définition du style des icones de sauvegarde et d'annulation
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
@@ -53,7 +53,8 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
       borderRadius: "50%",
     },
   };
-  const dispatch = useDispatch();
+  const dispatch = useDispatch();// fonction d'appel du store
+  // fonction de gestion de la création des images
   const handleFileChange = async (event) => {
     const selectedFiles = event.target.files;
     const newImages = [];
@@ -61,10 +62,10 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     for (let i = 0; i < selectedFiles.length; i++) {
       const file = selectedFiles[i];
       try {
-        const { dataURL, name } = await readFileAsBase64(file);
-        const fileExtension = name.split(".").pop().toLowerCase();
-        const acceptedExtensions = ["jpeg", "jpg", "png", "tiff"];
-
+        const { dataURL, name } = await readFileAsBase64(file);// récupére l'url et le nom du fichier
+        const fileExtension = name.split(".").pop().toLowerCase();// récupére l'extension du fichier
+        const acceptedExtensions = ["jpeg", "jpg", "png", "tiff"]; // vérification de la validité de l'extension
+// si l'extension est correcte (fichier image) on ajoute au tableau newImage l'url modifiée avec la date du jour
         if (acceptedExtensions.includes(fileExtension)) {
           newImages.push({ id: Date.now() + i, url: dataURL });
         } else {
@@ -74,8 +75,9 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
         console.error("Erreur lors de la lecture du fichier:", error);
       }
     }
-    setImages((prevImages) => [...prevImages, ...newImages]);
+    setImages((prevImages) => [...prevImages, ...newImages]);// charge le tableau d'affichage des données avec les nouvelles images
   };
+   // fonction de lecture d'un fichier image
   const readFileAsBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -91,6 +93,7 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
       reader.readAsDataURL(file);
     });
   };
+  // focntion de sauvegarde du nouveau véhicule
   const saveInfoVehicule = () => {
     // verif effectuées: champs vides pour tous
     // on mets le flag de vérification à true dés le départ et on le passe à false si il y a une anomalie, on récupére ensuite les id des div pour afficher les divers messages liés aux saisies obligatoires (non nulles)
@@ -129,14 +132,15 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
       setOpen(true); // léve le drapeau d'affichage de la boite de dialogue pour valider les données
     }
   };
+  // ferme la boite d'affichage de la boite de validation des données
   const nonValid = () => {
     setOpen(false);
   };
+  // ferme la boite d'affichage de la boite de validation des données et sauvegarde les données dans la BD
   const validDonneeVehicule = () => {
-    setOpen(false);
+    setOpen(false);// ferme la boite d'affichage de la boite de validation
     // sauve les données modifiées ou pas dans un formData (sinon multer ne fonctionne pas)
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
-    //formData.append("id_vehicule", carte.id_partenaire); // a rajouter pour update par la suite
     formData.append("Marque", marque);
     formData.append("Modele", modele);
     formData.append("Modeleprecis", modelePrecis);
@@ -145,6 +149,7 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
     formData.append("Energie", energie);
     formData.append("Transmission", transmission);
     formData.append("Prix", prix);
+    // mise en forme des données images avant envoi pour sauvegarde dans la BD
     for (let i = 0; i < images.length; i++) {
       const image = images[i];
       const imageBlob = dataURItoBlob(image.url);
@@ -152,15 +157,12 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
       const imageFile = new File([imageBlob], `image${i}.${fileExtension}`, {
         type: `image/${fileExtension}`,
       });
-      formData.append("images", imageFile);
+      formData.append("images", imageFile); // ajoute les images au formdata
     }
-    // Parcours des entrées de FormData et affichage dans la console
-    for (const entry of formData.entries()) {
-      console.log(entry[0] + ":", entry[1]);
-    }
-    dispatch(createVehicule({ data: formData }));
+
+    dispatch(createVehicule({ data: formData }));  // envoi les données vers la base de données pour créer le véhicule
   };
-  //fonction permattant de transformer les donnees du fichier en fichier blob pour multer
+  //fonction permettant de transformer les donnees du fichier en fichier blob pour multer
   function dataURItoBlob(dataURI) {
     const byteString = atob(dataURI.split(",")[1]);
     const mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];

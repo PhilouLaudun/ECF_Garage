@@ -1,17 +1,17 @@
 import React, { useState } from "react"; // import des fonctions de react
+import { useDispatch } from "react-redux";// chargement des fonctions de gestion du store
+// import des icones mui material
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
-//import { createPrestation } from "../../features/slice/prestationSlice";
-import { useDispatch } from "react-redux";
+// import des fonctions de gestion du store
 import { createOpt } from "../../features/slice/optionSlice";
-
+//
 // composant NewPrestation (props passées: aucune )
 const NewOption = (props) => {
-  console.log("NewOption")
-  // composant affichant un input et une croix pour la saisie d'une nouvelle prestation
+  const dispatch = useDispatch(); // définit une fonction dispatch pour  envoyer les données dans le store
+  // composant affichant un input et une croix pour la saisie d'une nouvelle option
   const [valeurInput, setValeurInput] = useState(""); // récupére la valeur saisie dans l'input, on verra à traiter les doublons par la suite
-  //const listEquipement = props.equipements; // liste des equipements
-  const dispatch = useDispatch();
-  const nouvelEquipement = () => {
+
+  const nouvelleOption = () => {
     // si la saisie est vide on affiche le message pour signifier que l'input doit etre renseigné
     if (valeurInput === "") {
       var messageres = "Valeur nulle non acceptée";
@@ -57,7 +57,7 @@ const NewOption = (props) => {
           ></input>
           {/* icone d'ajout  */}
           <AddCircleTwoToneIcon
-            onClick={nouvelEquipement}
+            onClick={nouvelleOption}
             sx={{
               fontSize: "25px",
             }}

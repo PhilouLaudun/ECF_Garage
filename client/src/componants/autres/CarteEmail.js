@@ -1,9 +1,9 @@
 import React, { useState } from "react"; // import des fonctions de react
-import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
-import SendTwoToneIcon from "@mui/icons-material/SendTwoTone";
 import emailjs from "emailjs-com"; // Import de la librairie emailjs
-
-// composant CarteEmail  de la page structure (props passées: onCancel: pour fermer la boite de dialogue / objetDemande: précise la marque et le modéle du vehicule pour envoi à partir de la page ficheVehicule)
+// import des icones mui material
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+//
+// composant CarteEmail  de la page structure (props passées: onCancel: pour fermer la boite de dialogue / objetDemandeprops: précise la marque et le modéle du vehicule pour envoi à partir de la page ficheVehicule)
 const CarteEmail = ({onClose, objetDemandeprops}) => {
   // style de icone de fermeture et d'envoi
   const iconeStyle = {
@@ -16,19 +16,18 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
       transform: "scale(1.4)", // Déplace l'icône vers le haut au survol
     },
   };
-  //const onCancel = props.onCancel; // fonction de retour lors de la fermeture de la modale
+  //chargement des variables de saisie des champs
   const [name, setName] = useState(""); // variable contenant le nom de la personne envoyant le message
   const [prenom, setPrenom] = useState(""); // variable contenant le prénom de la personne envoyant le message
   const [email, setEmail] = useState(""); // variable contenant l'email de la personne envoyant le message
   const [telephone, setTelephone] = useState(""); // variable contenant le numérode téléphone de la personne envoyant le message
-
   const [message, setMessage] = useState(""); // message d'erreur
   const serviceId = "service_3b23au8"; // variable contenant le numéro d'identification pour emailjs
   const templateId = "template_19udd2q"; // variable contenant le numéro d'identification pour emailjs
   const publicKey = "user_wycCeh0xbzJrIlAiWMPQA"; // clé pour email.js
   const recipientEmail = "philippe.boudinaud@orange.fr"; // pour envoyer vers un autre destinataire il faut rajouter {{to_email}} dans le champ To EMail du template sinon cela laisse l'adresse par défaut. Cela implique que si on veut utiliser une adresse d'un partenaire, on charge recipientEmail avec cette adresse et on modifie le champ du template. Voir on crée un nouveau template
   const [sendStatus, setSendStatus] = useState(null); // variable définissant le status de l'envoi
-  var messageavertissement = document.getElementById("messageavertissement"); // adresse de la div d'affichage du message
+  // fonction d'envoi du message
   const sendMessage = (e) => {
     e.preventDefault();
     let nameS = document.getElementById("name"); // récupére la localisation du champ obligatoire name
@@ -37,6 +36,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
     let telephoneS = document.getElementById("telephone"); // récupére la localisation du champ obligatoire  email
     let messageS = document.getElementById("message"); // récupére la localisation du champ obligatoire message
     let formMess = document.querySelector(".messagecontact"); // récupére la localisation de l'élément servant à afficher les messages d'erreur
+    // fonction de vérification du format de l'email
     const isEmail = () => {
       let isMail = document.getElementById("not-mail"); // récupére la localisation indiquant un email non valide
       let regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/; // régle concernant la validation d'un email
@@ -57,7 +57,9 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
         return false; //renvoi faux pour email valide
       }
     };
+    // vérification des données saisies : email conforme et nom, prénom, téléphone non vide
     if (name && prenom && telephone && isEmail() && message) {
+      // si conforme, envoi du mail
       emailjs
         .send(
           serviceId,
@@ -106,6 +108,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
           }, 2000);
         });
     } else {
+      // si la saisie des champs n'est pas conforme
       formMess.innerHTML = "Merci de remplir correctement les champs requis *"; // charge le message d'erreur
       formMess.style.background = "{$red}"; // met le fond du message en rouge
       formMess.style.opacity = "1"; // affiche le message
@@ -138,41 +141,18 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
       }
     }
 
-    /*else {
-      // envoi du mail
-      emailjs
-        .send(
-          serviceId,
-          templateId,
-          {
-            name: "Philippe BOUDINAUD", // Example data, replace with your dynamic data
-            company: "Maison",
-            phone: "1234567890",
-            email: "philougard@gmail.com",
-            message: message,
-            to_email: recipientEmail,
-          },
-          publicKey
-        )
-        .then(
-          (response) => {
-            setSendStatus("success");
-          },
-          (error) => {
-            setSendStatus("error");
-          }
-        );
-    }*/
   };
 
   return (
     <main className="carteEmail">
       {/* zone de saisie du message  */}
+      {/* Affichage de l'objet de la demande lors d'un envoi de mail à partir de la fiche Véhicule */}
       {objetDemandeprops && (
         <div className="objetDemande">
           Objet de la demande: {objetDemandeprops}
         </div>
       )}
+      {/* Saisie du nom*/}
       <input
         type="text"
         id="name"
@@ -182,6 +162,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
         placeholder="Nom *"
         value={name}
       />
+      {/* Saisie du prénom*/}
       <input
         type="text"
         id="prenom"
@@ -191,6 +172,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
         placeholder="Prénom *"
         value={prenom}
       />
+      {/* Saisie du numéro de téléphone*/}
       <input
         type="number"
         id="telephone"
@@ -200,6 +182,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
         placeholder="Numéro de téléphone *"
         value={telephone}
       />
+      {/* Saisie de l'email*/}
       <div className="email-content">
         <label id="not-mail">Email non valide</label>
         <input
@@ -212,6 +195,7 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
           value={email}
         />
       </div>
+      {/* Saisie du message*/}
       <textarea
         id="message"
         name="message"
@@ -220,12 +204,12 @@ const CarteEmail = ({onClose, objetDemandeprops}) => {
         value={message}
         required
       />
+      {/* Bouton d'envoi du mail*/}
       <div className="zonebouton">
         <button className="boutonoccase" onClick={sendMessage}>
           Envoyer
         </button>
-        { onClose && (<CancelTwoToneIcon sx={iconeStyle} onClick={onClose} />)}
-        
+        {onClose && <CancelTwoToneIcon sx={iconeStyle} onClick={onClose} />}
       </div>
       {/* zone du message si celui est vide  */}
       <div id="messageavertissement" className="messagecontact"></div>

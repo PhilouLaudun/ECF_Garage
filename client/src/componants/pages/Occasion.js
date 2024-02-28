@@ -5,7 +5,7 @@ import Header from "../autres/Header";
 import Footer from "../autres/Footer";
 import Presentation from "../autres/Presentation";
 //import du fichier des données du composant de présentation de la page
-// page occasion
+// page occasion ( cette page ne sert plus, on peut la virer)
 const Occasion = () => {
 
   return (

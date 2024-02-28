@@ -1,13 +1,6 @@
-import React, { useState } from "react";
-import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
-import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import {
-  CustomPrevArrow,
-  CustomNextArrow,
-} from "./CustomArrow";
+import React, { useState } from "react";// chargement des composants react
+import { useDispatch } from "react-redux";// chargement des fonctions de gestion du store
+// import des composants mui material
 import {
   Button,
   Dialog,
@@ -15,23 +8,25 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+// import des icones mui material
+import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+// import des fonctions de gestion du store
 import { updateVehicule } from "../../features/slice/vehiculeSlice";
-
+// composant SynthéseModal pour la modification des données de synthése d'un véhicule (props passées : vehicule: donnée du véhicule / onClose: focntion callback lors de la fermeture de la modale)
 const SyntheseModale = ({ vehicule, onClose }) => {
-console.log("vehicule", vehicule)
-
-  const [marque, setMarque] = useState(vehicule.Marque);
-  const [modele, setModele] = useState(vehicule.Modele);
-  const [modelePrecis, setModelePrecis] = useState(vehicule.Modeleprecis);
-  const [annee, setAnnee] = useState(vehicule.Annee);
-  const [kilometrage, setKilometrage] = useState(vehicule.Kilometrage);
-  const [transmission, setTransmission] = useState(vehicule.Transmission);
-  const [energie, setEnergie] = useState(vehicule.Energie);
-  const [prix, setPrix] = useState(vehicule.Prix);
-  const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
+  const dispatch = useDispatch();// focntion d'appel des slices
+  // chargement des données à modifier et à, afficher dans les inputs
+  const [marque, setMarque] = useState(vehicule.Marque);// marque
+  const [modele, setModele] = useState(vehicule.Modele);// modéle
+  const [modelePrecis, setModelePrecis] = useState(vehicule.Model)// modéle précis;
+  const [annee, setAnnee] = useState(vehicule.Annee);// année
+  const [kilometrage, setKilometrage] = useState(vehicule.Kilometrage);// kilométrage
+  const [transmission, setTransmission] = useState(vehicule.Transmission);// boite de vitesse
+  const [energie, setEnergie] = useState(vehicule.Energie);// energie
+  const [prix, setPrix] = useState(vehicule.Prix);// prix
+  const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue de validation des données modifiées,
   // definition du style des composants icones de sauvegarde et d'annulation
-
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
@@ -40,10 +35,8 @@ console.log("vehicule", vehicule)
       borderRadius: "50%",
     },
   };
-  const dispatch = useDispatch();
-
+// fonction de sauvegarde des données de synthése du véhicule
   const saveInfoVehicule = () => {
-    console.log("Saving info vehicule");
     // verif effectuées: champs vides pour tous
     // on mets le flag de vérification à true dés le départ et on le passe à false si il y a une anomalie, on récupére ensuite les id des div pour afficher les divers messages liés aux saisies obligatoires (non nulles)
     var flagOk = true;
@@ -79,11 +72,13 @@ console.log("vehicule", vehicule)
       setOpen(true); // léve le drapeau d'affichage de la boite de dialogue pour valider les données
     }
   };
+  // fonction de fermeture de la boite de dialogue de validation des données
   const nonValid = () => {
     setOpen(false);
   };
+  // fonction de sauvegarde des données modifiées
   const validDonneeVehicule = () => {
-    setOpen(false);
+    setOpen(false);// fermeture de la boite de dialogue de validation des données
     // sauve les données modifiées ou pas dans un formData (sinon multer ne fonctionne pas)
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
     formData.append("id_vehicule", vehicule.id_vehicule);
@@ -97,13 +92,8 @@ console.log("vehicule", vehicule)
     formData.append("Transmission", transmission);
     formData.append("Prix", prix);
 
-    // Parcours des entrées de FormData et affichage dans la console
-    for (const entry of formData.entries()) {
-      console.log(entry[0] + ":", entry[1]);
-    }
         const id = vehicule.id_vehicule;
-        console.log("id:", id, typeof id);
-    dispatch(updateVehicule({ id: id, data: formData }));
+    dispatch(updateVehicule({ id: id, data: formData }));// update les données dans la base de données
     onClose()
   };
 

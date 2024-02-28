@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";// chargement des composants react
+import { useDispatch, useSelector } from "react-redux";// chargement des fonction de gestion du store 
+// import des fonctions de gestion du store
 import {
   listHoraires,
   updateHoraires,
 } from "../../features/slice/horaireSlice";
-
+//
+//page Horaires (pas de props passées)
 const Horaires = () => {
-  const role = useSelector((state) => state.utilisateur.role);
-  const horaires = useSelector((state) => state.horaire.horaire);
-  const [hasLoadedDataHoraire, setHasLoadedDataHoraire] = useState(false);
-  const dispatch = useDispatch();
-  const [horairesModif, setHorairesModif] = useState([]);
+  const dispatch = useDispatch();// fonction d'appel des slice
+  const role = useSelector((state) => state.utilisateur.role); // role de la personne identifiée : admin ou consultant
+  const horaires = useSelector((state) => state.horaire.horaire);// horaires définis
+  const [hasLoadedDataHoraire, setHasLoadedDataHoraire] = useState(false);// drapeau de chargement des données
+  const [horairesModif, setHorairesModif] = useState([]);// tableau contenant les horaires modifiés
   useEffect(() => {
     async function fetchData() {
       if (!hasLoadedDataHoraire) {
@@ -47,9 +49,11 @@ const Horaires = () => {
       setHorairesModif(horaires);
     }
   }, [horaires]);
+  // focntion de modification des horaires
   const handleChange = (idHoraire, newValue) => {
+    // si role est admin alors on peut modifier les champs
     if (role === 1) {
-      // Mettre à jour l'horaire correspondant dans horairestest
+      // Mettre à jour l'horaire correspondant dans horairesModif
       const updatedHoraires = horairesModif.map((horaire) =>
         horaire.id_horaire === idHoraire
           ? { ...horaire, Horaires: newValue }
@@ -58,17 +62,16 @@ const Horaires = () => {
       setHorairesModif(updatedHoraires);
     }
   };
-
+// focntion de sauvegarde des horaires
   const saveData = () => {
-    // Code to save data to a file (data.js)
-    // You may use a server-side logic or browser APIs like localStorage or IndexedDB for client-side storage
-    // For simplicity, I'll just console log the data here
     dispatch(updateHoraires({ horairesModif: horairesModif }));
   };
 
   return (
     <div className="horaire">
+      {/* Titre*/}
       <h2>HORAIRES D'OUVERTURE</h2>
+      {/* si les données sont chargées alors on les affiche et si role "admin" alors on permet la modification*/}
       {hasLoadedDataHoraire && (
         <div className="horaires-list">
           {horairesModif.map(({ id_horaire, Jour, Horaires }) => (
@@ -82,12 +85,13 @@ const Horaires = () => {
                 value={Horaires}
                 onChange={(e) => handleChange(id_horaire, e.target.value)}
                 disabled={role !== 1}
+                required
               />
             </div>
           ))}
         </div>
       )}
-
+{/* Si role "admin", on affice la bouton de sauvegarde*/}
       {role === 1 && (
         <button className="boutonoccase" onClick={saveData}>
           Save

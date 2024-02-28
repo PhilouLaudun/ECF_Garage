@@ -12,9 +12,9 @@ import PhoneEnabledIcon from "@mui/icons-material/PhoneEnabled";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import EmailIcon from "@mui/icons-material/Email";
 
-// page principale de l'application
+// page principale de l'application (pas de props passée)
 const Home = () => {
-  const navigate = useNavigate() // fonction pour naviguer vers les autres pages 
+  const navigate = useNavigate() // fonction pour naviguer vers les autres pages au click sur les petites icones
   
   return (
     <>
@@ -23,13 +23,16 @@ const Home = () => {
         <Header />
         {/* Corps de la page */}
         <div className="containerbodyhome">
+          {/* Affichage image du haut du corps */}
           <div className="imageHome">
             <img src="./assets/img/Accueil2 et reparation.jpg" alt="Logo" />
             <img src="./assets/img/Accueil1.jpg" alt="Logo" />
           </div>
           <div className="presentHome">
+            {/* Affichage de la présentation de la page */}
             <Presentation className="" page={1} largeur={90} />
           </div>
+          {/* Affichage des icones de contact */}
           <div className="contactHome">
             <div className="contactitem">
               <PetiteIcone materialIcon={PhoneEnabledIcon} />
@@ -37,7 +40,7 @@ const Home = () => {
             </div>
             <div className="contactitem" onClick={() => navigate("/contact")}>
               <PetiteIcone materialIcon={CalendarMonthIcon} />
-              <p>Prendre rendez-vous</p> 
+              <p>Prendre rendez-vous</p>
             </div>
             <div className="contactitem" onClick={() => navigate("/contact")}>
               <PetiteIcone materialIcon={EmailIcon} />
@@ -45,6 +48,7 @@ const Home = () => {
             </div>
           </div>
           <hr className="traithome"></hr>
+             {/* Affichage des services possibles */}
           <div className="serviceHome">
             <div className="containerServiceHome">
               <div className="col1">
@@ -55,8 +59,9 @@ const Home = () => {
                 <CarteService service={3} />
                 <CarteService service={4} />
               </div>
+              {/* Affichage du blog */}
               <div className="col3">
-              <BlogCard/>
+                <BlogCard />
               </div>
             </div>
           </div>

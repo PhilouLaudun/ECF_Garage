@@ -1,8 +1,9 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { login } from "../../features/slice/loginSlice";
+import React, { useState } from "react";// chargement des composants react
+import { useDispatch } from "react-redux";// chargement des fonction de gestion du store
+// import des icones mui material
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
-
+//import des fonctions de gestion du store
+import { login } from "../../features/slice/loginSlice";
 // ************************************************************************************************
 // composant carteConnexion de la page home (pas de props passées)
 const Carteconnexion = ({ onCancel }) => {
@@ -30,50 +31,51 @@ const Carteconnexion = ({ onCancel }) => {
     appearance: "none",
   };
   //*********************************************************************************************
-  // handlesubmit : routine gérant la connexion à la page partenaire après validation du profil
+  // handlesubmit : routine gérant la connexion à l'application après validation du profil
   const handleLogin = (e) => {
     e.preventDefault(); // evite les déclenchements secondaires dus aux parents
-    console.log("credentials", credentials);
-    var message = "";
-    var flagValidDonnee = true;
-    
+    var message = ""; // contient le message d'erreur
+    var flagValidDonnee = true; // flag de validation des données saisies
+    // verification si la saisie est compatible avec le format d'un email
     if (!isValidEmail(credentials.identifiant)) {
+      // email non valide
       flagValidDonnee = false;
       message = "L'identifiant doit être un email";
     }
+    // verification si le mot de passe n'est  pas vide
     if (!credentials.mdp) {
+      // mot de passe vide
       flagValidDonnee = false;
       message = message + "  - Le mot de passe doit être renseigné";
     }
+    // action si les données sont valides ou pas
     if (flagValidDonnee) {
       //envoi les données saisies vers le controlleur de la base de données qui effectue le test de la validaté de l'identifiant et du mot de passe
       dispatch(login(credentials)).then((res) => {
         const okay = res.payload.okay.trim().toLowerCase() === "true";
-        var messageres =""
+        var messageres = "";
         if (okay) {
-
-        var messagelogin = document.getElementById("messagelogin"); // récupère l'adresse dans le DOM de la div dédié au message
-        messagelogin.innerHTML = "Utilisateur identifié"; // inserre le message dans le DOM et l'affiche pendant 3s
-        messagelogin.style.display = "inline-block";
-        setTimeout(function () {
-          messagelogin.innerHTML = "";
-          messagelogin.style.display = "none";
-         onCancel() 
-        }, 3000);
-
+          var messagelogin = document.getElementById("messagelogin"); // récupère l'adresse dans le DOM de la div dédié au message
+          messagelogin.innerHTML = "Utilisateur identifié"; // inserre le message dans le DOM et l'affiche pendant 3s
+          messagelogin.style.display = "inline-block";
+          setTimeout(function () {
+            messagelogin.innerHTML = "";
+            messagelogin.style.display = "none";
+            onCancel();
+          }, 3000);
         } else {
-        // si identifiant ou mot de passe incorrect
-        messageres = res.payload.message; // récupére le message
-        console.log("messageres", messageres);
-        messagelogin = document.getElementById("messagelogin"); // récupère l'adresse dans le DOM de la div dédié au message
-        messagelogin.innerHTML = messageres; // inserre le message dans le DOM et l'affiche pendant 3s
-            messagelogin.style.display = "inline-block";
-        setTimeout(function () {
-          messagelogin.innerHTML = "";
-             messagelogin.style.display = "none";
-        }, 3000);
-      }
-    });
+          // si identifiant ou mot de passe incorrect
+          messageres = res.payload.message; // récupére le message
+          console.log("messageres", messageres);
+          messagelogin = document.getElementById("messagelogin"); // récupère l'adresse dans le DOM de la div dédié au message
+          messagelogin.innerHTML = messageres; // inserre le message dans le DOM et l'affiche pendant 3s
+          messagelogin.style.display = "inline-block";
+          setTimeout(function () {
+            messagelogin.innerHTML = "";
+            messagelogin.style.display = "none";
+          }, 3000);
+        }
+      });
     } else {
       var messagelogin = document.getElementById("messagelogin"); // récupère l'adresse dans le DOM de la div dédié au message
       if (message.trim() === "") {
@@ -106,6 +108,7 @@ const Carteconnexion = ({ onCancel }) => {
   };
   return (
     <main className="carteconnexion">
+      {/* En tête */}
       <div className="titreconnexion">
         <div className="titre">Connexion</div>
         <div className="cancelconnexion">
@@ -113,7 +116,9 @@ const Carteconnexion = ({ onCancel }) => {
           <CancelTwoToneIcon sx={iconeStyle} onClick={onCancel} />
         </div>
       </div>
+      {/* Corps */}
       <div className="ligneconnexion">
+        {/* Saisie du login */}
         <input
           type="text"
           id="identifiant"
@@ -124,6 +129,7 @@ const Carteconnexion = ({ onCancel }) => {
         ></input>
       </div>
       <div className="ligneconnexion">
+        {/* Saisie du mot de passe */}
         <input
           type="password"
           id="mdp"
@@ -135,10 +141,11 @@ const Carteconnexion = ({ onCancel }) => {
           style={inputStyle} // Appliquez le style à l'élément input
         ></input>
       </div>
-
+      {/* Affichage des messages */}
       <div className="ligneconnexion">
         <div id="messagelogin" className="messagelogin"></div>
       </div>
+      {/* Bouton de soumission */}
       <div className="boutonenvoyer">
         <button
           name="boutonEnvoyer"

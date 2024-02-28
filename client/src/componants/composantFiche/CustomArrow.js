@@ -1,7 +1,6 @@
-// CustomArrow.js
 
-import React from "react";
-
+import React from "react";// chargement des composants react
+// style des fléches du carroussel
 const CustomPrevArrow = (props) => (
   <div
     {...props}

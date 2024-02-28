@@ -1,15 +1,15 @@
 import React, { useState } from "react"; // import des fonctions de react
+import { useDispatch } from "react-redux";// chargement des fonctions de gestion du store
+// import des icones mui material
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
-//import { createPrestation } from "../../features/slice/prestationSlice";
-import { useDispatch } from "react-redux";
-import { combineSlices } from "@reduxjs/toolkit";
+// import des fonctions de gestion du store
 import { createEquip } from "../../features/slice/equipementSlice";
 // composant NewPrestation (props passées: aucune )
 const NewEquipement = (props) => {
-  // composant affichant un input et une croix pour la saisie d'une nouvelle prestation
+  const dispatch = useDispatch(); // définit une fonction dispatch pour  envoyer les données dans le store
+  // composant affichant un input et une croix pour la saisie d'un nouvel equipement
   const [valeurInput, setValeurInput] = useState(""); // récupére la valeur saisie dans l'input, on verra à traiter les doublons par la suite
-  //const listEquipement = props.equipements; // liste des equipements
-  const dispatch = useDispatch();
+
   const nouvelEquipement = () => {
     // si la saisie est vide on affiche le message pour signifier que l'input doit etre renseigné
     if (valeurInput === "") {
@@ -36,13 +36,13 @@ const NewEquipement = (props) => {
       } else {// si nouvelle prestation
         dispatch(createPrestation({ data: valeurInput })); // crée la nouvelle prestation
       }*/
-       dispatch(createEquip({ data: valeurInput })); // crée la nouvelle prestation
+      dispatch(createEquip({ data: valeurInput })); // crée la nouvelle prestation
     }
   };
   return (
     <main className="newEO">
       <div className="bouton">
-        {/* zone de saisie d'une prestation */}
+        {/* zone de saisie d'un équipement */}
         <div className="zoneinput">
           {/* zone de saisie */}
           <input

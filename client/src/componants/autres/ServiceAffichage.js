@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";// chargement des composants react
+import { useDispatch, useSelector } from "react-redux";// chargement des fonction de gestion du store 
+// import des icones mui material
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+// import des slices
 import { listServices, updateServices } from "../../features/slice/serviceSlice";
-
+//
+// composant ServiceAffichage (props passées : id : numéro de la page pour afficher le texte correspondant / service: dert à définir les positions d'affichage de la photo et du texte : 1 photo-texte : 2 texte-photo)
 const ServiceAffichage = ({ id, service }) => {
-  const [hasLoadedDataServ, setHasLoadedDataServ] = useState(false);
-  const role = useSelector((state) => state.utilisateur.role);
-  const services = useSelector((state) => state.service.service);
-  const dispatch = useDispatch();
-  const [idBd, setIdBd] = useState("");
-  const [image, setImage] = useState("");
-  const [titre, setTitre] = useState("");
-  const [texte, setTexte] = useState("");
-  const [isModified, setIsModified] = useState(false);
-  var classService = service === 1 ? "service1" : "service2";
-  var classImg = service === 1 ? "imge1" : "imge2";
-  var classText = service === 1 ? "servi1" : "servi2";
-
+  const dispatch = useDispatch(); // fonction d'envoi des données vers les slices du store
+  const [hasLoadedDataServ, setHasLoadedDataServ] = useState(false); // drapeau de chargement des données
+  const role = useSelector((state) => state.utilisateur.role); // role de la personne identifiée : admin ou consultant
+  const services = useSelector((state) => state.service.service); // contient l'ensemble des données des services
+  // initialisation des variables
+  const [image, setImage] = useState(""); // image à afficher
+  const [titre, setTitre] = useState(""); // titre du service
+  const [texte, setTexte] = useState(""); // texte du sertvice
+  const [isModified, setIsModified] = useState(false); // drapeau signifiant des modifications dans les saisies
+  var classService = service === 1 ? "service1" : "service2"; // charge en fonction de service la classe pour modifier la position texte-photo (utilisation d'un grid différent)
+  var classImg = service === 1 ? "imge1" : "imge2"; // charge en fonction de service la classe pour modifier la position de la photo
+  var classText = service === 1 ? "servi1" : "servi2"; // charge en fonction de service la classe pour modifier la position du texte
   // definition du style des composants icones de sauvegarde et d'annulation
   const iconeStyle = {
     fontSize: "35px",
@@ -27,6 +29,7 @@ const ServiceAffichage = ({ id, service }) => {
       borderRadius: "50%",
     },
   };
+  // useEffect de chargement des données à partir de la BD
   useEffect(() => {
     async function fetchData() {
       if (!hasLoadedDataServ) {
@@ -57,7 +60,7 @@ const ServiceAffichage = ({ id, service }) => {
     }
     fetchData();
   }, [dispatch, hasLoadedDataServ, services]);
-  // Mettre à jour horairestest avec les horaires initiaux du store Redux
+  // Mettre à jour les données à afficher avec celles initiales du store Redux
   useEffect(() => {
     if (hasLoadedDataServ) {
       const servicePage = services.find((service) => service.id_service === id);
@@ -66,26 +69,27 @@ const ServiceAffichage = ({ id, service }) => {
       setTexte(servicePage.Texte);
     }
   }, [services]);
+  // fonction de modification lors de la saisie dans le champs texte
   const handleInputChange = (event) => {
     setTexte(event.target.value);
     setIsModified(true); // Lève le drapeau lorsque le champ est modifié
   };
+  // fonction d'annulation du texte modifié
   const abordtexteServ = () => {
     const servicePage = services.find((service) => service.id_service === id);
     setTexte(servicePage.Texte);
     setIsModified(false); // Lève le drapeau lorsque le champ est modifié
   };
+  //fonction de sauvegarde du texte modifié
   const saveMessage = () => {
     if (texte === "") {
-     const servicePage = services.find((service) => service.id_service === id);
+      const servicePage = services.find((service) => service.id_service === id);
       setTexte(servicePage.Texte);
       setIsModified(false); // Lève le drapeau lorsque le champ est modifié
     } else {
-      console.log("page", id, typeof id);
-      console.log("message2", texte, typeof texte);
       const message = {
         Titre: titre,
-        Texte:texte,
+        Texte: texte,
       };
       dispatch(updateServices({ id: id, message: message }));
       setIsModified(false);
@@ -93,6 +97,7 @@ const ServiceAffichage = ({ id, service }) => {
   };
   return (
     <main className="mainService">
+      {/* si message modifié et admin, on affiche les icones de sauvegarde ou d'annulation */}
       {isModified && role === 1 && (
         <div className="iconContainer">
           <SaveTwoToneIcon
@@ -103,10 +108,14 @@ const ServiceAffichage = ({ id, service }) => {
         </div>
       )}
       <div className={classService}>
+        {/* quand les données sont chargées*/}
         {hasLoadedDataServ && (
           <>
+            {/* affichage photo*/}
             <img className={classImg} src={image} alt="Logo" />
+            {/* affichage titre et texte*/}
             <div className={classText}>
+              {/* affichage titre*/}
               <div className="titreService">{titre}</div>
               <div
                 className={`messageservice ${

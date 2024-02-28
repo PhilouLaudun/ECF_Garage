@@ -1,7 +1,8 @@
-import React, { useState } from "react";
-// Exemple si le fichier JSON est dans le même répertoire que votre composant
+import React, { useState } from "react";// chargement des composants react
+// import des données
 import menuNav from '../../data/menuNavigation';
-
+//
+//composant Navigation (pas de props passées)
 const Navigation = () => {
   const [menus, setMenus] = useState(menuNav);
   return (

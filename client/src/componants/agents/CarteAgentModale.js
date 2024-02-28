@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"; // import des fonctions de react
-import { useDispatch} from "react-redux";
-// import des composants constituant la page
+import { useDispatch} from "react-redux";// chargement des fonction de gestion du store 
+// import des composants mui material
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
+//gestion du store
 import {
   Select,
   Dialog,
@@ -13,7 +14,6 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-// Gestion du store
 import { listeUtilisateur, saveNewAgent, updateAgent } from "../../features/slice/loginSlice";
 // données externes contenant les qualités possible pour les agents
 import { QualiteAgent } from "../../data/qualiteAgent";// import des différentes qualités possibles des agents 
@@ -29,7 +29,7 @@ export const CarteAgentModale = ({onCancel}) => {
   const [hasLoadedDataAgent, setHasLoadedDataAgent] = useState(false); // flag signifiant le chargement des données
   const [flagNouvelAgent, setFlagNouvelAgent] = useState(false);// flag pour  la création d'un nouvel agent
   const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue devalidation des données saisies,
-  const [message, setMessage] = useState(""); //  message de retour de  la base de données en cas d'erreur ou si elle est vide
+ // const [message, setMessage] = useState(""); //  message de retour de  la base de données en cas d'erreur ou si elle est vide
   // definition du style des composants icones de sauvegarde, annulation et fermeture
   const [idUtilisateur, setIdUtilisateur] = useState("");// id de l'utilisateur
   const [nomAgent, setNomAgent] = useState("");// nom de l'utilisateur
@@ -71,7 +71,7 @@ export const CarteAgentModale = ({onCancel}) => {
           if (response.payload.okay === "false") {
             // si le flag okay est faux c'est que la BD est vide
             // Gérer le cas où la table est vide ou pas de structure pour le partenaire donné
-            setMessage(response.payload.message); //récupère le message renvoyé par le serveur (base vide ou structure absente)
+           // setMessage(response.payload.message); //récupère le message renvoyé par le serveur (base vide ou structure absente)
             setHasLoadedDataAgent(true); // Marquer que les données ont été chargées
           } else {
             setHasLoadedDataAgent(true);// Marquer que les données ont été chargées
@@ -81,9 +81,9 @@ export const CarteAgentModale = ({onCancel}) => {
       } catch (error) {
         // en cas d'erreur lors de l'interrogation de la BD
         setHasLoadedDataAgent(true); // Marquer que les données ont été chargées
-        setMessage(
+        /*setMessage(
           "Une erreur est survenue lors de la recherche des utilisateurs."
-        );
+        );*/
       }
     }
   }; 

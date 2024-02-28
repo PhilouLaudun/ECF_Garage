@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
-import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+import React, { useState } from "react";// chargement des composants react
+import { useDispatch } from "react-redux";// chargement des fonctions de gestion du store
+// import des composants mui material
 import {
   Button,
   Dialog,
@@ -8,38 +8,41 @@ import {
   DialogContent,
   DialogTitle,
 } from "@mui/material";
-import { useDispatch } from "react-redux";
+// import des icones mui material
+import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
+import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
+// import des fonctions de gestion du store
 import {
   createCaract,
   updateCaract,
 } from "../../features/slice/caracteristiqueSlice";
-
+//composant ModaleCaracteristiqueVehicule pour la modification des données caractéristiques d'un véhicule (props passées : caracteristique: donnée caractéristique du véhicule / flagCreation: flag signifiant la création de données/ onClose: focntion callback lors de la fermeture de la modale/ id : id du véhicule concerné)
 const ModaleCaracteristiqueVehicule = ({
   caracteristique,
   flagCreation,
   onClose,
   idvehicule,
 }) => {
-
-  const [provenance, setProvenance] = useState(caracteristique.Provenance);
+    const dispatch = useDispatch();// fonction d'appel du store
+//chargement des données à modifier ou a créer
+  const [provenance, setProvenance] = useState(caracteristique.Provenance);// provenance
   const [miseencirculation, setMiseencirculation] = useState(
     caracteristique.Miseencirculation
-  );
-  const [couleur, setCouleur] = useState(caracteristique.Couleur);
-  const [nombreporte, setNombreporte] = useState(caracteristique.Nombreporte);
-  const [nombreplace, setNombreplace] = useState(caracteristique.Nombreplace);
-  const [longueur, setLongueur] = useState(caracteristique.Longueur);
-  const [largeur, setLargeur] = useState(caracteristique.Largeur);
+  );//  date de mise en circulation
+  const [couleur, setCouleur] = useState(caracteristique.Couleur);// couleur
+  const [nombreporte, setNombreporte] = useState(caracteristique.Nombreporte);// nombres de portes
+  const [nombreplace, setNombreplace] = useState(caracteristique.Nombreplace);//  nombres de places
+  const [longueur, setLongueur] = useState(caracteristique.Longueur);// longueur
+  const [largeur, setLargeur] = useState(caracteristique.Largeur);// largeur
   const [volumecoffre, setVolumecoffre] = useState(
     caracteristique.Volumecoffre
-  );
+  );// volume du coffre
   const [puissancefiscal, setPuissancefiscal] = useState(
     caracteristique.Puissancefiscale
-  );
+  );// puissance fiscale
   const [puissancemoteur, setPuissancemoteur] = useState(
     caracteristique.Puissancemoteur
-  );
-
+  );// puissance du moteur
   const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
   // definition du style des composants icones de sauvegarde et d'annulation
   const iconeStyle = {
@@ -50,8 +53,7 @@ const ModaleCaracteristiqueVehicule = ({
       borderRadius: "50%",
     },
   };
-  const dispatch = useDispatch();
-
+// fonction de vérification des données avant la sauvegarde
   const saveCaracteristiqueVehicule = () => {
     // verif effectuées: champs vides pour tous
     // on mets le flag de vérification à true dés le départ et on le passe à false si il y a une anomalie, on récupére ensuite les id des div pour afficher les divers messages liés aux saisies obligatoires (non nulles)
@@ -100,11 +102,13 @@ const ModaleCaracteristiqueVehicule = ({
       setOpen(true); // léve le drapeau d'affichage de la boite de dialogue pour valider les données
     }
   };
+  // fonction de non validation des données
   const nonValid = () => {
     setOpen(false);
   };
+  // fonction de sauvegarde ou de création des données
   const validDonneeVehicule = () => {
-    setOpen(false);
+    setOpen(false);// ferme la modale de validation des données
     // sauve les données modifiées ou pas dans un formData (sinon multer ne fonctionne pas)
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
     //formData.append("id_caracteristique", carte.id_partenaire); // a rajouter pour update par la suite
@@ -119,16 +123,13 @@ const ModaleCaracteristiqueVehicule = ({
     formData.append("Volumecoffre", volumecoffre);
     formData.append("Puissancefiscale", puissancefiscal);
     formData.append("Puissancemoteur", puissancemoteur);
-
-    // Parcours des entrées de FormData et affichage dans la console
-    /*for (const entry of formData.entries()) {
-      console.log(entry[0] + ":", entry[1]);
-    }*/
+// en focntion du flag, crée ou upadte un enregistrement
     if (flagCreation) {
+      // si crétion de caractéristiques
       dispatch(createCaract({ data: formData }));
     } else {
+      // si update les données
       const id = caracteristique.id_caracteristique;
-      console.log("id:", id, typeof id);
       dispatch(updateCaract({ id: id, data: formData }))
         .then((response) => {
           // Traitez la réponse ici si nécessaire
@@ -139,7 +140,7 @@ const ModaleCaracteristiqueVehicule = ({
           // Gérez les erreurs ici si nécessaire
         });
     }
-    onClose()
+    onClose() // ferme la modale de création des données et revient à la page ficheVehicule
   };
 
   // fonction de test des champs vides

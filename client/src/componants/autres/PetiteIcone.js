@@ -1,6 +1,9 @@
-import React from 'react'
+import React from 'react'// chargement des composants react
+// import des composants mui material
 import { styled } from "@mui/system";
+//import des icones mui material
 import { IconButton } from "@mui/material";
+// style du cercel autour de l'icone
     const StyledCircle = styled("div")({
       width: "50px",
       height: "50px",
@@ -20,6 +23,8 @@ import { IconButton } from "@mui/material";
         // Ajoutez d'autres styles selon vos besoins
       },
     });
+//
+// compsant PetitreIcone (props passées : materialIcon : nom de l'icone à afficher)
 const PetiteIcone = ({ materialIcon: MaterialIcon }) => {
   return (
     <div>

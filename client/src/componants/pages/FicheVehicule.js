@@ -1,4 +1,16 @@
-
+import { useState } from "react";// chargement des composants react
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";// chargement des fonction de gestion du store
+// import des composants de la page
+import Header from "../autres/Header";
+import Footer from "../autres/Footer";
+import SyntheseVehicule from "../composantFiche/SyntheseVehicule";
+import CaracteristiqueVehicule from "../composantFiche/CaracteristiqueVehicule";
+import EquipementVehicule from "../composantFiche/EquipementVehicule";
+import OptionVehicule from "../composantFiche/OptionVehicule";
+// import des composants mui material
+import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
+// import des composant du carroussel
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -6,22 +18,13 @@ import {
   CustomPrevArrow,
   CustomNextArrow,
 } from "../composantFiche/CustomArrow";
-import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
-import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
-import Header from "../autres/Header";
-import Footer from "../autres/Footer";
-import SyntheseVehicule from "../composantFiche/SyntheseVehicule";
-import CaracteristiqueVehicule from "../composantFiche/CaracteristiqueVehicule";
-import EquipementVehicule from "../composantFiche/EquipementVehicule";
-import OptionVehicule from "../composantFiche/OptionVehicule";
-import { useDispatch, useSelector } from "react-redux";
+// gestion du store
 import { ajoutImage, fetchImageById } from "../../features/slice/imageSlice";
-import { useEffect } from "react";
 import { fetchEquip } from "../../features/slice/equipementSlice";
 import { fetchOpt } from "../../features/slice/optionSlice";
-import { useState } from "react";
+// import focntion externe pour afficher les images
 const backendUrl = process.env.REACT_APP_BACKEND_URL; // charge l'url du serveur pour charger directement les photos à partir du serveur, fichier .env à la racine de /client
-
+  // definition du style du composant carroussel
 const settings = {
   dots: true,
   infinite: true,
@@ -31,15 +34,16 @@ const settings = {
   prevArrow: <CustomPrevArrow />,
   nextArrow: <CustomNextArrow />,
 };
-
+// composant page FicheVehicule (pas de props passées)
 const FicheVehicule = () => {
-  const authorized = useSelector((state) => state.utilisateur.isAuthentified);
-  let id = useSelector((state) => state.vehicule.vehiculeEnCours);
-  id = parseInt(id); // tranforme l'id en nombre, car l'id envoyé par Navigate est modifié en string
-  const dispatch = useDispatch();
-  const imagesFromStore = useSelector((state) => state.image.images);
-  const [newImages, setNewImages] = useState([]);
-  const [flagNewImages, setFlagNewImages] = useState(false);
+  const authorized = useSelector((state) => state.utilisateur.isAuthentified); // sert pour afficher les icones de modification pour les personnes authorisées
+  let id = useSelector((state) => state.vehicule.vehiculeEnCours); // récupére l'id du véhicule en cours d'affichage
+  id = parseInt(id); // tranforme l'id en nombre
+  const dispatch = useDispatch(); // fonction d'appel des fonctions du store
+  const imagesFromStore = useSelector((state) => state.image.images); // récupére les images à afficher stockées dans le store
+  const [newImages, setNewImages] = useState([]); // tableau contenant les nouvelles images pour le carroussel
+  const [flagNewImages, setFlagNewImages] = useState(false); // flag pour l'ajout de nouvelles images ans le carroussel
+  // style des icones sauvegarde et annulation
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
@@ -48,7 +52,6 @@ const FicheVehicule = () => {
       borderRadius: "50%",
     },
   };
-  //const images = useSelector((state) => state.image.images);
   // récupére les images pour le carroussel dans la tables images, on ne teste pas la base vide car il y a par défaut des images
   useEffect(() => {
     dispatch(fetchImageById({ data: id }));
@@ -63,13 +66,13 @@ const FicheVehicule = () => {
     return `${backendUrl}/${formattedUrl}`; // backendUrl est votre URL de backend
   };
 
-  //
-
-  dispatch(fetchEquip()); //recupére la liste des équipement, cela permet de charger le store pour les cartes
-  dispatch(fetchOpt()); //recupére la liste des options, cela permet de charger le store pour les cartes
-
+  // récupération des données pour l'équipement et les options
+  dispatch(fetchEquip()); //recupére la liste des équipement, cela permet de charger le store pour la carte equipement
+  dispatch(fetchOpt()); //recupére la liste des options, cela permet de charger le store pour la carte options
+  // focntion appelée quand on ajoute de nouvelles images
   const handleFileChangeCarroussel = async (event) => {
-    setFlagNewImages(true);
+    setFlagNewImages(true); // léve le drapeau signifiant l'import de nouvelles images
+    // vérifie que les images sont bien des images avant de les sauvegarder dans le tableau newImages ( voir carte modaleCarteVehicule)
     const selectedFiles = event.target.files;
     const imagesToAdd = [];
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -88,9 +91,9 @@ const FicheVehicule = () => {
         console.error("Erreur lors de la lecture du fichier:", error);
       }
     }
-    console.log("imagesToAdd:", imagesToAdd);
     setNewImages((prevImages) => [...prevImages, ...imagesToAdd]);
   };
+  // fonction de lecture d'un fichier image
   const readFileAsBase64 = (file) => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -106,6 +109,7 @@ const FicheVehicule = () => {
       reader.readAsDataURL(file);
     });
   };
+  // fonction de sauvegarde des nouvelles images dans la base de données
   const saveImagesToDatabase = () => {
     // Envoyer les nouvelles images au backend pour les sauvegarder dans la base de données
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
@@ -119,10 +123,6 @@ const FicheVehicule = () => {
       });
       formData.append("images", imageFile);
     }
-    // Parcours des entrées de FormData et affichage dans la console
-    /*for (const entry of formData.entries()) {
-      console.log("visu formdata",entry[0] + ":", entry[1]);
-    }*/
     dispatch(ajoutImage({ data: formData }));
     // Réinitialiser les nouvelles images dans le state local
     setNewImages([]);
@@ -142,6 +142,7 @@ const FicheVehicule = () => {
       type: mimeString,
     });
   }
+  // permet l'affichage des images issus du back ajoutées à celles du tableau newImage, car les url sont différentes
   const allImages = [
     ...imagesFromStore.map((item) => ({
       id: item.id_photo,
@@ -152,16 +153,17 @@ const FicheVehicule = () => {
     ...newImages,
   ];
 
-  //sauvegarde DOM
-
-  /*
-   */
   return (
     <main>
+      {/* En tete */}
       <Header />
+      {/* Corps de la page */}
       <div className="corpFiche">
+        {/* haut de la page : slider et synthése */}
         <div className="hautc">
+          {/*slider  */}
           <div className="slider">
+            {/* zone d'ajout des images si personne autorisée */}
             <div className="zonemodif">
               {authorized && (
                 <label className="file-input-container">
@@ -181,7 +183,7 @@ const FicheVehicule = () => {
                 />
               )}
             </div>
-
+            {/* zone d'affichage du carroussel */}
             <Slider {...settings} infinite={false}>
               {allImages.map((image) => (
                 <img
@@ -193,18 +195,22 @@ const FicheVehicule = () => {
               ))}
             </Slider>
           </div>
+          {/*carte synthése  */}
           <div className="synthesevehicule">
             <SyntheseVehicule id={id} />
           </div>
         </div>
+        {/* bas de la page : caractéristiques, équipements et options */}
         <div className="basc">
-          {" "}
+          {/* carte caractéristiques  */}
           <div className="caracteristique">
             <CaracteristiqueVehicule id={id} />
           </div>
+          {/* carte equipements  */}
           <div className="equipement">
             <EquipementVehicule id={id} />
           </div>
+          {/* carte options  */}
           <div className="option">
             <OptionVehicule id={id} />
           </div>
