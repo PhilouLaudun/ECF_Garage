@@ -3,10 +3,9 @@ const db = require("../models/index");
 const Equipement = db.equipements;
 const op = db.Sequelize.Op;
 
-// Charge tous les partenaires de la base de données
+// Charge tous les équipements de la base de données
 exports.fetchEquip = (req, res) => {
   // test si la table est vide
-  console.log("controller caracteristique");
   var okay = false;
   var vide = false;
   Equipement.count()
@@ -26,7 +25,6 @@ exports.fetchEquip = (req, res) => {
       vide = "false"; // flag pour exprimer que la table est vide afin de differencier ce cas avec l'absence de structure pour ce partenaire
       Equipement.findAll()
         .then((data) => {
-            //console.log("data controller ", data);
             res.send({ data, okay, vide });
         })
         .catch((err) => {
@@ -39,6 +37,7 @@ exports.fetchEquip = (req, res) => {
     }
   });
 };
+// Crée un équipement
 exports.createEquip = (req, res) => {
   const equipement = {
     Equipement: req.body.data,
@@ -55,20 +54,8 @@ exports.createEquip = (req, res) => {
           });
         });
   
-  /*var flagmodifdonnee = false;
-  Caracteristique.create(newvaracteristique)
-    .then((data) => {
-      var flagmodifdonnee = true;
-      // Renvoyez une réponse au client
-      res.send({ flagmodifdonnee, data }); // renvoi les données;
-    })
-    .catch((err) => {
-      console.error("Erreur lors de la création des caractéristiques :", err);
-      res
-        .status(500)
-        .json({ message: "Erreur lors de la création des caractéristiques." });
-    });*/
 };
+// Met à jourles équipemen,t d'un véhicule
 exports.updateCaract = (req, res) => {
   const id = req.params.id;
   // transforme les valeurs numeriques en nombre avant enregistrement dans la BD, sinon en retour l'index est un string au lieu d'un nombre
@@ -96,7 +83,7 @@ exports.updateCaract = (req, res) => {
         res.send(req.body); // on utilise req.body en retour pour pouvoir modifié le store sinon cela ne fonctionne pas
       } else {
         res.send({
-          message: `Impossible de mettre à jour la structure avec l'id=${id}. Peut-etre  que le la caracteristique n'a pas été trouvé ou alors req.body est vide!`,
+          message: `Impossible de mettre à jour les equipements avec l'id=${id}. Peut-etre  que les équipements n'ont pas été trouvés ou alors req.body est vide!`,
         });
       }
     })
@@ -104,7 +91,7 @@ exports.updateCaract = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          "Une erreur est intervenue lors de la mise à jour de la cracteristique avec l'id=" +
+          "Une erreur est intervenue lors de la mise à jour des équipements avec l'id=" +
           id,
       });
     });

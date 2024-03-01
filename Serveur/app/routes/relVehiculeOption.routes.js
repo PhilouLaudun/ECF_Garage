@@ -4,11 +4,11 @@ module.exports = app => {
   const relVehiculeOption = require("../controllers/relvehiculeoptions.controller.js");
   var router = require("express").Router();
 
-  // charge les images pour un vehicule
+  // charge les relations vehicule-options pour un vehicule
   router.get("/list", relVehiculeOption.listeRelVO);
-
+  // crée une relation vehicule-options
   router.post("/create", relVehiculeOption.createRelVO);
-  // supprime une prestation
+  // supprime une  relation vehicule-options
   router.delete("/:id", relVehiculeOption.deleteRelVO); //
 
   app.use("/api/relVehiculeOption", router);

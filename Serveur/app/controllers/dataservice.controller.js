@@ -5,7 +5,7 @@ const op = db.Sequelize.Op;
 
 
 
-// Charge tous les utilisateurs de la base de données
+// Charge tous les services de la base de données
 exports.findAll = (req, res) => {
   // récupére le titre (title) du post contenu dans la requête (fonction provenant d'un exemple de post et gardé pour éviter des erreurs; à travailler pour le supprimer),condition :  varaible contenant la condition de recherche, pour nous seul l'option est à garder, on ne recherche pas par nom,
   const title = req.query.title;
@@ -45,7 +45,7 @@ exports.findAll = (req, res) => {
       });
     });
 }
-
+// Met à jour un service de la base de données
 exports.update = async (req, res) => {
   const id = req.params.id;
   const texte = {

@@ -3,12 +3,11 @@ const db = require("../models/index.js");
 const Image = db.images;
 const op = db.Sequelize.Op;
 
-// Charge tous les partenaires de la base de données
+// Charge les images pour un véhicule
 exports.findImageById = (req, res) => {
   // test si la table est vide
   const fk_vehicule = req.query.data; // ici on utilise directement le data sans le transformer en nombre, on utilise la forme string
   const condition = fk_vehicule ? { fk_vehicule: fk_vehicule } : {}; // Utilisez un objet vide pour ne pas appliquer de filtre si fk_parten n'est pas spécifié
-  console.log("condition", condition);
   // La table contient des enregistrements, effectuez la recherche
   okay = "true"; // flag de chargement correct des données
   vide = "false"; // flag pour exprimer que la table est vide afin de differencier ce cas avec l'absence de structure pour ce partenaire
@@ -18,12 +17,11 @@ exports.findImageById = (req, res) => {
         // Aucune structure trouvée pour ce partenaire
         okay = "false"; // flag de validation à faux
         res.send({
-          message: "Aucune structure trouvée pour ce partenaire",
+          message: "Aucune image trouvée pour ce vehicule",
           okay,
           vide,
         }); // renvoi un message à afficher et le flag de validation à faux
       } else {
-        //console.log("data controller ", data);
         res.send({ data, okay, vide });
       }
     })
@@ -31,58 +29,20 @@ exports.findImageById = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Une erreur s'est produite lors de la récupération des structures.",
+          "Une erreur s'est produite lors de la récupération des images.",
       });
     });
-
-  /*Image.count()
-    .then((count) => {
-      var okay = "true"; // léve le drapeau de validation si les données sont trouvées
-      if (count === 0) {
-        // La table est vide
-        okay = "false"; // flag de validation à faux
-        res.send({
-          message: "Table vehicule vide, veuillez saisir un vehicule  ",
-          okay,
-        }); // renvoi un message à afficher et le flag de validation à faux
-      } else {
-        // La table contient des enregistrements, effectuez la recherche
-        Image.findAll()
-          .then((data) => {
-            res.send({ data, okay }); // renvoi les données
-          })
-          .catch((err) => {
-            res.status(500).send({
-              message:
-                err.message ||
-                "Une erreur est intervenue lors de la recherche des vehicules.",
-            });
-          });
-      }
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message ||
-          "Une erreur est intervenue lors de la recherche des vehicules.",
-      });
-    });
-  */
 };
+// Ajoute des images pour un vehicule
 exports.ajout = (req, res) => {
-  console.log("Données du formulaire :", req.body);
   id_vehicule = parseInt(req.body.id_vehicule, 10);
-  console.log("controller id_vehicule :", id_vehicule);
-
     // Affichage des fichiers téléversés avec Multer
-  console.log("Fichiers téléversés :", req.files);
        const images = req.files.map((file) => {
         return {
           fk_vehicule: id_vehicule,
           UrlPhoto: `uploads/${file.filename}`,
         };
       });
-
       // Enregistrez les images dans la base de données
       return Image.bulkCreate(images);
  }

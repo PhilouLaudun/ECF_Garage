@@ -3,24 +3,20 @@ const db = require("../models/index.js");
 const Blog = db.blogs;
 const op = db.Sequelize.Op;
 
-
-
-// Charge tous les utilisateurs de la base de données
+// Charge tous les avis de la base de données
 exports.findAll = (req, res) => {
   // récupére le titre (title) du post contenu dans la requête (fonction provenant d'un exemple de post et gardé pour éviter des erreurs; à travailler pour le supprimer),condition :  varaible contenant la condition de recherche, pour nous seul l'option est à garder, on ne recherche pas par nom,
-  console.log("findAll controleur blog");
   const title = req.query.title;
   var condition = title ? { title: { [op.like]: `%${title}%` } } : null; //(attention au guillemet simple inverse)
   // Recherche dans la base de données tous les enregistrements car la condition est nulle, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
   Blog.count()
     .then((count) => {
       var okay = "true"; // léve le drapeau de validation si les données sont trouvées
-      console.log("blog",okay);
       if (count === 0) {
         // La table est vide
         okay = "false"; // flag de validation à faux
         res.send({
-          message: "Table utilisateur vide, veuillez saisir un utilisateur  ",
+          message: "Table avis vide, veuillez saisir un avis  ",
           okay,
         }); // renvoi un message à afficher et le flag de validation à faux
       } else {
@@ -33,7 +29,7 @@ exports.findAll = (req, res) => {
             res.status(500).send({
               message:
                 err.message ||
-                "Une erreur est intervenue lors de la recherche des partenaires.",
+                "Une erreur est intervenue lors de la recherche des avis.",
             });
           });
       }
@@ -45,15 +41,9 @@ exports.findAll = (req, res) => {
           "Une erreur est intervenue lors de la recherche des partenaires.",
       });
     });
-  /*okay = "false"; // flag de validation à faux
-  res.send({
-    message: "Table partenaire vide, veuillez saisir un partenaire ",
-    okay,
-  }); */ // renvoi un message à afficher et le flag de validation à faux
 };
-
+// Crée un avis
 exports.create = (req, res) => {
-  console.log("req.body", req.body);
   // Convertir la date de la chaîne en objet Date
   const [day, month, year] = req.body.DateM.split("/");
   const dateStr = `${year}-${month}-${day}`;
@@ -73,9 +63,6 @@ const satisfaction = parseInt(req.body.Satisfaction, 10);
     Approuve: req.body.Approuve,
     Satisfaction: satisfaction,
   };
-  console.log("constante Date", message.DateM, typeof message.DateM);
-  console.log("constante Heure", message.Heure, typeof message.Heure);
-  console.log("constante Approuve", message.Approuve, typeof message.Approuve);
   // enregistre les données dans la base de données
   Blog.create(message)
     .then((data) => {
@@ -86,10 +73,11 @@ const satisfaction = parseInt(req.body.Satisfaction, 10);
       res.status(500).send({
         message:
           err.message ||
-          "Une erreur est intervenue lors de la création de l'agent",
+          "Une erreur est intervenue lors de la création de l'avis",
       });
     });
 };
+// met à jour un avis
 exports.update = (req, res) => {
   // récupére l'index de l'enregistrement à modifier (id)
   const id = req.params.id;
@@ -108,7 +96,7 @@ exports.update = (req, res) => {
         res.send(req.body); // on utilise req.body en retour pour pouvoir modifié le store sinon cela ne fonctionne pas
       } else {
         res.send({
-          message: `Impossible de mettre à jour la structure avec l'id=${id}. Peut-etre  que le la strucuture n'a pas été trouvé ou alors req.body est vide!`,
+          message: `Impossible de mettre à jour l'avis avec l'id=${id}. Peut-etre  que cet avis n'a pas été trouvé ou alors req.body est vide!`,
         });
       }
     })
@@ -121,9 +109,9 @@ exports.update = (req, res) => {
       });
     });
 };
+//Supprime un avis
 exports.delete = (req, res) => {
   const id_message = req.params.id;
-  console.log("id_message", id_message);
   Blog.destroy({
       where: { id_message: id_message },
     })
@@ -131,18 +119,18 @@ exports.delete = (req, res) => {
       console.log("num", num);
       if (num === 1) {
         res.status(200).json({
-          message: "Le message a été supprimée avec succès.",
+          message: "L'avis a été supprimée avec succès.",
         });
       } else {
         res.status(404).json({
-          message: `Impossible de supprimer le message avec l'id=${id_message}. Peut-être que le message n'a pas été trouvée.`,
+          message: `Impossible de supprimer l'avis avec l'id=${id_message}. Peut-être que cet avis n'a pas été trouvée.`,
         });
       }
     })
     .catch((err) => {
       res.status(500).json({
         message:
-          "Une erreur est survenue lors de la suppression du message avec l'id=" +
+          "Une erreur est survenue lors de l'avis avec l'id=" +
           id_message,
       });
     });

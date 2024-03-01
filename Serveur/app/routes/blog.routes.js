@@ -1,4 +1,4 @@
-//const { logReceivedData } = require("../controllers/uploadImage.js");
+
 
 module.exports = app => {
   const blog = require("../controllers/blog.controller.js");

@@ -3,10 +3,9 @@ const db = require("../models/index.js");
 const Caracteristique = db.caracteristiques;
 const op = db.Sequelize.Op;
 
-// Charge tous les partenaires de la base de données
+// Charge toutes les caractéristique d'un véhicule
 exports.fetchCaractById = (req, res) => {
   // test si la table est vide
-  console.log("controller caracteristique");
   var okay = false;
   var vide = false;
   Caracteristique.count().then((count) => {
@@ -21,8 +20,7 @@ exports.fetchCaractById = (req, res) => {
       }); // renvoi un message à afficher et le flag de validation à faux
     } else {
       const fk_vehicule = req.query.data; // ici on utilise directement le data sans le transformer en nombre, on utilise la forme string
-      const condition = fk_vehicule ? { fk_vehicule: fk_vehicule } : {}; // Utilisez un objet vide pour ne pas appliquer de filtre si fk_parten n'est pas spécifié
-      console.log("condition", condition);
+      const condition = fk_vehicule ? { fk_vehicule: fk_vehicule } : {}; // Utilisez un objet vide pour ne pas appliquer de filtre si vehicule n'est pas spécifié
 
       // La table contient des enregistrements, effectuez la recherche
       okay = "true"; // flag de chargement correct des données
@@ -38,7 +36,6 @@ exports.fetchCaractById = (req, res) => {
               vide,
             }); // renvoi un message à afficher et le flag de validation à faux
           } else {
-            //console.log("data controller ", data);
             res.send({ data, okay, vide });
           }
         })
@@ -86,8 +83,8 @@ exports.fetchCaractById = (req, res) => {
     });
   */
 };
+// Crée les caractéristique d'un véhicule
 exports.createCaract = (req, res) => {
-  console.log("req.body", req.body);
   const newvaracteristique = {
     fk_vehicule: req.body.fk_vehicule,
     Provenance: req.body.Provenance,
@@ -115,6 +112,7 @@ var flagmodifdonnee = true;
         .json({ message: "Erreur lors de la création des caractéristiques." });
     });
 };
+// Met à jour les caractéristique d'un véhicule
 exports.updateCaract = (req, res) => {
   const id = req.params.id;
   // transforme les valeurs numeriques en nombre avant enregistrement dans la BD, sinon en retour l'index est un string au lieu d'un nombre
@@ -142,7 +140,7 @@ exports.updateCaract = (req, res) => {
         res.send(req.body); // on utilise req.body en retour pour pouvoir modifié le store sinon cela ne fonctionne pas
       } else {
         res.send({
-          message: `Impossible de mettre à jour la structure avec l'id=${id}. Peut-etre  que le la caracteristique n'a pas été trouvé ou alors req.body est vide!`,
+          message: `Impossible de mettre à jour des caracteristiques avec l'id=${id}. Peut-etre  que les caracteristiques n'ont pas été trouvées ou alors req.body est vide!`,
         });
       }
     })
@@ -150,7 +148,7 @@ exports.updateCaract = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          "Une erreur est intervenue lors de la mise à jour de la cracteristique avec l'id=" +
+          "Une erreur est intervenue lors de la mise à jour des caracteristiques avec l'id=" +
           id,
       });
     });

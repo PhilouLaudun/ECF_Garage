@@ -3,10 +3,9 @@ const db = require("../models/index");
 const relvehiculeoptions = db.relvehiculeoptions;
 const op = db.Sequelize.Op;
 
-// Charge tous les partenaires de la base de données
+// Charge toutes les relation vehicule-options pour un vehicule de la base de données
 exports.listeRelVO = (req, res) => {
   // test si la table est vide
-  console.log("controller relation option", req.query.data);
   const fk_vehicule = req.query.data; // ici on utilise directement le data sans le transformer en nombre, on utilise la forme string
   const condition = fk_vehicule ? { fk_vehicule: fk_vehicule } : {}; // Utilisez un objet vide pour ne pas appliquer de filtre si fk_structure n'est pas spécifié
 relvehiculeoptions
@@ -19,7 +18,7 @@ relvehiculeoptions
       okay = "false"; // flag de validation à faux
       vide = "true"; // flag levé pour signifier que la table est vide
       res.send({
-        message: "La table structure est vide ",
+        message: "La table relation vehicule-options est vide ",
         okay,
         vide,
       }); // renvoi un message à afficher et le flag de validation à faux
@@ -28,15 +27,11 @@ relvehiculeoptions
       relvehiculeoptions
         .findAll({ where: condition })
         .then((data) => {
-          console.log("data", data);
-          console.log("condition", condition);
-          console.log("req.query.data", req.query.data);
-          console.log("data.lenght", data.length);
           if (data.length === 0) {
             // Aucune structure trouvée pour ce vehicule
             okay = "false"; // flag de validation à faux
             res.send({
-              message: "Aucune structure trouvée pour ce partenaire",
+              message: "Aucune relation trouvée pour ce véhicule",
               okay,
               vide,
             }); // renvoi un message à afficher et le flag de validation à faux
@@ -49,7 +44,7 @@ relvehiculeoptions
           res.status(500).send({
             message:
               err.message ||
-              "Une erreur s'est produite lors de la récupération des structures.",
+              "Une erreur s'est produite lors de la récupération des relations.",
           });
         });
     }
@@ -63,11 +58,9 @@ relvehiculeoptions
   });
 
 };
+// Crée une relation véhicule-option
 exports.createRelVO = (req, res) => {
-  console.log("req.body",req.body);
   const { vehiculeId, optionsIds } = req.body;
-    console.log("vehiculeId", vehiculeId);
-  console.log("optionIds", optionsIds);
 if (!vehiculeId || !optionsIds || !Array.isArray(optionsIds)) {
   return res.status(400).send({ message: "Invalid data format." });
   }
@@ -92,9 +85,9 @@ if (!vehiculeId || !optionsIds || !Array.isArray(optionsIds)) {
       });
     });
 };
+// Suppression d'une relation véhicule-option
 exports.deleteRelVO = (req, res) => {
   const id_relvehiculeoption = req.params.id;
-  console.log("id_relvehiculeoption", id_relvehiculeoption);
   relvehiculeoptions
     .destroy({
       where: { id_relvehiculeoption: id_relvehiculeoption },

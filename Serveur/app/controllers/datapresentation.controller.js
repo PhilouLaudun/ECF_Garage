@@ -5,10 +5,9 @@ const op = db.Sequelize.Op;
 
 
 
-// Charge tous les utilisateurs de la base de données
+// Charge toutes les présentations de la base de données
 exports.findAll = (req, res) => {
   // récupére le titre (title) du post contenu dans la requête (fonction provenant d'un exemple de post et gardé pour éviter des erreurs; à travailler pour le supprimer),condition :  varaible contenant la condition de recherche, pour nous seul l'option est à garder, on ne recherche pas par nom,
-  console.log("findAll controleur horaire");
   const title = req.query.title;
   var condition = title ? { title: { [op.like]: `%${title}%` } } : null; //(attention au guillemet simple inverse)
   // Recherche dans la base de données tous les enregistrements car la condition est nulle, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
@@ -20,7 +19,7 @@ exports.findAll = (req, res) => {
         // La table est vide
         okay = "false"; // flag de validation à faux
         res.send({
-          message: "Table horaire vide  ",
+          message: "Table présentation vide  ",
           okay,
         }); // renvoi un message à afficher et le flag de validation à faux
       } else {
@@ -33,7 +32,7 @@ exports.findAll = (req, res) => {
             res.status(500).send({
               message:
                 err.message ||
-                "Une erreur est intervenue lors de la recherche des partenaires.",
+                "Une erreur est intervenue lors de la recherche des présentations.",
             });
           });
       }
@@ -42,11 +41,11 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Une erreur est intervenue lors de la recherche des partenaires.",
+          "Une erreur est intervenue lors de la recherche des présentations.",
       });
     });
 }
-
+// Met à jout une présentation de la base de données
 exports.update = async (req, res) => {
   const id = req.params.id;
   const message2 = {

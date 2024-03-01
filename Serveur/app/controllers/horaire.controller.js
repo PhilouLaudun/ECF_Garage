@@ -5,10 +5,9 @@ const op = db.Sequelize.Op;
 
 
 
-// Charge tous les utilisateurs de la base de données
+// Charge tous les horaires de la base de données
 exports.findAll = (req, res) => {
   // récupére le titre (title) du post contenu dans la requête (fonction provenant d'un exemple de post et gardé pour éviter des erreurs; à travailler pour le supprimer),condition :  varaible contenant la condition de recherche, pour nous seul l'option est à garder, on ne recherche pas par nom,
-  console.log("findAll controleur horaire");
   const title = req.query.title;
   var condition = title ? { title: { [op.like]: `%${title}%` } } : null; //(attention au guillemet simple inverse)
   // Recherche dans la base de données tous les enregistrements car la condition est nulle, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
@@ -33,7 +32,7 @@ exports.findAll = (req, res) => {
             res.status(500).send({
               message:
                 err.message ||
-                "Une erreur est intervenue lors de la recherche des partenaires.",
+                "Une erreur est intervenue lors de la recherche des horaires.",
             });
           });
       }
@@ -42,13 +41,12 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Une erreur est intervenue lors de la recherche des partenaires.",
+          "Une erreur est intervenue lors de la recherche des horaires.",
       });
     });
 }
-
+// Met à jour tous les horaires de la base de données
 exports.update = async (req, res) => {
-  console.log(req.body)
   try {
     const updatedHoraires = req.body; // Les nouvelles données à mettre à jour
     // Mettre à jour tous les horaires dans la base de données

@@ -1,12 +1,12 @@
-//const { logReceivedData } = require("../controllers/uploadImage.js");
+
 
 module.exports = app => {
   const presentation = require("../controllers/datapresentation.controller");
   var router = require("express").Router();
-  // charge tous les horaires
+  // charge toutes les presentations
   router.get("/", presentation.findAll);
 
-  // met à jour un horaire
+  // met à jour une presentation
   router.put("/update/:id", presentation.update);
 
   app.use("/api/presentation", router);

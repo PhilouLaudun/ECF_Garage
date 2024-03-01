@@ -4,11 +4,9 @@ const Utilisateur = db.utilisateurs;
 const op = db.Sequelize.Op;
 const jwt = require("jsonwebtoken");
 
-
 // Charge tous les utilisateurs de la base de données
 exports.findAll = (req, res) => {
   // récupére le titre (title) du post contenu dans la requête (fonction provenant d'un exemple de post et gardé pour éviter des erreurs; à travailler pour le supprimer),condition :  varaible contenant la condition de recherche, pour nous seul l'option est à garder, on ne recherche pas par nom,
-  console.log("findAll controleur utilisateur");
   const title = req.query.title;
   var condition = title ? { title: { [op.like]: `%${title}%` } } : null; //(attention au guillemet simple inverse)
   // Recherche dans la base de données tous les enregistrements car la condition est nulle, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
@@ -41,18 +39,12 @@ exports.findAll = (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Une erreur est intervenue lors de la recherche des partenaires.",
+          "Une erreur est intervenue lors de la recherche des utilisateurs.",
       });
     });
-  /*okay = "false"; // flag de validation à faux
-  res.send({
-    message: "Table partenaire vide, veuillez saisir un partenaire ",
-    okay,
-  }); */// renvoi un message à afficher et le flag de validation à faux
 };
-
+//Vérification de la personne autorisée
 exports.login = (req, res) => {
-  console.log("req.body", req.body);
   const { identifiant, mdp } = req.body; // récupére les données saisies dans la boite de dialogue connexion
   Utilisateur.count()
     .then((count) => {
@@ -87,31 +79,9 @@ exports.login = (req, res) => {
        });
       }
     })
-  /*Utilisateur.findOne({
-    where: { Login: identifiant }, //  recherche l'utilisateur dans la base de données
-  }).then((user) => {
-    // gére le résultat de la recherche
-    var okay = "true"; // léve le drapeau de validation si utilisateur trouvé et mot de passe valide
-    if (user) {
-      // si utilisateur trouvé
-      if (mdp === user.Mdp) {
-        // verifie si le mot de passe est valide
-        const token = jwt.sign({ userId: user.id }, "Philou", {
-          expiresIn: "1h",
-        }); // crée un token, voir comment l'utiliser plus tard sur les routes
-        res.send({ user: user.toJSON(), token, okay }); // renvoi les données concernant l'utilisateur, le token et le flag de validation à vrai
-      } else {
-        // Gérer le cas où le mot de passe est invalide
-        okay = "false"; // met le flag de validation à faux
-        res.send({ message: "Mot de passe invalide ", okay }); // renvoi un message à afficher et le flag de validation à faux
-      }
-    } else {
-      // Gérer le cas où l'utilisateur n'est pas trouvé
-      okay = "false"; // met le flag de validation à faux
-      res.send({ message: "Utilisateur non trouvé", okay }); // renvoi un message à afficher et le flag de validation à faux
-    }
-  });*/
+ 
 }
+// Crée un utilisateur
 exports.create = (req, res) => {
   const agent = {
     Nom: req.body.Nom,
@@ -134,6 +104,7 @@ exports.create = (req, res) => {
       });
     });
 }
+// Met à jour un utilisateur
 exports.update = (req, res) => {
   // récupére l'index de l'enregistrement à modifier (id)
   const id = req.params.id;
@@ -158,7 +129,7 @@ exports.update = (req, res) => {
         res.send(req.body); // on utilise req.body en retour pour pouvoir modifié le store sinon cela ne fonctionne pas
       } else {
         res.send({
-          message: `Impossible de mettre à jour la structure avec l'id=${id}. Peut-etre  que le la strucuture n'a pas été trouvé ou alors req.body est vide!`,
+          message: `Impossible de mettre à jour l'utilisateur' avec l'id=${id}. Peut-etre  que l'utilisateur n'a pas été trouvé ou alors req.body est vide!`,
         });
       }
     })
@@ -166,7 +137,7 @@ exports.update = (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          "Une erreur est intervenue lors de la mise à jour du partenaire dont l'id=" +
+          "Une erreur est intervenue lors de la mise à jour de l'utilisateur dont l'id=" +
           id,
       });
     });

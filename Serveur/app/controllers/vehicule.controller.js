@@ -4,10 +4,9 @@ const Vehicule = db.vehicules;
 const Image = db.images;
 const op = db.Sequelize.Op;
 
-// Charge tous les partenaires de la base de données
+// Charge tous les véhicules de la base de données
 exports.findAll = (req, res) => {
   // test si la table est vide
-  console.log("charge les vehicules")
   Vehicule.count()
     .then((count) => {
       var okay = "true"; // léve le drapeau de validation si les données sont trouvées
@@ -44,11 +43,6 @@ exports.findAll = (req, res) => {
 
 // Crée un nouveau vehicule
 exports.create = (req, res) => {
-  // Affichage des données du formulaire envoyées depuis le frontend
-  console.log("Données du formulaire :", req.body);
-
-  // Affichage des fichiers téléversés avec Multer
-  console.log("Fichiers téléversés :", req.files);
   // Récupération de l'URL de la première photo (si elle existe)
   const firstImageUrl =
     req.files.length > 0 ? `uploads/${req.files[0].filename}` : null;
@@ -92,12 +86,9 @@ exports.create = (req, res) => {
         .json({ message: "Erreur lors de la création du véhicule." });
     });
 };
-
+// Met à jour un vehicule
 exports.updateVehicule = (req, res) => {
   const id = req.params.id;
-    console.log("controller vehicule:");
-  console.log("id :", id);
-  console.log("req.body :", req.body.id_vehicule, typeof req.body.id_vehicule);
   // transforme les valeurs numeriques en nombre avant enregistrement dans la BD, sinon en retour l'index est un string au lieu d'un nombre
 const id_vehicule = parseInt( req.body.id_vehicule,10);// trnaformer l'id en nombre car si on renvoi rq.body, l'i reste en string
   const annee = parseInt(req.body.Annee, 10);
@@ -130,7 +121,7 @@ const id_vehicule = parseInt( req.body.id_vehicule,10);// trnaformer l'id en nom
     .catch((err) => {
       res.status(500).send({
         message:
-          "Une erreur est intervenue lors de la mise à jour de la cracteristique avec l'id=" +
+          "Une erreur est intervenue lors de la mise à jour du véhicule avec l'id=" +
           id,
       });
     });
