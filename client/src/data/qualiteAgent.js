@@ -6,6 +6,6 @@ export const QualiteAgent = [
   },
   {
     id: 2,
-    qualite: "consultant",
+    qualite: "personnel",
   },
 ];

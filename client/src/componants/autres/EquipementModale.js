@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"; // import des fonctions de react
-import { useDispatch, useSelector } from "react-redux";// chargement des fonctions de gestion du store
+import { useDispatch, useSelector } from "react-redux"; // chargement des fonctions de gestion du store
 //  import des composants react
 import NewEquipement from "../composantFiche/NewEquipement";
 // import des composants mui material
@@ -10,7 +10,11 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 // import des fonctions de gestion du store
-import { createRelVehEquip, deleteRelVelVehEquip, listRelVehEquip } from "../../features/slice/relVehiculeEquipementSlice";
+import {
+  createRelVehEquip,
+  deleteRelVelVehEquip,
+  listRelVehEquip,
+} from "../../features/slice/relVehiculeEquipementSlice";
 import { fetchEquip } from "../../features/slice/equipementSlice";
 //
 //composant EquipementModale pour la modification des données caractéristiques d'un véhicule (props passées : onCancel: focntion callback lors de la fermeture de la modale/ idVehicule : id du véhicule concerné)
@@ -40,7 +44,7 @@ export const EquipementModale = (props) => {
       borderRadius: "50%",
     },
   };
-// definition du style de l'icone de suppression  d'un equipements liée
+  // definition du style de l'icone de suppression  d'un equipements liée
   const iconeStyleDelete = {
     fontSize: "15px",
     "&:hover": {
@@ -50,7 +54,6 @@ export const EquipementModale = (props) => {
   };
   // definition du style de l'icone de coche des equipements à lier
   const prestaStyle = {
-    //fontSize: "10px",
     "& .MuiSvgIcon-root": { fontSize: 13 },
     "& .MuiTypography-body1": { fontSize: 13 },
   };
@@ -140,7 +143,6 @@ export const EquipementModale = (props) => {
 
       // Après la sauvegarde, mettez à jour les états nécessaires
       const response = await dispatch(listRelVehEquip({ data: IdVehicule }));
-      console.log("response .payload.data", response.payload.data);
       const updatedRelations = response.payload.data.map((item) => ({
         id_relVehiculeEquipement: item.id_relVehiculeEquipement,
         fk_vehicule: item.fk_vehicule,
@@ -165,7 +167,7 @@ export const EquipementModale = (props) => {
       ...prevState,
       [selectedId]: !isChecked,
     }));
-    // Vérifiez si la prestation est déjà liée
+    // Vérifiez si l'equipemt est déjà liée
     const estDejaLiee = equipementsLiees.includes(selectedId);
 
     if (!estDejaLiee) {
@@ -242,7 +244,7 @@ export const EquipementModale = (props) => {
     <main className="contentModale">
       {/* En-tête de la modale */}
       <div className="entetemodal">
-         {/* titre de la modale */}
+        {/* titre de la modale */}
         <div className="titremodal">Equipements</div>
         {/* icones de la modale */}
         <CancelTwoToneIcon
@@ -281,16 +283,27 @@ export const EquipementModale = (props) => {
               (r) => r.fk_equipement === equipementId
             );
             return (
-              <div key={equipementId} className="itemlistepresta">
+              <div key={equipementId} className="itemlisteequip">
                 <div>
                   {equipement && (
                     <div className="ajustitemliste">
                       <span>{equipement.Equipement}</span>
                       <DeleteTwoToneIcon
                         sx={iconeStyleDelete}
-                        onDoubleClick={() =>
-                          deleteRelation(relation.id_relvehiculeequipement)
-                        }
+                        onClick={() => {
+                          if (relation && relation.id_relVehiculeEquipement) {
+                            // Supprimer la relation de la base de données
+                            deleteRelation(
+                              relation.id_relVehiculeEquipement,
+                              true
+                            );
+                          } else {
+                            // Supprimer l'équipement de equipementsLiees
+                            setEquipementsLiees((prevState) =>
+                              prevState.filter((id) => id !== equipementId)
+                            );
+                          }
+                        }}
                       />
                     </div>
                   )}
@@ -304,11 +317,17 @@ export const EquipementModale = (props) => {
           {ajoutEquip && (
             <>
               {" "}
-              <FormGroup>
+              <FormGroup
+                sx={{
+                  display: "block",
+                  Width: "100px",
+                  Height: "600px",
+                  overflowY: "auto",
+                }}
+              >
                 {equipementsDisponiblesFiltrees.map((equipement) => (
                   <FormControlLabel
                     key={equipement.id_equipement}
-                    sx={prestaStyle}
                     control={
                       <Checkbox
                         checked={
@@ -316,15 +335,25 @@ export const EquipementModale = (props) => {
                         }
                         value={equipement.id_equipement}
                         onChange={handleCheckboxChange}
+                        sx={prestaStyle}
                       />
                     }
                     label={equipement.Equipement}
+                    sx={{
+                      ".MuiTypography-root": {
+                        // Sélecteur spécifique pour le composant Typograph
+                        fontSize: "10px",
+                        borderBottom: "1px solid black", // Ajout de la bordure basse
+                        paddingBottom: "5px", // Ajout de l'espacement en dessous
+                        // Ajoutez d'autres styles personnalisés ici
+                      },
+                    }}
                   />
                 ))}
               </FormGroup>
               {/* Ajout d'un nouvel équipement */}
               <div className="AjoutNouvelEquipement">
-                <NewEquipement />
+                <NewEquipement listeEquipement={listeEquipement} />
               </div>
             </>
           )}

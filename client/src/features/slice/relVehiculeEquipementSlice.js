@@ -5,16 +5,14 @@ import service from "../../services/service"; //import de la fonction permettant
 export const createRelVehEquip = createAsyncThunk(
   "relVehiculeEquipement/create",
   async (vehiculeId) => {
-    // const data = { fk_structure: structureId, fk_prestation: prestatId };
-console.log("vehiculeId", vehiculeId);
     const res = await service.createRelVehEquip(vehiculeId);
     return res.data;
   }
 );
+//fonction permettant de charger la liste des équipement pour un vehicule
 export const listRelVehEquip = createAsyncThunk(
   "relVehiculeEquipement/liste",
   async (data) => {
-    // const data = { fk_structure: structureId, fk_prestation: prestatId };
     const res = await service.listRelVehEquip(data);
     return res.data;
   }
@@ -23,7 +21,6 @@ export const listRelVehEquip = createAsyncThunk(
 export const deleteRelVelVehEquip = createAsyncThunk(
   "relVehiculeEquipement/delete",
   async (id_relVehEquip) => {
-    console.log("Slice: id_relVehEquip", id_relVehEquip);
     const res = await service.delRelVehEquip(id_relVehEquip);
 
     return res.data;

@@ -4,7 +4,6 @@ import { Routes, Route } from "react-router-dom"; // import de la balise route p
 import Home from "./componants/pages/Home";
 import Entretien from "./componants/pages/Entretien";
 import Carrosserie from "./componants/pages/Carrosserie";
-import Occasion from "./componants/pages/Occasion";
 import Autres from "./componants/pages/Autres";
 import Contact from "./componants/pages/Contact";
 import Vehicules from "./componants/pages/Vehicules";

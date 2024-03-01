@@ -2,26 +2,25 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; // import des 
 import service from "../../services/service"; //import de la fonction permettant de gérer les demandes au serveur à l'aide d'AXIOS
 // fonction permettant de verifier a partir du serveur le login des personnes habilitées
 
-
+// liste des avis
 export const listeAvis = createAsyncThunk("avis", async () => {
  const res = await service.listeAvis();
 return res.data;
 });
+// créer un avis
 export const saveAvis = createAsyncThunk("avis/create", async ({ message }) => {
   const res = await service.saveAvis(message);
   return res.data;
 });
+// valider un avis
 export const updateAvis = createAsyncThunk(
   "avis/update",
   async ({ id, messageaenvoyer }) => {
-    // Afficher les clés et les valeurs du FormData en une seule boucle, a conserver pour memoire
-    /*for (var entry of data.entries()) {
-      console.log(entry[0] + ": " + entry[1]);
-    }*/
     const res = await service.updateAvis(id, messageaenvoyer);
     return res.data;
   }
 );
+// supprimer un avis
 export const deleteAvis = createAsyncThunk(
   "avis/delete",
   async ({ id_message }) => {

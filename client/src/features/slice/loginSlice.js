@@ -5,11 +5,12 @@ export const login = createAsyncThunk("utilisateur/login", async (data) => {
   const res = await service.validLogin(data);
   return res.data;
 });
-
+ // fonction permettant de récupérer la liste des utilisateurs
 export const listeUtilisateur = createAsyncThunk("utilisateur", async () => {
   const res = await service.listUtilisateur();
   return res.data;
 });
+// fonction permettant de créer un nouvel utilisateur
 export const saveNewAgent = createAsyncThunk(
   "utilisateur/create",
   async ({ data }) => {
@@ -17,13 +18,10 @@ export const saveNewAgent = createAsyncThunk(
     return res.data;
   }
 );
+// fonction permettant de mettre à, jour un utilisateur
 export const updateAgent = createAsyncThunk(
   "utilisateur/update",
   async ({ id, data }) => {
-    // Afficher les clés et les valeurs du FormData en une seule boucle, a conserver pour memoire
-    /*for (var entry of data.entries()) {
-      console.log(entry[0] + ": " + entry[1]);
-    }*/
     const res = await service.updateAgent(id, data);
     return res.data;
   }
@@ -51,7 +49,6 @@ const utilisateurSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(login.fulfilled, (state, { payload }) => {
-      console.log("login.fulfilled");
       const okay = payload.okay.trim().toLowerCase() === "true"; // obliger de faire cela sinon on ne peut pas faire le test car req.body.payload.okay est du texte et boolean ne fontionne pas (ne donne pas true pour true et false pour false)
       if (okay) {
         //  si l'utilisateur est identifié et le mot de passe valide
@@ -59,7 +56,6 @@ const utilisateurSlice = createSlice({
         state.identifiant = payload.user.Login; // sauve l'identifiant de l'utilisateur identifié
         state.nom = payload.user.Nom; // sa sa sa
         state.role = payload.user.Qualite; // sauve la qualité d'utilisateur identifié
-        console.log("state role", state.role, typeof state.role);
         if (state.role === 1) {
           // permet de lever le flag pour les options réservées à l'administrateur
           state.flagRole = true;

@@ -1,14 +1,15 @@
 // import de la fonction axios pour interroger l'API
-import http from "../http-common" //charge la fonction axios vers la base de données
+import http from "../http-common"; //charge la fonction axios vers la base de données
 // *********************** login *********************************
 // envoi les infos sur l'utilisateur pour validation du login
 const validLogin = (data) => {
-  console.log("dataservice",data)
- return http.post("/login",data);
+  return http.post("/login", data);
 };
-const listUtilisateur = () => { 
-return http.get("/login");
-}
+// charge la liste de tous les utilisateurs
+const listUtilisateur = () => {
+  return http.get("/login");
+};
+// sauvegarde d'un utilisateur
 const saveNewAgent = (data) => {
   // je laisse les parties config et affichage des clés et valeur du formdata pour mémoire. Pour formdata, cela permet d'afficher les données du formdata. Pour config, ici comme il n'y a pas de fichier transmis, on à pas besoin de modifier le Content-Type en ultipart/form-data
   /*const config = {
@@ -19,15 +20,16 @@ const saveNewAgent = (data) => {
   };*/
   return http.post("/login/create", data);
 };
-// met a jour un agent
+// met a jour un uilisateur
 const updateAgent = (id, data) => {
   return http.put(`/login/update/${id}`, data);
 };
 // *********************** table blog *********************************
-// envoi les infos sur l'utilisateur pour validation du login
-const listeAvis = () => { 
-return http.get("/blog");
-}
+// charge la liste de tous les avis
+const listeAvis = () => {
+  return http.get("/blog");
+};
+// sauvegarde un avis
 const saveAvis = (message) => {
   // je laisse les parties config et affichage des clés et valeur du formdata pour mémoire. Pour formdata, cela permet d'afficher les données du formdata. Pour config, ici comme il n'y a pas de fichier transmis, on à pas besoin de modifier le Content-Type en ultipart/form-data
   /*const config = {
@@ -42,39 +44,36 @@ const saveAvis = (message) => {
 const updateAvis = (id, messageaenvoyer) => {
   return http.put(`/blog/update/${id}`, messageaenvoyer);
 };
-
+// suprime un avis
 const deleteAvis = (id_message) => {
   return http.delete(`/blog/delete/${id_message}`);
 };
 // *********************** table horaires *********************************
-// envoi les infos sur l'utilisateur pour validation du login
+// charge la liste de tous les horaires
 const listeHoraires = () => {
   return http.get("/horaire");
 };
-
-// met a jour d'un avis
+// met a jour les horaires
 const updateHoraires = (horairesModif) => {
   return http.put(`/horaire/update`, horairesModif);
 };
 // *********************** table presentations *********************************
-// envoi les infos sur l'utilisateur pour validation du login
+// charge la liste des présenatations de page
 const listPresentations = () => {
   return http.get("/presentation");
 };
 
-// met a jour d'un avis
+// met a jour une présentation
 const updatePresentations = (id, message) => {
   return http.put(`/presentation/update/${id}`, message);
 };
 // *********************** table services *********************************
-// envoi les infos sur l'utilisateur pour validation du login
+// charge la liste de tous les services
 const listServices = () => {
   return http.get("/service");
 };
-
-// met a jour d'un avis
+// met a jour un service
 const updateServices = (id, message) => {
-  console.log("updateServices servcice", id, message);
   return http.put(`/service/update/${id}`, message);
 };
 // *********************** table vehicule *********************************
@@ -82,13 +81,8 @@ const updateServices = (id, message) => {
 const getAllVehicule = () => {
   return http.get("/vehicules");
 };
-// crée un vehicule  
+// crée un vehicule
 const createVehicule = (data) => {
-  console.log("createVehicule service")
-  // Parcours des entrées de FormData et affichage dans la console
-  for (const entry of data.entries()) {
-    console.log(entry[0] + ":", entry[1]);
-  }
   const config = {
     // en-tête remplacant l'en-tête par défaut quand un formData contient un champ avec un fichier binaire : IMPORTANT
     headers: {
@@ -97,11 +91,8 @@ const createVehicule = (data) => {
   };
   return http.post("/vehicules/create", data, config);
 };
+// met à jour un vehicule
 const upadteVehicule = (id, data) => {
-  for (const entry of data.entries()) {
-    console.log(entry[0] + ":", entry[1]);
-  }
-  console.log("data service", data);
   return http.put(`/vehicules/update/${id}`, data);
 };
 
@@ -112,11 +103,8 @@ const fetchImageById = (data) => {
   const url = `/images/byId?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
 };
+// ajoute des images
 const ajoutImage = (data) => {
-  // Parcours des entrées de FormData et affichage dans la console
-  /*for (const entry of data.entries()) {
-    console.log(entry[0] + ":", entry[1]);
-  }*/
   const config = {
     // en-tête remplacant l'en-tête par défaut quand un formData contient un champ avec un fichier binaire : IMPORTANT
     headers: {
@@ -132,38 +120,14 @@ const fetchCaractById = (data) => {
   const url = `/caracteristiques/byId?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
 };
-// crée une nouvelle caractéristique 
+// crée une nouvelle caractéristique
 const createCaract = (data) => {
-  /*for (const entry of data.entries()) {
-    console.log(entry[0] + ":", entry[1]);
-  }*/
   return http.post("/caracteristiques/create", data);
 };
-// met à jour une nouvelle caractéristique 
-const upadteCaract = (id,data) => {
-  /*for (const entry of data.entries()) {
-    console.log(entry[0] + ":", entry[1]);
-  }*/
+// met à jour une nouvelle caractéristique
+const upadteCaract = (id, data) => {
   return http.put(`/caracteristiques/update/${id}`, data);
 };
-
-// crée une structure sans image pour le logo 
-/* const createStructureNoImg = (data) => {
-  ici comme le fomData ne contient pas de fichier binaire on ne change pas l'en-tête d'envoi des données
-  // lignes suivantes conservées si on a besoin d'afficher les données transmises par un formData
-  /*console.log("id_structure", data.get('id_structure'));
-  console.log("fk_parten", data.get('fk_parten'));
-  console.log("Nom", data.get('Nom'));
-  console.log("Logo", data.get('Logo'));
-  console.log("Etat", data.get('Etat'));
-  console.log("Description", data.get('Description'));
-  console.log("Rue", data.get('Rue'));
-  console.log("CodePostal", data.get('CodePostal'));
-  console.log("Ville", data.get('Ville'));
-  console.log("flagNewImage", data.get('flagNewImage'));
-  console.log("ImageLogo", data.get('ImageLogo'));
-  return http.post("/Structures/NoImg", data);
-};*/
 // *********************** table equipement *********************************
 // charge la liste de toutes les equipements
 const fetchEquip = () => {
@@ -174,7 +138,7 @@ const createEquip = (data) => {
   return http.post("/equipements/create", data);
 };
 // *********************** table option *********************************
-// charge la liste de toutes les equipements
+// charge la liste de toutes les options
 const fetchOpt = () => {
   return http.get("/options");
 };
@@ -183,18 +147,18 @@ const createOpt = (data) => {
   return http.post("/options/create", data);
 };
 // *********************** table relvehiculeequipements *********************************
-// charge la liste de toutes les structures associées à un partenaire
+// charge la liste de tous les équipements associées à un vehicule
 const listRelVehEquip = (data) => {
   const queryParams = new URLSearchParams(data).toString(); // on est obligé de faire cette transformation pour coller le data à l'url
   const url = `/relVehiculeEquipement/list?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
 };
 
-// crée un nouvel equipement
+// crée un nouvel relation equipement pour un vehicule
 const createRelVehEquip = (data) => {
   return http.post("/relVehiculeEquipement/create", data);
 };
-// supprime une relation
+// supprime une relation pour un vehicule
 const delRelVehEquip = (id_relVehEquip) => {
   return http.delete(`/relVehiculeEquipement/${id_relVehEquip}`);
 };
@@ -205,8 +169,7 @@ const listRelVehOpt = (data) => {
   const url = `/relVehiculeOption/list?${queryParams}`; // les données contrairement à POST sont passées par l'url
   return http.get(url);
 };
-
-// crée une nouvelle option
+// crée une nouvelle relation option pour un vehicule
 const createRelVehOpt = (data) => {
   return http.post("/relVehiculeOption/create", data);
 };
@@ -217,19 +180,18 @@ const delRelVehOpt = (id_relVehOpt) => {
 // *********************** récupération données binaire image sur serveur répertoire upload *********************************
 // fonction utilisée pour récuperer l'image du logo d'un prestataire dans le répertoire upload
 const getImageDataFromURL = (imageUrl) => {
-  return http.get(imageUrl, {
-      responseType: 'arraybuffer'
+  return http
+    .get(imageUrl, {
+      responseType: "arraybuffer",
     })
-    .then(response => {
+    .then((response) => {
       return response.data; // Renvoie directement les données ArrayBuffer
     })
-    .catch(error => {
-      console.error('Erreur lors du téléchargement de l\'image', error);
+    .catch((error) => {
+      console.error("Erreur lors du téléchargement de l'image", error);
       throw error;
     });
 };
-
-
 
 // variable pour l'appel dans les autres modules
 const Service = {
@@ -247,12 +209,12 @@ const Service = {
   createRelVehEquip,
   listRelVehEquip,
   delRelVehEquip,
-listRelVehOpt,
-createRelVehOpt,
+  listRelVehOpt,
+  createRelVehOpt,
   delRelVehOpt,
   fetchOpt,
   createOpt,
-ajoutImage,
+  ajoutImage,
   saveNewAgent,
   updateAgent,
   listeAvis,

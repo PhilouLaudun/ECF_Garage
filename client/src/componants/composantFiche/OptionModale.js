@@ -10,7 +10,7 @@ import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 import AddCircleTwoToneIcon from "@mui/icons-material/AddCircleTwoTone"; // import du composant Mui, voir si on doit le laisser
 import DeleteTwoToneIcon from "@mui/icons-material/DeleteTwoTone";
 // import des fonctions de gestion du store
-import { createRelVehOpt, listRelVehOpt } from "../../features/slice/relVehiculeOptionSlice";
+import { createRelVehOpt, delRelVehOpt, listRelVehOpt } from "../../features/slice/relVehiculeOptionSlice";
 import { fetchOpt } from "../../features/slice/optionSlice";
 //
 //composant OptionModale pour la modification des données caractéristiques d'un véhicule (props passées : onCancel: focntion callback lors de la fermeture de la modale/ idVehicule : id du véhicule concerné)
@@ -26,9 +26,9 @@ export const OptionModale = (props) => {
   const [showSaveButton, setShowSaveButton] = useState(false); // flag d'affichage de l'icone de sauvegarde
   const [showAddButton, setShowAddButton] = useState(true); // flag d'affichage de l'icone d'edition
   const [nouvellesOptionsLiees, setNouvellesOptionsLiees] = useState([]); // tableau contenant les nouvelles options du véhicule
-  const [nouveauxEquipements, setNouveauxEquipements] = useState([]); // Nouvelle variable d'état pour les nouvelles prestations liées
+  /*const [nouveauxEquipements, setNouveauxEquipements] = useState([]); // Nouvelle variable d'état pour les nouvelles prestations liées
   const [equipementsDisponibles, setEquipementsDisponibles] =
-    useState(listeOption); // Remplacez par l'ensemble des prestations disponibles
+    useState(listeOption); // Remplacez par l'ensemble des prestations disponibles*/
 
   const [hasLoadedDataRelVehOpt, setHasLoadedDataRelVehOpt] = useState(false); // n'est pas gérer de la même manière que dans le composant partenaire
   // definition du style des composants icones de sauvegarde, annulation et fermeture
@@ -49,7 +49,6 @@ export const OptionModale = (props) => {
   };
   // definition du style de l'icone de coche des options à lier
   const prestaStyle = {
-    //fontSize: "10px",
     "& .MuiSvgIcon-root": { fontSize: 13 },
     "& .MuiTypography-body1": { fontSize: 13 },
   };
@@ -162,7 +161,7 @@ export const OptionModale = (props) => {
     const estDejaLiee = optionsLiees.includes(selectedId);
 
     if (!estDejaLiee) {
-      // Mettez à jour les nouvelles prestations à lier
+      // Mettez à jour les nouvelles options à lier
       setNouvellesOptionsLiees((prevOptions) => {
         setShowSaveButton(true); // Affiche le bouton après l'ajout d'une prestation
 
@@ -197,7 +196,7 @@ export const OptionModale = (props) => {
   };
   // fonction executée lors de la suppression d'une option dans la partie gauche
   const deleteRelation = (id_relvehiculeoption) => {
-    dispatch(deleteRelation(id_relvehiculeoption))
+    dispatch(delRelVehOpt(id_relvehiculeoption))
       .then(async (response) => {
         // Mettez à jour le tableau optionsLiees et relations après la suppression
         const updatedData = await dispatch(listRelVehOpt({ data: IdVehicule }));
@@ -231,7 +230,7 @@ export const OptionModale = (props) => {
       {/* En-tête de la modale */}
       <div className="entetemodal">
         {/* titre de la modale */}
-        <div className="titremodal">Equipements</div>
+        <div className="titremodal">Options</div>
         {/* icones de la modale */}
         <CancelTwoToneIcon
           className="escape"
@@ -265,16 +264,24 @@ export const OptionModale = (props) => {
             // Obtenir la relation correspondant à l'option
             const relation = relations.find((r) => r.fk_option === optiontId);
             return (
-              <div key={optiontId} className="itemlistepresta">
+              <div key={optiontId} className="itemlisteequip">
                 <div>
                   {option && (
                     <div className="ajustitemliste">
                       <span>{option.Optionvehicule}</span>
                       <DeleteTwoToneIcon
                         sx={iconeStyleDelete}
-                        onDoubleClick={() =>
-                          deleteRelation(relation.id_relvehiculeoption)
-                        }
+                        onClick={() => {
+                          if (relation && relation.id_relvehiculeoption) {
+                            // Supprimer la relation de la base de données
+                            deleteRelation(relation.id_relvehiculeoption, true);
+                          } else {
+                            // Supprimer l'équipement de equipementsLiees
+                            setOptionsLiees((prevState) =>
+                              prevState.filter((id) => id !== optiontId)
+                            );
+                          }
+                        }}
                       />
                     </div>
                   )}
@@ -288,19 +295,35 @@ export const OptionModale = (props) => {
           {ajoutOption && (
             <>
               {" "}
-              <FormGroup>
+              <FormGroup
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  Height: "600px",
+                  overflowY: "auto",
+                }}
+              >
                 {optionsDisponiblesFiltrees.map((option) => (
                   <FormControlLabel
                     key={option.id_option}
-                    sx={prestaStyle}
                     control={
                       <Checkbox
                         checked={checkboxState[option.id_option] || false}
                         value={option.id_option}
                         onChange={handleCheckboxChange}
+                        sx={prestaStyle}
                       />
                     }
                     label={option.Optionvehicule}
+                    sx={{
+                      ".MuiTypography-root": {
+                        // Sélecteur spécifique pour le composant Typograph
+                        fontSize: "10px",
+                        borderBottom: "1px solid black", // Ajout de la bordure basse
+                        paddingBottom: "5px", // Ajout de l'espacement en dessous
+                        // Ajoutez d'autres styles personnalisés ici
+                      },
+                    }}
                   />
                 ))}
               </FormGroup>

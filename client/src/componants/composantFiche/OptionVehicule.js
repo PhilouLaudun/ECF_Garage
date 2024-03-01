@@ -35,7 +35,7 @@ const OptionVehicule = () => {
     margin: "auto",
     display: "flex",
     height: "auto",
-    width: "400px",
+    width: "420px",
     "& .MuiPaper-root": { borderRadius: "20px" },
     "& .MuiDialog-paper": {
       borderRadius: "20px",
@@ -96,7 +96,6 @@ const OptionVehicule = () => {
   const closeOptVehicule = () => {
     dispatch(fetchOpt());
     setFlagEdit(false);
-
     // Déclencher le rechargement des données après la fermeture de la modale
     updateOptionsLiees();
   };
@@ -111,7 +110,7 @@ const OptionVehicule = () => {
       }
     } catch (error) {
       console.error(
-        "Erreur lors de la mise à jour des équipements liés :",
+        "Erreur lors de la mise à jour des options liées :",
         error
       );
       // Gérer l'erreur, par exemple afficher un message d'erreur à l'utilisateur

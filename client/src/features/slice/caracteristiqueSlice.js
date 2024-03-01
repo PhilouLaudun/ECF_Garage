@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; // import des fonctions de création d'un slice et de création de fonctions asynchrones
 import service from "../../services/service"; //import de la fonction permettant de gérer les demandes au serveur à l'aide d'AXIOS
 
-// fonction permettant de récuperer auprès du serveur les images liées à un vehicule
+// fonction permettant de récuperer les caractéristiques d'un vehicule
 export const fetchCaractById = createAsyncThunk(
   "caracteristique/byId",
   async (data) => {
@@ -9,6 +9,7 @@ export const fetchCaractById = createAsyncThunk(
     return res.data;
   }
 );
+// création d'une carctéristique pour un vehicule
 export const createCaract = createAsyncThunk(
   "caracteristique/create",
   async ({ data }) => {
@@ -16,10 +17,10 @@ export const createCaract = createAsyncThunk(
     return res.data;
   }
 );
+// mise à jour des caracteristiques d'un vehicule
 export const updateCaract = createAsyncThunk(
   "caracteristique/update",
   async ({ id, data }) => {
-    console.log(id, data);
     const res = await service.upadteCaract(id, data);
     return res.data;
   }
@@ -31,7 +32,7 @@ const initialState = {
   loading: false,
   error: null,
 };
-// slice contenant les reducers de gestion pour le store du fichier image
+// slice contenant les reducers de gestion
 const caracteristiqueSlice = createSlice({
   // ne pas oublier de le déclarer dans le store pour que fulfilled fonctionne
   name: "caracteristique",
@@ -56,10 +57,8 @@ const caracteristiqueSlice = createSlice({
         state.caracteristique = payload.data;
       })
       .addCase(updateCaract.fulfilled, (state, { payload }) => {
-
        const { flagmodifdonnee, ...data } = payload; // on supprime le flag flagmodifdonnee du payload avant de stocker les données dans le store
         // Stocker les données dans le store
-        console.log("data retour dans slice", data)
        state.caracteristique = data;
 
       });

@@ -17,7 +17,7 @@ const dataCarteService = [
     message:
       "Un parc de plus de 100 véhicules d'occasion pour trouver votre future voiture. ",
     icone: NoCrashIcon,
-    navigation: "/occasion",
+    navigation: "/vehicule",
   },
   {
     id: 3,

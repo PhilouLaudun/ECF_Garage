@@ -1,23 +1,22 @@
 
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"; // import des fonctions de création d'un slice et de création de fonctions asynchrones
 import service from "../../services/service"; //import de la fonction permettant de gérer les demandes au serveur à l'aide d'AXIOS
-// fonction permettant de charger a partir du serveur l'ensemble des partenaires
+// fonction permettant de charger a partir du serveur l'ensemble des vehicules
 export const listVehicule = createAsyncThunk("vehicule/list", async () => {
   const res = await service.getAllVehicule();
   return res.data;
 });
-//fonction permettant d'ajouter un partenaire à la base de données
+//fonction permettant d'ajouter un vehicule à la base de données
 export const createVehicule = createAsyncThunk(
     "vehicule/create",
     async ({ data }) => {
-        console.log("createVehicule Slice")
       const res = await service.createVehicule(data);
       return res.data;
   });
+  // fonction permettant de mettre à jour un véhicule
  export const updateVehicule = createAsyncThunk(
    "vehicule/update",
    async ({ id, data }) => {
-     console.log(id, data);
      const res = await service.upadteVehicule(id, data);
      return res.data;
    }
@@ -59,7 +58,6 @@ const vehiculeSlice = createSlice({
          var index = state.vehicule.findIndex(
            (vehicule) => vehicule.id_vehicule === parseInt(payload.id_vehicule)
         ); //  recherche de l'index de la carte modifiée
-        console.log("index slice vehicule",index)
          state.vehicule[index] = {
            ...state.vehicule[index],
            ...payload,

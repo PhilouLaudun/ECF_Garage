@@ -1,11 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import Presentation from "../../services/service";
 
-
+// fonction permettant de récupérer l'ensembles des textes des compsant de présentation
 export const listPresentations = createAsyncThunk("presentation", async () => {
     const res = await Presentation.listPresentations();
 return res.data
 })
+// fonction permettant de mettre à jour une présentation
 export const updatePresentations = createAsyncThunk(
   "presentation/update",
   async ({ id,message }) => {

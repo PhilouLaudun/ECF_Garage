@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";// chargement des composants react
+import React, { useEffect } from "react"; // chargement des composants react
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";// chargement des fonction de gestion du store
+import { useDispatch, useSelector } from "react-redux"; // chargement des fonction de gestion du store
 // import des composants de la page
 import SyntheseModale from "./SyntheseModale";
 import CarteEmail from "../autres/CarteEmail";
@@ -48,7 +48,7 @@ const SyntheseVehicule = () => {
     "@media (max-width: 420px)": {
       position: "absolute",
       top: "10%",
-      left: "-13%",
+      left: "-25px",
       // Ajoutez d'autres styles selon vos besoins
     },
   };
@@ -110,9 +110,12 @@ const SyntheseVehicule = () => {
       <div className="prixsynthese">{Prix}€</div>
       {/* affichage du bouton d'envoi de mail */}
       <div className="containerboutonmail">
-        <button className="boutonsynthese">
-          <EmailIcon onClick={sendEmail} />
-        </button>
+        { /* si c'est un visiteur on autorise l'envoi d'un mail */}
+        {!authorized && (
+          <button className="boutonsynthese">
+            <EmailIcon onClick={sendEmail} />
+          </button>
+        )}
       </div>
       {/* affichage de la modale de modification des données de synthése*/}
       {flagEdit && (
@@ -120,7 +123,7 @@ const SyntheseVehicule = () => {
           <SyntheseModale vehicule={vehicule} onClose={closeSyntheseVehicule} />
         </Dialog>
       )}
-       {/* affichage de la modale d'envoi d'un mail*/}  
+      {/* affichage de la modale d'envoi d'un mail*/}
       {flagMail && (
         <Dialog open={true} sx={modalStyle}>
           <CarteEmail onClose={closeEmail} objetDemandeprops={objetMessages} />

@@ -7,9 +7,8 @@ export const fetchImageById = createAsyncThunk("image/byId", async (data) => {
   return res.data;
 });
 
-//fonction permettant d'ajouter un partenaire à la base de données
+//fonction permettant d'ajouter une image
 export const ajoutImage = createAsyncThunk("image/ajout", async ({ data }) => {
-  console.log("ajoutImage Slice", data);
   const res = await service.ajoutImage(data);
   return res.data;
 });
@@ -26,9 +25,7 @@ const imageSlice = createSlice({
   name: "image",
   initialState,
   reducers: {
-    resetUtilisateur: (state, { payload }) => {
-      return initialState;
-    },
+
   },
   extraReducers: (builder) => {
     builder.addCase(fetchImageById.fulfilled, (state, { payload }) => {

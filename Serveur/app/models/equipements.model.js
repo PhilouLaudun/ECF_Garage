@@ -9,7 +9,7 @@ module.exports = (sequelize, Sequelize) => {
         primaryKey: true,
       },
       Equipement: {
-        type: Sequelize.STRING(60),
+        type: Sequelize.STRING(100),
         allowNull: false,
       },
       

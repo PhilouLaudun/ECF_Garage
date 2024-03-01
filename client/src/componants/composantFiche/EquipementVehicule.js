@@ -35,7 +35,7 @@ const EquipementVehicule = () => {
     margin: "auto",
     display: "flex",
     height: "auto",
-    width: "400px",
+    width: "420px",
     "& .MuiPaper-root": { borderRadius: "20px" },
     "& .MuiDialog-paper": {
       borderRadius: "20px",

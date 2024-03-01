@@ -44,9 +44,13 @@ background: linear-gradient(
       border: none; /* Supprime les bordures */
       outline: none; /* Supprime le contour lorsqu'il est sélectionné */
       padding: 5px;
+      text-align: center;
+        @media (max-width: 420px) {
+      font-size: 14px;
+    }
       
     }
-    &.editable {
+    &.editable { 
         textarea {
             background-color: rgba(173, 216, 230, 0.2);
         }

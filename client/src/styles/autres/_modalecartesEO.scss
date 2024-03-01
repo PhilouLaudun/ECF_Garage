@@ -1,7 +1,7 @@
 .contentModale {
   min-width: 390px;
   max-width: 410px;
-  height: 400px;
+  height: 600px;
   background: rgba(211, 214, 234, 0.6);
   border: 5px rgba(128, 128, 128, 0.631) solid;
   border-radius: 20px;
@@ -57,16 +57,27 @@
     grid-template-columns: 50% 50%;
     grid-template-rows: 100%;
     grid-template-areas: "listevalide listeajout";
-    //place-items: center center;
-    
+
     .liste {
       grid-area: listevalide;
       padding-left: 10px;
       padding-top: 10px;
+
       .titreliste {
         font-family: $font-1;
         font-size: 18px;
         font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .itemlisteequip {
+        display: flex;
+        width: 100%;
+        overflow-y: auto;
+        .ajustitemliste {
+          font-size: 13px;
+          border-bottom: 1px solid $black;
+          margin-bottom: 3px;
+        }
       }
     }
     .listeAjout {
@@ -74,8 +85,8 @@
       background: rgb(50, 151, 206, 0.4);
       display: grid;
       grid-template-columns: 1fr;
-    grid-template-rows: 85% 15%;
-    grid-template-areas: "listeEquipement" "ajoutEquipement";
+      grid-template-rows: 85% 15%;
+      grid-template-areas: "listeEquipement" "ajoutEquipement";
 
       .AjoutNouvelEquipement {
         width: 100%;
