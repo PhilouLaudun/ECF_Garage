@@ -9,6 +9,10 @@ export const fetchImageById = createAsyncThunk("image/byId", async (data) => {
 
 //fonction permettant d'ajouter une image
 export const ajoutImage = createAsyncThunk("image/ajout", async ({ data }) => {
+  console.log("data slice", data);
+      for (const entry of data.entries()) {
+        console.log("entry formData dslice", entry);
+      }
   const res = await service.ajoutImage(data);
   return res.data;
 });

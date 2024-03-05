@@ -118,12 +118,17 @@ const newApprovedMessages = messages
       const messageaenvoyer = {
         Approuve: true,
       };
-      dispatch(updateAvis({ id: id, messageaenvoyer: messageaenvoyer }));
-      dispatch(listeAvis());
+      dispatch(updateAvis({ id: id, messageaenvoyer: messageaenvoyer })).then(
+        () => {
+          dispatch(listeAvis()); // Après la réussite de updateAvis, déclenche listeAvis pour obtenir la nouvelle liste complète des avis
+        }
+      ); // envoi les données vers la base de données pour créer l'avis
+
     } else {
       setHasLoadedDataAvis(false);
-      dispatch(deleteAvis({ id_message: id }));
-      dispatch(listeAvis());
+      dispatch(deleteAvis({ id_message: id })).then(() => {
+        dispatch(listeAvis()); // Après la réussite de deleteAvis, déclenche listeAvis pour obtenir la nouvelle liste complète des avis
+      }); // detruit un avis dans la base de données
     }
   };
 

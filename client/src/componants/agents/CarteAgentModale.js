@@ -179,9 +179,13 @@ export const CarteAgentModale = ({onCancel}) => {
     formData.append("Qualite", qualiteAgent); // Qualité de l'utilisateur
     if (flagNouvelAgent) {
       // si c'est un nouvel agent
-      dispatch(saveNewAgent({ data: formData })); // on utilise le slice et la route de création
+      dispatch(saveNewAgent({ data: formData })).then(() => {
+        dispatch(listeUtilisateur()); // Après la réussite de saveNewAgent, déclenche listeUtilisateur pour obtenir la nouvelle liste complète des agents
+      }); // on utilise le slice et la route de création
     } else {
-      dispatch(updateAgent({ id: idUtilisateur, data: formData })); // on utilise le slice et la route de la mise à jour
+      dispatch(updateAgent({ id: idUtilisateur, data: formData })).then(() => {
+        dispatch(listeUtilisateur()); // Après la réussite de updateAgent, déclenche listeUtilisateur pour obtenir la nouvelle liste complète des agents
+      }); // on utilise le slice et la route de la mise à jour
     }
     refreshData(); // on lance le chargement des agents à partir de la base de données après les mise à jour
     setOpen(false); // ferme la modale de confirmation des données

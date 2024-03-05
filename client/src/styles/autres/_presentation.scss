@@ -11,20 +11,38 @@ background: linear-gradient(
   );
   border-radius: 20px;
   padding: 10px;
+  .entete {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    grid-template-rows: 100%;
+    grid-template-areas: "titrep iconep";
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    justify-content: center; /* Centrer horizontalement */
+
+        @media (max-width: 420px) {
+  flex-direction: column;
+    }
   .iconContainer {
-        position: absolute; // Position absolue par rapport à main
-        top: 0px; // Décalage de 10px du haut
-        right: 10px; // Décalage de 10px de la droite
+    grid-area: iconep;
+        //position: absolute; // Position absolue par rapport à main
+        //top: 0px; // Décalage de 10px du haut
+        //right: 10px; // Décalage de 10px de la droite
         display: flex; // Permet d'aligner les icônes horizontalement
-        gap: 2px; // Espacement entre les icônes
+            align-items: center; /* Centrer verticalement */
+            justify-content: center; /* Centrer horizontalement */
     }
   .titrepresentation {
+    grid-area: titrep;
     font-size: 25px;
-    margin-bottom: 10px;
     @media (max-width: 420px) {
-      font-size: 18px;
+      font-size: 15px;
     }
   }
+
+  }
+
   .messagepresentation {
 
     font-size: 18px;
@@ -52,7 +70,9 @@ background: linear-gradient(
     }
     &.editable { 
         textarea {
-            background-color: rgba(173, 216, 230, 0.2);
+            background-color: rgba(173, 216, 230,1);
+            border: 1px solid blueviolet;
+            border-radius: 20px;
         }
     }
   }

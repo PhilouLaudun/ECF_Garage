@@ -9,6 +9,7 @@ import { Dialog } from "@mui/material";
 import EditTwoToneIcon from "@mui/icons-material/EditTwoTone";
 // import des fonctions de gestion du store
 import { fetchCaractById } from "../../features/slice/caracteristiqueSlice";
+import { combineSlices } from "@reduxjs/toolkit";
 
 // css dans fichier _fichevehicule.scss
 // composant d'affichage des caractéristiques d'un véhicule (pas de props passées)
@@ -22,16 +23,24 @@ const CaracteristiqueVehicule = () => {
   const caracteristique = useSelector(
     (state) => state.caracteristique.caracteristique
   ); // variable contenant les caractéristiques du vehicule
-  const [premierCaracteristique, setPremierCaracteristique] = useState(null);
-  // Effect pour mettre à jour premierCaracteristique lorsque caracteristique est défini et a des éléments
-  useEffect(() => {
-    if (caracteristique && caracteristique.length > 0) {
-      setPremierCaracteristique(caracteristique[0]);
-    }
-  }, [caracteristique]);
+   const {
+     id_caracteristique = "",
+     fk_vehicule = "",
+     Provenance = "",
+     Miseencirculation = "",
+     Couleur = "",
+     Nombreporte = "",
+     Nombreplace = "",
+     Longueur = "",
+     Largeur = "",
+     Volumecoffre = "",
+     Puissancefiscale = "",
+     Puissancemoteur = "",
+   } = caracteristique && caracteristique.length > 0 ? caracteristique[0] : {}; // tableau contenant les données à afficher, vide au départ si pas de données dans la base ==> evite les erreurs d'affichage
   // récupére les données dans la base de données, choix pour pouvoir tout gérer les modifs ou la création dans ce composant
   useEffect(() => {
-    dispatch(fetchCaractById({ data: id }))
+    if (!hasLoadedData) {
+      dispatch(fetchCaractById({ data: id }))
       .then((response) => {
         // Traitez la réponse ici
         if (response.payload.okay === "false") {
@@ -52,7 +61,8 @@ const CaracteristiqueVehicule = () => {
         // Traitez les erreurs ici
         setHasLoadedData(true); // Marquer que les données ont été chargées
       });
-  }, [dispatch, id]);
+} 
+  }, [dispatch, hasLoadedData,id]);
   // definition du style des composants icones de sauvegarde et d'annulation
   const iconeStyle = {
     fontSize: "35px",
@@ -81,20 +91,8 @@ const CaracteristiqueVehicule = () => {
       left: "-13%",
     },
   };
-  const {
-    id_caracteristique = "",
-    fk_vehicule = "",
-    Provenance = "",
-    Miseencirculation = "",
-    Couleur = "",
-    Nombreporte = "",
-    Nombreplace = "",
-    Longueur = "",
-    Largeur = "",
-    Volumecoffre = "",
-    Puissancefiscale = "",
-    Puissancemoteur = "",
-  } = premierCaracteristique || {}; // tableau contenant les données à afficher, vide au départ si pas de données dans la base ==> evite les erreurs d'affichage
+ 
+  //console.log("caracteristique et provenance", caracteristique, Provenance);
 // fonction d'ouverture de la modale de modification des données
   const editCaractVehicule = () => {
     setFlagEdit(true);
@@ -102,6 +100,8 @@ const CaracteristiqueVehicule = () => {
 // fonction de fermeture de la modale de modification des données
   const abordCaractVehicule = () => {
     dispatch(fetchCaractById({ data: id }));
+    setFlagCreation(false);
+    setHasLoadedData(false);
     setFlagEdit(false);
   };
   return (
@@ -109,32 +109,40 @@ const CaracteristiqueVehicule = () => {
       {/* Affichage du titre*/}
       <div className="titrecaracter">
         Caractéristiques
-      {/* affichage de l'icone d'édition pour les personnes autorisées */}
+        {/* affichage de l'icone d'édition pour les personnes autorisées */}
         {authorized && (
           <EditTwoToneIcon sx={iconeStyle} onClick={editCaractVehicule} />
         )}
       </div>
-      {/* Affichage des données */  }
+      {/* Affichage des données */}
       <div className="donnéecaracter">
-        <div>Provenance : {Provenance}</div>
-        <div>Date de mise en circulation : {Miseencirculation}</div>
-        <div>Couleur : {Couleur}</div>
-        <div>Nombres de portes : {Nombreporte}</div>
-        <div>Nombres de places : {Nombreplace} </div>
-        <div>Longeur : {Longueur} </div>
-        <div>Largeur: {Largeur} </div>
-        <div className="separationcaract">
-          Volume du coffre: {Volumecoffre}{" "}
+        <div>Provenance : {hasLoadedData ? Provenance : ""}</div>
+        <div>
+          Date de mise en circulation : {hasLoadedData ? Miseencirculation : ""}
         </div>
-        <div>Puissance fiscale (Cv) : {Puissancefiscale} </div>
-        <div>Puissances (DIN) : {Puissancemoteur} </div>
+        <div>Couleur : {hasLoadedData ? Couleur : ""}</div>
+        <div>Nombres de portes : {hasLoadedData ? Nombreporte : ""}</div>
+        <div>Nombres de places : {hasLoadedData ? Nombreplace : ""}</div>
+        <div>Longeur : {hasLoadedData ? Longueur : ""}</div>
+        <div>Largeur: {hasLoadedData ? Largeur : ""}</div>
+        <div className="separationcaract">
+          Volume du coffre: {hasLoadedData ? Volumecoffre : ""}
+        </div>
+        <div>
+          Puissance fiscale (Cv) : {hasLoadedData ? Puissancefiscale : ""}
+        </div>
+        <div>Puissances (DIN) : {hasLoadedData ? Puissancemoteur : ""}</div>
       </div>
       {/* Affichage de la modale de modification*/}
       {flagEdit && (
         <Dialog open={true} sx={modalStyle}>
           <ModaleCaracteristiqueVehicule
             idvehicule={id}
-            caracteristique={premierCaracteristique}
+            caracteristique={
+              caracteristique && caracteristique.length > 0
+                ? caracteristique[0]
+                : null
+            }
             flagCreation={flagCreation}
             onClose={abordCaractVehicule}
           />

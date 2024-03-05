@@ -5,6 +5,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
   dialect: dbConfig.Dialect,
   port: 3306, //mysql sur xampp
   operatorsAliases: 0,
+  logging: true, // Active les logs de requêtes SQL
   pool: {
     max: dbConfig.pool.max,
     min: dbConfig.pool.min,

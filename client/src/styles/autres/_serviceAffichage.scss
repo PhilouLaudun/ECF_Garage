@@ -1,51 +1,73 @@
 .mainService {
-width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centre horizontalement */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Centre horizontalement */
   align-items: center; /* Centre verticalement */
   padding: 10px;
+
+  .enteteserv {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    grid-template-rows: 100%;
+    grid-template-areas: "titres iconese";
+    display: flex;
+    align-items: center; /* Centrer verticalement */
+    justify-content: center; /* Centrer horizontalement */
+
+        @media (max-width: 420px) {
+  flex-direction: column;
+    }
+    .titreService {
+      grid-area: titres;
+      font-size: 23px;
+      margin-bottom: 10px;
+      @media (max-width: 420px) {
+        font-size: 14px;
+        font-weight: bold;
+      }
+    }
   .iconContainer {
-        position: absolute; // Position absolue par rapport à main
-        top: 0px; // Décalage de 10px du haut
-        right: 10px; // Décalage de 10px de la droite
-        display: flex; // Permet d'aligner les icônes horizontalement
-        gap: 2px; // Espacement entre les icônes
-    }
-  .titreService {
-    font-size: 23px;
-    margin-bottom: 10px;
-     align-self: flex-start; /* Cette ligne alignera le titre en haut */
-    @media (max-width: 420px) {
-      font-size: 18px;
-    }
+   grid-area: iconese;
+          display: flex; // Permet d'aligner les icônes horizontalement
+            align-items: center; /* Centrer verticalement */
+            justify-content: center; /* Centrer horizontalement */
   }
+
+  }
+
   .messageservice {
-width: 100%;
-height: 200px;
+    width: 100%;
+    height: 200px;
     font-size: 18px;
     margin-bottom: 10px;
     text-align: center;
-        @media (max-width: 420px) {
+    @media (max-width: 420px) {
+      height: 160px;
       font-size: 14px;
     }
     textarea {
-   font-size: 17px;
-   background: transparent; 
+      font-size: 17px;
+      background: transparent;
       width: 100%; /* Utilise la largeur du conteneur parent */
-      height: 100%; /* Utilise la hauteur du conteneur parent */
+      height: 100%;/* Utilise la hauteur du conteneur parent */
       resize: none; /* Empêche le redimensionnement manuel du textarea */
       box-sizing: border-box; /* Inclut la largeur et la hauteur dans les dimensions */
       text-align: center;
       border: none; /* Supprime les bordures */
       outline: none; /* Supprime le contour lorsqu'il est sélectionné */
       padding: 5px;
-      
+      @media (max-width: 420px) {
+        font-size: 14px;
+      }
     }
     &.editableservice {
-        textarea {
-            background-color: rgba(173, 216, 230, 0.35);
-        }
+      textarea {
+        background-color: rgba(173, 216, 230, 1);
+        border: 1px solid blueviolet;
+        border-radius: 20px;
+      }
     }
   }
 }

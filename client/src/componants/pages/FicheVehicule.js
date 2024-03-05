@@ -113,7 +113,6 @@ const FicheVehicule = () => {
   const saveImagesToDatabase = () => {
     // Envoyer les nouvelles images au backend pour les sauvegarder dans la base de données
     const formData = new FormData(); // formData pour envoi des données vers le serveur et ceci pour que multer puisse traiter le fichier image
-    formData.append("id_vehicule", id);
     for (let i = 0; i < newImages.length; i++) {
       const image = newImages[i];
       const imageBlob = dataURItoBlob(image.url);
@@ -122,6 +121,12 @@ const FicheVehicule = () => {
         type: `image/${fileExtension}`,
       });
       formData.append("images", imageFile);
+    }
+    console.log("id", id);
+    formData.append("fk_vehicule", id);
+    // Utilisation de entries()
+    for (const entry of formData.entries()) {
+      console.log("entry formData",entry);
     }
     dispatch(ajoutImage({ data: formData }));
     // Réinitialiser les nouvelles images dans le state local

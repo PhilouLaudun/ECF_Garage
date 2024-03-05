@@ -9,7 +9,7 @@ module.exports = app => {
   // charge les images pour un vehicule
   router.get("/byId", image.findImageById);
   // crée des images pour un vehicule
-  router.post("/ajout", uploadImage, image.ajout);
+  router.post("/ajout", uploadImage,image.ajout);
 
   app.use("/api/images", router);
 };

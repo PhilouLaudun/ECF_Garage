@@ -128,12 +128,14 @@ exports.updateCaract = (req, res) => {
   req.body.fk_vehicule = fk_vehicule;
     var flagmodifdonnee = false;
   // met à jour l'enregistrement concerné, et renvoi les données ou un message si il y a un problême, à intercepter plus tard
+    console.log("update id", id)
   Caracteristique.update(req.body, {
     where: {
       id_caracteristique: id,
     },
   })
     .then((num) => {
+      console.log("num", num)
       if (num == 1) {
         var flagmodifdonnee = true;
         req.body.flagmodifdonnee = flagmodifdonnee;

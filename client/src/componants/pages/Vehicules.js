@@ -44,6 +44,8 @@ const Vehicules = () => {
   const modalStyle = {
     zIndex: 20,
     position: "absolute",
+    top: "20px",
+    left:"-50px",
     margin: "auto",
     display: "flex",
     height: "auto",

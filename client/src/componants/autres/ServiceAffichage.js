@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from "react";// chargement des composants react
-import { useDispatch, useSelector } from "react-redux";// chargement des fonction de gestion du store 
+import React, { useEffect, useState } from "react"; // chargement des composants react
+import { useDispatch, useSelector } from "react-redux"; // chargement des fonction de gestion du store
 // import des icones mui material
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 // import des slices
-import { listServices, updateServices } from "../../features/slice/serviceSlice";
+import {
+  listServices,
+  updateServices,
+} from "../../features/slice/serviceSlice";
 //
 // composant ServiceAffichage (props passées : id : numéro de la page pour afficher le texte correspondant / service: dert à définir les positions d'affichage de la photo et du texte : 1 photo-texte : 2 texte-photo)
 const ServiceAffichage = ({ id, service }) => {
@@ -24,6 +27,10 @@ const ServiceAffichage = ({ id, service }) => {
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
+    "@media (max-width: 420px)": {
+      fontSize: "25px",
+      margin: "1px",
+    },
     "&:hover": {
       background: "radial-gradient(#E6E6FA, #1687A7)",
       borderRadius: "50%",
@@ -97,16 +104,6 @@ const ServiceAffichage = ({ id, service }) => {
   };
   return (
     <main className="mainService">
-      {/* si message modifié et admin, on affiche les icones de sauvegarde ou d'annulation */}
-      {isModified && role === 1 && (
-        <div className="iconContainer">
-          <SaveTwoToneIcon
-            sx={iconeStyle}
-            onClick={saveMessage}
-          ></SaveTwoToneIcon>
-          <CancelTwoToneIcon sx={iconeStyle} onClick={abordtexteServ} />
-        </div>
-      )}
       <div className={classService}>
         {/* quand les données sont chargées*/}
         {hasLoadedDataServ && (
@@ -116,7 +113,24 @@ const ServiceAffichage = ({ id, service }) => {
             {/* affichage titre et texte*/}
             <div className={classText}>
               {/* affichage titre*/}
-              <div className="titreService">{titre}</div>
+              <div className="enteteserv">
+                {" "}
+                <div className="titreService">{titre}</div>
+                {/* si message modifié et admin, on affiche les icones de sauvegarde ou d'annulation */}
+                {isModified && role === 1 && (
+                  <div className="iconContainer">
+                    <SaveTwoToneIcon
+                      sx={iconeStyle}
+                      onClick={saveMessage}
+                    ></SaveTwoToneIcon>
+                    <CancelTwoToneIcon
+                      sx={iconeStyle}
+                      onClick={abordtexteServ}
+                    />
+                  </div>
+                )}
+              </div>
+
               <div
                 className={`messageservice ${
                   role === 1 ? "editableservice" : ""

@@ -20,7 +20,7 @@ import {
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 // gestion du store
-import { createVehicule } from "../../features/slice/vehiculeSlice";
+import { createVehicule, listVehicule } from "../../features/slice/vehiculeSlice";
 // composant modale de création d'un vehicule: props passées : onClose: callback de sortie de la modale/ newvehicule : flag pour signifier la création d'un véhicule (à virer car on utilise pas cette modale pour la modification, a voir)
 const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
   // initialisation des variables pour la saisie dans les champs des données du vehicule
@@ -160,7 +160,11 @@ const ModaleCarteVehicule = ({ onClose, newvehicule }) => {
       formData.append("images", imageFile); // ajoute les images au formdata
     }
 
-    dispatch(createVehicule({ data: formData }));  // envoi les données vers la base de données pour créer le véhicule
+    //dispatch(createVehicule({ data: formData }));
+    dispatch(createVehicule({ data: formData })).then(() => {
+      dispatch(listVehicule()); // Après la réussite de createVehicule, déclenche listVehicule pour obtenir la nouvelle liste complète de véhicules
+    });// envoi les données vers la base de données pour créer le véhicule
+    onClose()
   };
   //fonction permettant de transformer les donnees du fichier en fichier blob pour multer
   function dataURItoBlob(dataURI) {

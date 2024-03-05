@@ -35,7 +35,7 @@ const EquipementVehicule = () => {
     margin: "auto",
     display: "flex",
     height: "auto",
-    width: "420px",
+    width: "390px",
     "& .MuiPaper-root": { borderRadius: "20px" },
     "& .MuiDialog-paper": {
       borderRadius: "20px",
@@ -44,7 +44,7 @@ const EquipementVehicule = () => {
     "@media (max-width: 420px)": {
       position: "absolute",
       top: "10%",
-      left: "-13%",
+      left: "-14%",
       // Ajoutez d'autres styles selon vos besoins
     },
   };

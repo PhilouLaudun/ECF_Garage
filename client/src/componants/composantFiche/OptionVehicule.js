@@ -44,7 +44,7 @@ const OptionVehicule = () => {
     "@media (max-width: 420px)": {
       position: "absolute",
       top: "10%",
-      left: "-13%",
+      left: "-40px",
       // Ajoutez d'autres styles selon vos besoins
     },
   };

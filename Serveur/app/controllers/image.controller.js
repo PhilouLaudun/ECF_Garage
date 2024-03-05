@@ -35,7 +35,7 @@ exports.findImageById = (req, res) => {
 };
 // Ajoute des images pour un vehicule
 exports.ajout = (req, res) => {
-  id_vehicule = parseInt(req.body.id_vehicule, 10);
+  id_vehicule = parseInt(req.body.fk_vehicule, 10);
     // Affichage des fichiers téléversés avec Multer
        const images = req.files.map((file) => {
         return {

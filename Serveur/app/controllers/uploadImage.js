@@ -25,7 +25,7 @@ const fileFilter = (req, file, cb) => {
     cb(null, false);
   }
   // Affichage des informations sur le fichier
-  //console.log("Informations sur le fichier :", file);
+  console.log("Informations sur le fichier :", file);
 };
 
 // Configuration de l'upload avec Multer

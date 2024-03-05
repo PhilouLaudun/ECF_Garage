@@ -25,23 +25,35 @@ const ModaleCaracteristiqueVehicule = ({
 }) => {
     const dispatch = useDispatch();// fonction d'appel du store
 //chargement des données à modifier ou a créer
-  const [provenance, setProvenance] = useState(caracteristique.Provenance);// provenance
+  const [provenance, setProvenance] = useState(
+    flagCreation ? "" : caracteristique.Provenance
+  );// provenance
   const [miseencirculation, setMiseencirculation] = useState(
-    caracteristique.Miseencirculation
+    flagCreation ? "" : caracteristique.Miseencirculation
   );//  date de mise en circulation
-  const [couleur, setCouleur] = useState(caracteristique.Couleur);// couleur
-  const [nombreporte, setNombreporte] = useState(caracteristique.Nombreporte);// nombres de portes
-  const [nombreplace, setNombreplace] = useState(caracteristique.Nombreplace);//  nombres de places
-  const [longueur, setLongueur] = useState(caracteristique.Longueur);// longueur
-  const [largeur, setLargeur] = useState(caracteristique.Largeur);// largeur
+  const [couleur, setCouleur] = useState(
+    flagCreation ? "" : caracteristique.Couleur
+  );// couleur
+  const [nombreporte, setNombreporte] = useState(
+    flagCreation ? "" : caracteristique.Nombreporte
+  );// nombres de portes
+  const [nombreplace, setNombreplace] = useState(
+    flagCreation ? "" : caracteristique.Nombreplace
+  );//  nombres de places
+  const [longueur, setLongueur] = useState(
+    flagCreation ? "" : caracteristique.Longueur
+  );// longueur
+  const [largeur, setLargeur] = useState(
+    flagCreation ? "" : caracteristique.Largeur
+  );// largeur
   const [volumecoffre, setVolumecoffre] = useState(
-    caracteristique.Volumecoffre
+    flagCreation ? "" : caracteristique.Volumecoffre
   );// volume du coffre
   const [puissancefiscal, setPuissancefiscal] = useState(
-    caracteristique.Puissancefiscale
+    flagCreation ? "" : caracteristique.Puissancefiscale
   );// puissance fiscale
   const [puissancemoteur, setPuissancemoteur] = useState(
-    caracteristique.Puissancemoteur
+    flagCreation ? "" : caracteristique.Puissancemoteur
   );// puissance du moteur
   const [open, setOpen] = useState(false); // open : variable contenant le drapeau d'affichage de la boite de dialogue,
   // definition du style des composants icones de sauvegarde et d'annulation
@@ -125,7 +137,7 @@ const ModaleCaracteristiqueVehicule = ({
     formData.append("Puissancemoteur", puissancemoteur);
 // en focntion du flag, crée ou upadte un enregistrement
     if (flagCreation) {
-      // si crétion de caractéristiques
+      // si création de caractéristiques
       dispatch(createCaract({ data: formData }));
     } else {
       // si update les données
@@ -134,7 +146,6 @@ const ModaleCaracteristiqueVehicule = ({
         .then((response) => {
           // Traitez la réponse ici si nécessaire
           //const { data } = response.payload;
-          console.log("response modale", response.payload.flagmodifdonnee);
         })
         .catch((error) => {
           // Gérez les erreurs ici si nécessaire
@@ -226,12 +237,12 @@ const ModaleCaracteristiqueVehicule = ({
       </div>
       {/* zone du nombre de places du véhicule */}
       <div className="divdonnee">
-        <div className="intitule">Nombre de place</div>
+        <div className="intitule">Nombre de places</div>
         <input
           type="number"
           className="stylesaisie"
           value={nombreplace}
-          placeholder="Nombre de place"
+          placeholder="Nombre de places"
           onChange={(e) => {
             setNombreplace(e.target.value);
           }}

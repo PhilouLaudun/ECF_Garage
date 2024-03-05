@@ -47,8 +47,8 @@ const caracteristiqueSlice = createSlice({
       .addCase(fetchCaractById.fulfilled, (state, { payload }) => {
         const okay = payload.okay.trim().toLowerCase() === "true"; // obliger de faire cela sinon on ne peut pas faire le test car req.body.payload.okay est du texte et la fonction boolean ne fontionne pas (ne donne pas true pour true et false pour false)
         if (okay) {
-          //  si la base n'est pas vide alors on charge la liste des véhicules
-          state.caracteristique = payload.data; // charge le store avec la liste des véhicules
+          //  si la base n'est pas vide alors on charge la liste des caractéristiques -->
+          state.caracteristique = payload.data; // charge le store avec la liste des caractéristiques
         } else {
           state.caracteristique = payload.data = []; // ne charge rien dans le store
         }
@@ -59,7 +59,8 @@ const caracteristiqueSlice = createSlice({
       .addCase(updateCaract.fulfilled, (state, { payload }) => {
        const { flagmodifdonnee, ...data } = payload; // on supprime le flag flagmodifdonnee du payload avant de stocker les données dans le store
         // Stocker les données dans le store
-       state.caracteristique = data;
+      
+      // state.caracteristique = [data]; on ne récupére pas les données revenant du controller ,on réactalise les données en interrogeant la base
 
       });
       ;

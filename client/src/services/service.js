@@ -111,6 +111,10 @@ const ajoutImage = (data) => {
       "Content-Type": "multipart/form-data",
     },
   };
+  console.log("data service", data);
+        for (const entry of data.entries()) {
+          console.log("entry formData service", entry);
+        }
   return http.post("/images/ajout", data, config);
 };
 // *********************** table caracteristiques *********************************

@@ -77,7 +77,7 @@ const SyntheseVehicule = () => {
   };
   // fonction de fermeture de la modale de modification des données de synthése du vehicule
   const closeSyntheseVehicule = () => {
-    dispatch(listVehicule); // remet la liste des données des véhicules à jour
+    dispatch(listVehicule()); // remet la liste des données des véhicules à jour
     setFlagEdit(false);
   };
   // fonction d'affichage de la modale d'envoi des mails

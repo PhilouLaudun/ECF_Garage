@@ -1,10 +1,13 @@
-import React, { useEffect, useState } from 'react';// chargement des composants react
-import { useDispatch, useSelector } from 'react-redux';// chargement des fonction de gestion du store
+import React, { useEffect, useState } from "react"; // chargement des composants react
+import { useDispatch, useSelector } from "react-redux"; // chargement des fonction de gestion du store
 // import des icones mui material
 import SaveTwoToneIcon from "@mui/icons-material/SaveTwoTone";
 import CancelTwoToneIcon from "@mui/icons-material/CancelTwoTone";
 // import des slices
-import { listPresentations, updatePresentations } from '../../features/slice/presentationSlice';
+import {
+  listPresentations,
+  updatePresentations,
+} from "../../features/slice/presentationSlice";
 //
 // composant Presentation (props passées : page : numéro de la page pour afficher le texte correspondant / largeur: definit la largeur de l'affichage)
 const Presentation = ({ page, largeur }) => {
@@ -18,7 +21,7 @@ const Presentation = ({ page, largeur }) => {
   const [message1, setMessage1] = useState(""); // 1er message de la présentation
   const [message2, setMessage2] = useState(""); // 2eme message de la présentation, seul celui-ci est modifiable
   const [message3, setMessage3] = useState(""); // 3eme message de la présentation
-  const [isModified, setIsModified] = useState(false);// drapeau signifiant des modifications dans les saisies
+  const [isModified, setIsModified] = useState(false); // drapeau signifiant des modifications dans les saisies
   // Ajoutez le style avec la largeur en pourcentage
   const largeurPresentation = {
     width: `${largeur}%`,
@@ -31,6 +34,11 @@ const Presentation = ({ page, largeur }) => {
   const iconeStyle = {
     fontSize: "35px",
     margin: "10px",
+    "@media (max-width: 420px)": {
+      fontSize: "25px",
+      margin: "1px",
+    },
+
     "&:hover": {
       background: "radial-gradient(#E6E6FA, #1687A7)",
       borderRadius: "50%",
@@ -79,7 +87,7 @@ const Presentation = ({ page, largeur }) => {
       setMessage3(presentationPage.Message3);
     }
   }, [presentations]);
-// fonction de modification lors de la saisie dans le champs message2
+  // fonction de modification lors de la saisie dans le champs message2
   const handleInputChange = (event) => {
     setMessage2(event.target.value);
     setIsModified(true); // Lève le drapeau lorsque le champ est modifié
@@ -113,22 +121,24 @@ const Presentation = ({ page, largeur }) => {
 
   return (
     <main className="mainPresentation" style={largeurPresentation}>
-      {/* si message modifié et admin, on affiche les icones de sauvegarde ou d'annulation */}
-      {isModified && role === 1 && (
-        <div className="iconContainer">
-          <SaveTwoToneIcon
-            sx={iconeStyle}
-            onClick={saveMessage}
-          ></SaveTwoToneIcon>
-          <CancelTwoToneIcon sx={iconeStyle} onClick={abordtexte} />
-        </div>
-      )}
       {/* quand les données sont chargées*/}
       {hasLoadedDataPres && (
         <>
-          {/* affichage titre*/}
-          <div className="titrepresentation">{titre}</div>
-                    {/* affichage messages*/}
+          {/* affichage titre et icone*/}
+          <div className="entete">
+            <div className="titrepresentation">{titre}</div>
+            {/* si message modifié et admin, on affiche les icones de sauvegarde ou d'annulation */}
+            {isModified && role === 1 && (
+              <div className="iconContainer">
+                <SaveTwoToneIcon
+                  sx={iconeStyle}
+                  onClick={saveMessage}
+                ></SaveTwoToneIcon>
+                <CancelTwoToneIcon sx={iconeStyle} onClick={abordtexte} />
+              </div>
+            )}
+          </div>
+ {/* affichage messages*/}
           <div className="messagepresentation">
             {message1 && <div>{message1}</div>}
           </div>
@@ -153,4 +163,4 @@ const Presentation = ({ page, largeur }) => {
   );
 };
 
-export default Presentation
+export default Presentation;

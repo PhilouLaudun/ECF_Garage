@@ -19,7 +19,7 @@ const SyntheseModale = ({ vehicule, onClose }) => {
   // chargement des données à modifier et à, afficher dans les inputs
   const [marque, setMarque] = useState(vehicule.Marque);// marque
   const [modele, setModele] = useState(vehicule.Modele);// modéle
-  const [modelePrecis, setModelePrecis] = useState(vehicule.Model)// modéle précis;
+  const [modelePrecis, setModelePrecis] = useState(vehicule.Modeleprecis);// modéle précis;
   const [annee, setAnnee] = useState(vehicule.Annee);// année
   const [kilometrage, setKilometrage] = useState(vehicule.Kilometrage);// kilométrage
   const [transmission, setTransmission] = useState(vehicule.Transmission);// boite de vitesse
